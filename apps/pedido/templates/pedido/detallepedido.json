@@ -1,0 +1,15 @@
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for detallepedido in  detallepedidos %}
+			{
+				"id": {{detallepedido.id}},
+				"pedidoid": {{detallepedido.pedido.id }},
+				"pedido__nro_pedido": '{{detallepedido.pedido.nro_pedido}}',
+				"producto__descripcion": '{{detallepedido.producto.descripcion}}',
+				"productoid": {{detallepedido.producto.id}},
+				"cantidad": '{{detallepedido.cantidad}}',
+			},{% endfor %}
+		]
+}

@@ -1,0 +1,26 @@
+{
+	"data":[
+		{% for modulo in modulos %}
+			{
+				"id":{{ modulo.id }},
+				"text": "{{modulo.nombre}}",
+				"iconCls": "uno",
+				"items": [
+					{% for menu in menus %}
+						{% if menu.modulo.id == modulo.id %}
+						{
+							"id":{{menu.id}},
+							"text":"{{menu.nombre}}",
+							"iconCls":"xf0c0",
+							"className":"panel",
+							"menu_id":{{menu.menupadre.id|default:0}},
+							"leaf":true,
+							"control": "{{menu.control}}"
+						},
+						{% endif %}
+					{% endfor %}
+				],
+			},
+		{% endfor %}
+	],
+}

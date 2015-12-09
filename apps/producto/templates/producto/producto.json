@@ -1,0 +1,16 @@
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for producto in  productos %}
+			{
+				"id": {{producto.id}},
+				"descripcion": '{{producto.descripcion}}',
+				"cantidad_actual": {{producto.cantidad_actual}},
+				{% load l10n %}
+				"precio": {{producto.precio|unlocalize }},
+				"imagen": '{{producto.imagen}}',
+				"imagen2": '<img src=media/'+'{{producto.imagen}}'+' alt="HTML5 Icon" width="128" height="128">',
+			},{% endfor %}
+		]
+}

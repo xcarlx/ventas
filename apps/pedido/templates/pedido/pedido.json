@@ -1,0 +1,17 @@
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for pedido in  pedidos %}
+			{
+				"id": {{pedido.id}},
+				"fecha_pedido": '{{pedido.fecha_pedido|date:'m/d/Y' }}',
+				"fecha_entrega": '{{pedido.fecha_entrega|date:'m/d/Y' }}',
+				"clienteid": {{pedido.cliente.id }},
+				"nro_pedido": '{{pedido.nro_pedido}}',
+				"cliente__nombres": '{{pedido.cliente.nombres}}',
+				"cliente__apellidos": '{{pedido.cliente.apellidos}}',
+				"estado": '{{pedido.estado}}',
+			},{% endfor %}
+		]
+}

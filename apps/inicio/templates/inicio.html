@@ -1,0 +1,20 @@
+{% extends "Base.html" %}
+
+{% load static from staticfiles %}
+
+{% block contenido %}
+	<script>
+		var gridPageSize = 10;
+		var panelCentral = null;
+		{% if user.is_authenticated %}
+			var loginid = {{ user.id }};
+			var loginame = "{{ user.username|capfirst }}";
+			var loginsu = {{ user.is_superuser|lower }};
+		{% else %}
+			var loginid = null;
+			var loginame = "";
+			var loginsu = false;
+		{% endif %}
+	</script>
+<script src="{% static 'inicio/js/inicio.js' %}"></script>
+{% endblock contenido %}

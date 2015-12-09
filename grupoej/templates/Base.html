@@ -1,0 +1,21 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Sistemas de Control de clientes</title>
+	<link id="themecss" rel="stylesheet" type="text/css" href="{% static 'grupoej/js/extjs/build/classic/theme-classic/resources/theme-classic-all.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'iconos.css' %}">
+</head>
+<body>
+	<!--<script src="{% static 'grupoej/js/extjs/build/ext-all.js' %}"></script>-->
+	<script src="{% static 'grupoej/js/extjs/build/ext-all-debug.js' %}"></script>
+    <!--
+    <script src="{% static 'js/extjs/build/packages/ux/classic/ux-debug.js' %}"></script>
+    -->
+    <script src="{% static 'grupoej/js/extjs/build/classic/locale/locale-es.js' %}"></script>
+	{% block contenido %}
+	{% endblock contenido %}
+</body>
+</html>
