@@ -1,6 +1,10 @@
+*/__pycache__/*
+*/*/__pycache__/*
+*/*/*/__pycache__/*
 *.pyc
 __pycache__
 grupoej
 db.sqlite3
 .DS_Store
-
+*/migrations/*
+*/*/migrations/*
