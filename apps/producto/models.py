@@ -1,9 +1,6 @@
 from django.db import models
 from apps.inicio.models import *
 
-
-
-
 # Create your models here.
 
 class Producto(Auditoria):

@@ -25,6 +25,8 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 	Producto_Editar: function(button, e, options){
 		var me = this,
 			records = me.Producto_RegistrosSeleccionados();
+			// console.log(this.lookupReference('producto-grillaproductos'));
+			// console.log(records[0].getFields());
 		if (records[0]) {
 			me.Producto_AbrirVentanaEditar(records[0], button);
 		}

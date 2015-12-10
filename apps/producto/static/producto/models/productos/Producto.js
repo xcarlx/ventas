@@ -3,9 +3,8 @@ Ext.define('GRUPOEJ.producto.models.productos.Producto', {
 	fields:[
 		{name: 'descripcion', type: 'string'},
 		{name: 'cantidad_actual', type: 'int'},
-		{name: 'precio', type: 'int'},
+		{name: 'precio', type: 'number'},
 		{name: 'imagen', type: 'string'},
-		{name: 'imagen2', type: 'string'},
 	],
 	validators:{
 		descripcion: [
