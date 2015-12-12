@@ -1,9 +1,5 @@
 Ext.define('GRUPOEJ.producto.view.productos.Producto', {
 	extend: 'GRUPOEJ.inicio.view.PlantillaContenido',
-	layout: {
-		type: 'vbox',
-		align: 'stretch'
-	},
 	requires:[
 		'GRUPOEJ.producto.view.productos.ProductoGrilla',
 		'GRUPOEJ.producto.view.productos.ProductoModelo',
@@ -15,7 +11,7 @@ Ext.define('GRUPOEJ.producto.view.productos.Producto', {
 	controller: 'producto',
 	items:[
 		{
-			xtype: 'productos-grilla-productos',
+			xtype: 'aliasgrilla-productos',
 		},
 	],
 });

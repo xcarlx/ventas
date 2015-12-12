@@ -1,0 +1,18 @@
+{% load l10n %}
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for vale in  vales %}
+			{
+				"id": {{ vale.id}},
+				"fecha": '{{ vale.fecha|date:'m/d/Y'}}',
+				"numero": '{{ vale.numero}}',
+				"total": '{{ vale.total|unlocalize }}',
+				"observaciones":'{{ vale.observaciones }}',
+				"clienteid": {{ vale.cliente.id}},
+				"cliente__nombres": '{{ vale.cliente.nombres}}',
+				"cliente__apellidos": '{{ vale.cliente.apellidos}}',
+			},{% endfor %}
+		]
+}

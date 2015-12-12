@@ -121,7 +121,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
 	os.path.join(BASE_DIR,  'grupoej/static'),
-	os.path.join(BASE_DIR,  'statics'),
+	# os.path.join(BASE_DIR,  'statics'),
 )
 
 MEDIA_ROOT = 'media/'

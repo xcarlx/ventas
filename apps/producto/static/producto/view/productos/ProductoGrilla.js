@@ -1,11 +1,14 @@
 Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 	extend: 'Ext.grid.Panel',
-	alias: 'widget.productos-grilla-productos',
-	reference: 'producto-grillaproductos',
+	alias: 'widget.aliasgrilla-productos',
+	reference: 'referenceproductogrilla',
 	bind: {
 		store: '{store_producto}',
 	},
-	height: 800,
+	selModel: {
+		mode: 'MULTI'
+	},
+	height: 500,
 	columns: [
 		{
 			text: "Descripcion",
@@ -48,22 +51,6 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 	],
 	dockedItems:[
 		{
-			reference: 'grillaproductos-paginador',
-			bind:{
-				store: '{store_producto}',
-			},
-			xtype: 'pagingtoolbar',
-			pageSize: 8,
-			dock: 'bottom',
-			displayInfo: true,
-			displayRefresh: false,
-			listeners:{
-				beforerender: function(){
-					this.down('#refresh').hide();
-				}
-			},
-		},
-		{
 			xtype: 'toolbar',
 			dock: 'top',
 			items:[
@@ -80,7 +67,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 					text: 'Editar',
 					iconCls: 'icono-editar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!referenceproductogrilla.selection}",
 					},
 					listeners:{
 						click: 'Producto_Editar'
@@ -91,7 +78,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!referenceproductogrilla.selection}",
 					},
 					listeners:{
 						click: 'Producto_Eliminar',
@@ -110,6 +97,17 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 					}
 				},
 			],
-		}
+		},
+		{
+			xtype: 'pagingtoolbar',
+			bind:'{store_producto}',
+			dock: 'bottom',
+			displayInfo: true,
+			listeners:{
+				beforerender: function(){
+					this.down('#refresh').hide();
+				}
+			},
+		},
 	]
 });

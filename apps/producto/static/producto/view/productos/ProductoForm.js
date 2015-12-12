@@ -1,12 +1,12 @@
 Ext.define('GRUPOEJ.producto.view.productos.ProductoForm', {
 	extend: 'Ext.window.Window',
-	alias: 'widget.producto-form',
+	alias: 'widget.producto-formulario',
 	width: 400,
+	action: '',
 	closeAction: 'hide',
+	closable: true,
 	modal: true,
 	resizable: false,
-	action: "",
-	height: 'auto',
 	bind: {
 		title: '{titulo}'
 	},
@@ -20,11 +20,19 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoForm', {
 				type: 'vbox',
 				align: 'stretch'
 			},
+			defaults: {
+				// afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
+				anchor: '100%',
+				xtype: 'textfield',
+				msgTarget: 'side',
+				labelWidth: 75,
+				labelAlign: 'right',
+			},
 			items:[
 				{
 					xtype: 'numberfield',
 					name: 'id',
-					hidden: true,
+					hidden: false,
 					fieldLabel: 'Label',
 					bind:'{currentProducto.id}',
 				},
@@ -108,7 +116,5 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoForm', {
 			]
 		},
 	],
-	
-	
 
 });

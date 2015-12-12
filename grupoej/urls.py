@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^grupoej.producto.', include("apps.producto.urls")),
     url(r'^grupoej.cliente.', include("apps.cliente.urls")),
     url(r'^grupoej.pedido.', include("apps.pedido.urls")),
+    url(r'^grupoej.vale.', include("apps.vale.urls")),
 
 ]

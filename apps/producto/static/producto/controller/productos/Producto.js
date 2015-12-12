@@ -8,37 +8,28 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 		me = this;
 		if(!me.formProducto){
 			me.formProducto = me.getView().add({
-				xtype: 'producto-form',
+				xtype: 'producto-formulario',
 				constrain: true,
-				constrainTo: panelCentral.id,
 				renderTo: panelCentral.id,
-				viewModel:{ data: { titulo: "", }, },
+				constrainTo: panelCentral.id,		
+				viewModel: { data: { titulo: "", }, },
 			});
 			me.formProducto.on("show", function(win){
 				me.lookupReference("formProducto").getForm().findField("descripcion").focus();
 			});
 		}
 	},
-	Producto_Agregar: function(button, e, options){
-		this.Producto_AbrirVentanaEditar(null, button);
-	},
-	Producto_Editar: function(button, e, options){
-		var me = this,
-			records = me.Producto_RegistrosSeleccionados();
-			// console.log(this.lookupReference('producto-grillaproductos'));
-			// console.log(records[0].getFields());
-		if (records[0]) {
-			me.Producto_AbrirVentanaEditar(records[0], button);
-		}
+	Producto_RegistrosSeleccionados: function() {
+		return this.lookupReference('referenceproductogrilla').getSelection();
 	},
 	Producto_AbrirVentanaEditar: function(record, button) {
 		var me = this;
 		with (me.formProducto) {
 			setIconCls(button.iconCls);
 			action = !record ? "add" : "edit";
-			with (getViewModel()) {
+			with (me.getViewModel()) {
 				setData({
-					titulo: record ? 'Editando ' + record.get('descripcion') : 'Agregando Módulo'
+					titulo: record ? 'Editando ' + record.get('descripcion') : 'Agregando Producto'
 				});
 				setLinks({
 					currentProducto: record || {
@@ -50,8 +41,16 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 			show();
 		}
 	},
-	Producto_RegistrosSeleccionados: function() {
-		return this.lookupReference('producto-grillaproductos').getSelection();
+	Producto_Agregar: function(button, e, options){
+		this.Producto_AbrirVentanaEditar(null, button);
+	},
+	Producto_Editar: function(button, e, options){
+		var me = this,
+			records = me.Producto_RegistrosSeleccionados();
+		if (records[0]) {
+			me.Producto_AbrirVentanaEditar(records[0], button);
+			// console.log(records[0]);
+		}
 	},
 	Producto_Eliminar: function(button, e, options){
 		var me = this,
@@ -95,9 +94,11 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 					registro = getById(idRec);
 					newdata = form.getFieldValues();
 					campos = form.getFields();
+					// console.log(registro.set(campos));
 					for (i=0; i<campos.length; i++) {
 						campo = campos.items[i].name;
 						if (campo != "id") {
+							// console.log(registro.set(campo, eval("newdata."+campo)));
 							registro.set(campo, eval("newdata."+campo));
 						}
 					}

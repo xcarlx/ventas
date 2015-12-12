@@ -7,28 +7,38 @@ from django.core.paginator import Paginator
 # Create your views here.
 def ProductoListar(request):
 
-	limite = int(request.GET.get("limit","10"))
-	pagina = int(request.GET.get("page","1"))
-	orden = request.GET.get("sort","")
-	filtros = request.GET.get("filter","")
-	if len(filtros) == 0:
-		producto = Producto.objects.all()	
-	else:
-		filtros = json.loads(filtros)
-		cadFil = ""
-		for filtro in filtros:
-			cadFil = cadFil+filtro["property"]+"__icontains='"+filtro["value"]+"',"
+	findID = request.GET.get("id", 0)
 
-		cadFil = cadFil[:-1]
-		producto = eval("Producto.objects.filter("+cadFil+")")
-	total = producto.count()
-	if len(orden)>0:
-		orden = json.loads(orden)[0]
-		signo = "-" if orden["direction"] == "DESC" else ""
-		orden = signo+orden["property"]
-		producto = producto.order_by(orden)
-	producto = Paginator(producto, limite) 
-	producto = producto.page(pagina)
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Producto.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ", venta__isnull="+True+")"
+			producto = eval(filtros)
+		else:
+			producto = Producto.objects.all()
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			producto = producto.order_by(tipo_orden+campo_orden)
+		total = producto.count()
+		# Paginacion
+		if pagina > 0:
+			producto = Paginator(producto, limite)
+			producto = producto.page(pagina)
+	else:
+		producto = Producto.objects.filter(pk=findID)
+		total = producto.count()
 
 	return render(
 		request, 
