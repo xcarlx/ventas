@@ -1,5 +1,5 @@
 __pycache__/
-*.py[cod]
+.pyc
 *.pyc
 __pycache__
 grupoej
@@ -7,3 +7,5 @@ db.sqlite3
 .DS_Store
 */migrations/*
 */*/migrations/*
+
+
