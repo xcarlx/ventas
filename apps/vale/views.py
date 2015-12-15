@@ -116,3 +116,27 @@ def ValeEliminar(request):
 		json.dumps(response_data),
 		content_type="application/json"
 	)
+
+def ValeEditar(request):
+
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idReg = registros[0]["id"]
+		registro = Vale.objects.get(pk=idReg)
+		registro.cliente = Cliente.objects.get(pk = int(registros[0]["clienteid"]))
+		registro.observaciones = str(registros[0]["observaciones"])
+		try:
+			registro.save()
+			response_data = {"success": "Registro actualizado correctamente"}
+		except ValueError:
+			response_data = {"error": sys.exc_info()[0]}
+			raise
+
+	else:
+		response_data = {"error": "Error al actualizar el registro"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)

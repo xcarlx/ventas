@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 					name: 'id',
 					hidden: true,
 					fieldLabel: 'Label',
-					bind : '{currentModulo.id}'
+					bind : '{currentVale.id}'
 				},
 				{
 					xtype: 'combobox',
