@@ -3,12 +3,13 @@ from apps.inicio.models import *
 from apps.cliente.models import * 
 from apps.venta.models import * 
 from apps.producto.models import * 
+from django.utils import timezone
 # Create your models here.
 
 
 class Vale(Auditoria):
-	fecha = models.DateField()
-	numero = models.CharField(max_length=10)
+	fecha = models.DateField(default=timezone.now, blank=True)
+	numero = models.CharField(max_length=10, blank=True, null=True)
 	total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 	observaciones = models.TextField(blank=True, null=True)
 	cliente = models.ForeignKey(Cliente)

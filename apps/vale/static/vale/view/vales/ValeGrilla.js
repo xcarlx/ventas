@@ -45,10 +45,11 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 		},
 
 	],
-	// listeners : {
-	// 	select: 'seleccionarPedido',
-	// 	deselect: 'deSeleccionarPedido',
-	// },
+	listeners : {
+		// select: 'seleccionarPedido',
+		// deselect: 'deSeleccionarPedido',
+		itemcontextmenu: 'vales_ContextMenu',
+	},
 	dockedItems:[
 		{
 			reference: 'grillavale-paginador',
@@ -75,7 +76,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 					text: 'Agregar',
 					iconCls: 'icono-agregar',
 					listeners:{
-						click: 'ValeAgregar',
+						click: 'vale_Agregar',
 					},
 				},
 				{
@@ -86,20 +87,20 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 						disabled: "{!producto-grillaproductos.selection}",
 					},
 					listeners:{
-						click: 'ValeEditar'
+						click: 'vale_Editar'
 					},
 				},
-				{
-					xtype: 'button',
-					text: 'Eliminar',
-					iconCls: 'icono-quitar',
-					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
-					},
-					listeners:{
-						click: 'ValeEliminar',
-					}
-				},
+				// {
+				// 	xtype: 'button',
+				// 	text: 'Eliminar',
+				// 	iconCls: 'icono-quitar',
+				// 	bind: {
+				// 		disabled: "{!producto-grillaproductos.selection}",
+				// 	},
+				// 	listeners:{
+				// 		click: 'vale_Eliminar',
+				// 	}
+				// },
 				{
 					xtype: 'tbfill',
 
@@ -109,7 +110,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 					text: 'Refrescar',
 					iconCls: 'icono-refrescar',
 					listeners:{
-						click: 'PedidoRefrescar',
+						click: 'modulo_Refrescar',
 					}
 				},
 			],

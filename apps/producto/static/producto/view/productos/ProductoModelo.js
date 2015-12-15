@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoModelo', {
 		store_producto:{
 			model: 'GRUPOEJ.producto.models.productos.Producto',
 			autoLoad: true,
-			pageSize: gridPageSize,
+			pageSize: 8,
 			remoteSort: true,
 			remoteFilter: true,
 		}

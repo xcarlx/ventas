@@ -101,8 +101,11 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 		{
 			xtype: 'pagingtoolbar',
 			bind:'{store_producto}',
+			xtype: 'pagingtoolbar',
+			pageSize: 8,
 			dock: 'bottom',
 			displayInfo: true,
+			displayRefresh: false,
 			listeners:{
 				beforerender: function(){
 					this.down('#refresh').hide();

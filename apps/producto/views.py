@@ -21,7 +21,7 @@ def ProductoListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", venta__isnull="+True+")"
+			filtros = filtros[:-1] + ")"
 			producto = eval(filtros)
 		else:
 			producto = Producto.objects.all()

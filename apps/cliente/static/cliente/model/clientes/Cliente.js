@@ -3,6 +3,7 @@ Ext.define('GRUPOEJ.cliente.model.clientes.Cliente', {
 	fields:[
 		{name: 'nombres', type: 'string'},
 		{name: 'apellidos', type: 'string'},
+		{name: 'nombres_apellidos', type: 'string'},
 		{name: 'tipo_documento', type: 'string'},
 		{name: 'nro_documento', type: 'string'},
 		{name: 'email', type: 'string'},

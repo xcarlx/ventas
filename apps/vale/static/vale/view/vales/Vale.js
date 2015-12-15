@@ -3,9 +3,9 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 	requires: [
 	'GRUPOEJ.vale.view.vales.ValeVistaModelo', 
 	'GRUPOEJ.vale.view.vales.ValeGrilla',
-	// 	'SARGRC.adm.controller.modulos.Modulo',
+	'GRUPOEJ.vale.controller.vales.Vale',
 	],
-	// controller: 'modulo',
+	controller: 'vale',
 	viewModel: {
 		type: 'vale',
 	},

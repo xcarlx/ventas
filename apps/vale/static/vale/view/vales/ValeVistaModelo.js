@@ -3,6 +3,8 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 	alias: 'viewmodel.vale',
 	requires: [
 		'GRUPOEJ.vale.model.vales.Vale', 
+		'GRUPOEJ.cliente.model.clientes.Cliente',
+
 	],
 	stores: {
 		store_vale: {
@@ -12,5 +14,12 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 			remoteSort: true,
 			remoteFilter: true,
 		},
+		store_comboclientes:{
+			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
+			autoLoad: true,
+			pageSize: 8,
+			remoteSort: true,
+			remoteFilter: true,
+		}
 	}
 });
