@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
-	height: 500,
+	height: 750,
 	columns: [
 		{
 			text: "Descripcion",
@@ -45,7 +45,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 		{
 			text: "Foto",
 			flex: 1,
-			dataIndex: 'imagen',
+			dataIndex: 'imagen2',
 			height: 30,
 		},
 	],
