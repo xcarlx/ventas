@@ -1,0 +1,16 @@
+{% load l10n %}
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for detallevale in  detallevales %}
+			{
+				"id": {{ detallevale.id}},
+				"producto__descripcion": '{{ detallevale.producto.descripcion}}',
+				"productoid": {{ detallevale.producto.id}},
+				"valeid": {{ detallevale.vale.id}},
+				"precio": {{ detallevale.precio|unlocalize }},
+				"cantidad":{{ detallevale.cantidad }},
+			},{% endfor %}
+		]
+}

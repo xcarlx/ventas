@@ -46,16 +46,16 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 
 	],
 	listeners : {
-		// select: 'seleccionarPedido',
-		// deselect: 'deSeleccionarPedido',
+		select: 'seleccionarVale',
+		deselect: 'deSeleccionarVale',
 		itemcontextmenu: 'vales_ContextMenu',
 	},
 	dockedItems:[
 		{
 			reference: 'grillavale-paginador',
-			// bind:{
-			// 	store: '{store_pedidos}',
-			// },
+			bind:{
+				store: '{store_vale}',
+			},
 			xtype: 'pagingtoolbar',
 			pageSize: 8,
 			dock: 'bottom',
@@ -90,17 +90,17 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 						click: 'vale_Editar'
 					},
 				},
-				// {
-				// 	xtype: 'button',
-				// 	text: 'Eliminar',
-				// 	iconCls: 'icono-quitar',
-				// 	bind: {
-				// 		disabled: "{!producto-grillaproductos.selection}",
-				// 	},
-				// 	listeners:{
-				// 		click: 'vale_Eliminar',
-				// 	}
-				// },
+				{
+					xtype: 'button',
+					text: 'Eliminar',
+					iconCls: 'icono-quitar',
+					bind: {
+						disabled: "{!producto-grillaproductos.selection}",
+					},
+					listeners:{
+						click: 'vale_Eliminar',
+					}
+				},
 				{
 					xtype: 'tbfill',
 

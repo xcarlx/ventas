@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
-from .models import Vale
+from .models import Vale, DetalleVale
 from .forms import ValeForm
+from apps.producto.models import Producto
 from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
 import json
@@ -38,7 +39,7 @@ def ValeListar(request):
 			vales = Paginator(vales, limite)
 			vales = vales.page(pagina)
 	else:
-		vales = Vale.objects.filter(pk=findID, venta__isnull=True)
+		vales = Vale.objects.filter(pk=findID)
 		total = vales.count()
 	
 	return render(
@@ -139,4 +140,65 @@ def ValeEditar(request):
 	return HttpResponse(
 		json.dumps(response_data),
 		content_type="application/json"
+	)
+
+
+def ProductoListar(request,idVa):
+	idv = Vale.objects.filter(id=idVa)
+	iddv =  DetalleVale.objects.filter(vale_id=idv).values('producto_id')
+	producto = Producto.objects.exclude(id__in=iddv)
+	total = producto.count()
+
+	return render(
+		request, 
+		"producto/producto.json",
+		{
+			'productos': producto,
+			'total':total
+		},
+		content_type= "application/json",
+	)
+
+def DetalleValeListar(request,idVa):
+	findID = request.GET.get("id", 0)
+	idv = Vale.objects.filter(id=idVa)
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "DetalleVale.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ", vale_id=idv)"
+			detallevales = eval(filtros)
+		else:
+			detallevales = DetalleVale.objects.filter(vale_id=idv)
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			detallevales = detallevales.order_by(tipo_orden+campo_orden)
+		total = detallevales.count()
+		# Paginacion
+		if pagina > 0:
+			detallevales = Paginator(detallevales, limite)
+			detallevales = detallevales.page(pagina)
+	else:
+		detallevales = DetalleVale.objects.filter(pk=findID)
+		total = detallevales.count()
+	
+	return render(
+		request,
+		'vale/detallevales.json',
+		{
+			'detallevales': detallevales,
+			'total' : total,
+		},
+		content_type="application/json",
 	)

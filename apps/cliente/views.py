@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Cliente
+from django.db import models
 from  django.http import HttpResponse
 import json
 from .forms import ClienteForm
@@ -47,20 +48,22 @@ def ClienteListar(request):
 
 def ClienteEliminar(request):
 	respuesta = {}
-	if request.method == "POST":
-		registros = json.loads(request.POST["data"])
-		idc = []
-		for registro in registros:
-			idc.append(registro["id"])
-		try:
-			cliente = Cliente.objects.filter(id__in=idc)
-			cliente.delete()
-			respuesta = {"success": "los registros se eliminaron"}
-		except Exception:
-			respuesta = {"error": "los registros no se eliminaron"}	
-			raise
-	else:
-		 respuesta = {"error": "Debe usar el Metodo Post"}
+	try:
+		if request.method == "POST":
+			registros = json.loads(request.POST["data"])
+			idc = []
+			for registro in registros:
+				idc.append(registro["id"])
+			try:
+				cliente = Cliente.objects.filter(id__in=idc)
+				cliente.delete()
+				respuesta = {"success": "los registros se eliminaron"}
+			except models.ProtectedError:
+				respuesta = {"success": "los registros no se eliminaron"}	
+		else:
+			 respuesta = {"error": "Debe usar el Metodo Post"}
+	except models.ProtectedError:
+		respuesta = {"error": "Debe usar el Metodo Post"}
 
 	return HttpResponse(
 		json.dumps(respuesta),

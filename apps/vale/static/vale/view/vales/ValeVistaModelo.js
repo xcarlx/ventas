@@ -4,7 +4,8 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 	requires: [
 		'GRUPOEJ.vale.model.vales.Vale', 
 		'GRUPOEJ.cliente.model.clientes.Cliente',
-
+		'GRUPOEJ.vale.model.vales.Producto',
+		'GRUPOEJ.vale.model.vales.DetalleVale',
 	],
 	stores: {
 		store_vale: {
@@ -17,6 +18,20 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 		store_comboclientes:{
 			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
 			autoLoad: true,
+			pageSize: 8,
+			remoteSort: true,
+			remoteFilter: true,
+		},
+		store_productos:{
+			model:'GRUPOEJ.vale.model.vales.Producto', 
+			autoLoad: false,
+			pageSize: 8,
+			remoteSort: true,
+			remoteFilter: true,
+		},	
+		store_detallevale:{
+			model:'GRUPOEJ.vale.model.vales.DetalleVale',
+			autoLoad: false,
 			pageSize: 8,
 			remoteSort: true,
 			remoteFilter: true,

@@ -5,4 +5,7 @@ urlpatterns = [
 	url(r'vales.vale/eliminar/$', "apps.vale.views.ValeEliminar", name='vale_eliminar'),
 	url(r'vales.vale/crear/$', "apps.vale.views.ValeCrear", name='vale_crear'),
 	url(r'vales.vale/editar/$', "apps.vale.views.ValeEditar", name='vale_editar'),
+
+	url(r'vales.producto/listar/(?P<idVa>\d+)$', "apps.vale.views.ProductoListar", name='productos_listar'),
+	url(r'vales.detallevales/listar/(?P<idVa>\d+)$', "apps.vale.views.DetalleValeListar", name='detallevale_listar'),
 ]

@@ -34,7 +34,6 @@ Ext.define('GRUPOEJ.cliente.controller.clientes.Cliente',	{
 	},
 	ClientesEliminar: function(){
 		me = this;
-
 		Ext.Msg.show({
 			title: 'Alert!!',
 			msg:'¿Esta Seguro de Eliminar este registro?',

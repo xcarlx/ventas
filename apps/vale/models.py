@@ -12,7 +12,7 @@ class Vale(Auditoria):
 	numero = models.CharField(max_length=10, blank=True, null=True)
 	total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 	observaciones = models.TextField(blank=True, null=True)
-	cliente = models.ForeignKey(Cliente)
+	cliente = models.ForeignKey(Cliente, on_delete = models.PROTECT)
 	venta = models.ForeignKey(Venta, blank=True, null=True)
 	detallevales = models.ManyToManyField(Producto, through='DetalleVale')
 

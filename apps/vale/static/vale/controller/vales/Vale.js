@@ -153,6 +153,55 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		}
 	},
 
+	seleccionarVale: function(selModel, record, index, options){
+		st_vale = this.getStore('store_vale');
+		st_vale.valeId = record.get("id");
+		this.refrescarVale();
+	},
+	deSeleccionarVale: function(sm, selectedRecords){
+		
+		this.getStore('store_productos').load({
+			url: '/grupoej.vale.vales.producto/listar/0'
+		});
+		this.getStore('store_detallevale').load({
+			url: 'grupoej.vale.vales.detallevales/listar/0'
+		});
+		this.lookupReference('comboproductosvale').clearValue();
+		this.lookupReference('cantidadproductosvale').setValue(1);
+	},
+
+	refrescarVale: function(){
+		st_vale = this.getStore('store_vale');
+		if (!st_vale.valeId){
+			st_vale.valeId = 0;
+		}
+		this.getStore('store_productos').load({
+			url: '/grupoej.vale.vales.producto/listar/' + st_vale.valeId
+		});
+		this.getStore('store_detallevale').load({
+			url: 'grupoej.vale.vales.detallevales/listar/' + st_vale.valeId
+		});
+	},
+
+	DetallVale_Guardar: function(button, e, options){
+		me = this;
+		form = me.lookupReference('fromvales').getForm();
+		store = me.getStore("store_detallevale");
+		with (store) {
+			add(form.getFieldValues());
+			save({
+				success: function(rec, op) {
+					GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+					store.reload();
+					me.ventana_Cancelar();
+				},
+				failure: function(rec, op) {
+					store.rejectChanges();
+				}
+			});
+		}
+		
+	},
 
 });
 
