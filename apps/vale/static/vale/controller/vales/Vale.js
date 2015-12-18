@@ -19,6 +19,11 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 				me.lookupReference("valeFormulario").getForm().findField("clienteid").focus();
 			});
 		}
+		// me.getStore("store_detallevale").on("load", function(pstore){
+		// 	pstore.getProxy().setExtraParams({
+		// 		valeid,
+		// 	})
+		// });
 	},
 	vale_Agregar: function(button, e, options){
 		this.vale_AbrirVentanaEditar(null, button);
@@ -50,7 +55,12 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		}
 	},
 	vale_RegistrosSeleccionados: function() {
+
 		return this.lookupReference('valeGrilla').getSelection();
+	},
+	detallevale_RegistrosSeleccionados: function() {
+
+		return this.lookupReference('detallevalegrillaRef').getSelection();
 	},
 	vale_Eliminar: function(button, e, options){
 		var me = this,
@@ -157,6 +167,7 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		st_vale = this.getStore('store_vale');
 		st_vale.valeId = record.get("id");
 		this.refrescarVale();
+		this.lookupReference("idvalereference").setValue(record.get("id"));
 	},
 	deSeleccionarVale: function(sm, selectedRecords){
 		
@@ -181,6 +192,7 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		this.getStore('store_detallevale').load({
 			url: 'grupoej.vale.vales.detallevales/listar/' + st_vale.valeId
 		});
+		this.lookupReference('cantidadproductosvale').setValue(1);
 	},
 
 	DetallVale_Guardar: function(button, e, options){
@@ -194,13 +206,43 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 					GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
 					store.reload();
 					me.ventana_Cancelar();
+					me.refrescarVale();
 				},
 				failure: function(rec, op) {
 					store.rejectChanges();
+					me.refrescarVale();
 				}
 			});
 		}
 		
+	},
+	detallevale_Eliminar: function(button, e, options){
+		var me = this,
+			records = me.detallevale_RegistrosSeleccionados(),
+			store = me.getStore('store_detallevale');
+		Ext.Msg.show({
+			title:'Alerta!!',
+			msg: '¿Está seguro de eliminar los Productos seleccionados?',
+			buttons: Ext.Msg.YESNO,
+			icon: Ext.Msg.QUESTION,
+			iconCls: button.iconCls,
+			fn: function (buttonId) {
+				if (buttonId == 'yes') {
+					store.remove(records);
+					store.save({
+						success: function(rec, op) {
+							GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+							store.reload();
+							me.refrescarVale();
+						},
+						failure: function(rec, op) {
+							store.rejectChanges();
+							me.refrescarVale();
+						}
+					});
+				}
+			}
+		});
 	},
 
 });

@@ -30,6 +30,12 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 			},
 			items:[
 				{
+					xtype: 'numberfield',
+					name: 'valeid',
+					hidden: true,
+					reference: 'idvalereference',
+				},
+				{
 					xtype: 'combobox',
 					editable: false,
 		          	fieldLabel: "Seleccionar el Producto: ",
@@ -57,6 +63,9 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 					allowNegative: false,
 					allowBlank: false,
 					minValue : 1,
+					bind:{
+						disabled: "{!comboproductosvale.selection}",
+					}
 
 				}
 			],

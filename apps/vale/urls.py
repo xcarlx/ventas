@@ -8,4 +8,6 @@ urlpatterns = [
 
 	url(r'vales.producto/listar/(?P<idVa>\d+)$', "apps.vale.views.ProductoListar", name='productos_listar'),
 	url(r'vales.detallevales/listar/(?P<idVa>\d+)$', "apps.vale.views.DetalleValeListar", name='detallevale_listar'),
+	url(r'vales.detallevale/crear/$', "apps.vale.views.DetalleValeCrear", name='detallevale_crear'),
+	url(r'vales.detallevale/eliminar/$', "apps.vale.views.DetalleValeEliminar", name='detallevale_eliminar'),
 ]

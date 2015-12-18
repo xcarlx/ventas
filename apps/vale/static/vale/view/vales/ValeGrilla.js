@@ -84,7 +84,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 					text: 'Editar',
 					iconCls: 'icono-editar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!valeGrilla.selection}",
 					},
 					listeners:{
 						click: 'vale_Editar'
@@ -95,7 +95,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!valeGrilla.selection}",
 					},
 					listeners:{
 						click: 'vale_Eliminar',

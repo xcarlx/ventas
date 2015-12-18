@@ -26,4 +26,7 @@ class DetalleVale(Auditoria):
 	precio = models.DecimalField(max_digits=10, decimal_places=2)
 
 	def __str__(self):
-		return self.vale.numero+" "+self.producto
+		return self.vale.numero+" "+self.producto.descripcion
+		
+	def sub_total(self):
+		return self.cantidad*self.precio

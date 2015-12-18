@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
 import json
 from django.core.paginator import Paginator
+from django.db.models import Sum
 
 def ValeListar(request):
 	findID = request.GET.get("id", 0)
@@ -201,4 +202,62 @@ def DetalleValeListar(request,idVa):
 			'total' : total,
 		},
 		content_type="application/json",
+	)
+
+def DetalleValeCrear(request):
+
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idvale = int(registros[0]['valeid'])
+		idproducto = int(registros[0]['productoid'])
+		cantidad = int(registros[0]['cantidad'])
+		idp = Producto.objects.get(pk = idproducto)
+		precio = Producto.objects.filter(pk = idproducto)
+		idvale=Vale.objects.get(pk=idvale)
+		try:
+			detallevale = DetalleVale.objects.create(
+					vale = idvale,
+					producto = idp,
+					cantidad = cantidad,
+					precio = idp.precio,
+					creador = request.user,
+				)
+			detallevale.save()
+			total = DetalleVale.objects.filter(vale_id = idvale).aggregate(Sum('precio'))
+			cantidad = DetalleVale.objects.filter(vale_id = idvale).aggregate(Sum('cantidad'))
+			print("Precio Total",total['precio__sum'])
+			print("Precio Total",cantidad['cantidad__sum'])
+			print("subtotal", float(total['precio__sum'])*float(cantidad['cantidad__sum']))
+			response_data = {
+				"success": "Producto agregado al Vale correctamente",
+			}
+
+		except Exception:
+			response_data = {"success": "Error al Agregar al Producto"}
+	else:
+		response_data = {"error": "Error al Agregar al Producto"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+
+def DetalleValeEliminar(request):
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		for reg in registros:
+			ids = reg["id"]
+			reg = DetalleVale.objects.get(pk=ids)
+			reg.delete()
+
+		response_data = {"success": "Los Vales se eliminaron correctamente"}
+	else:
+		response_data = {"error": "Error al eliminar los Vales"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
 	)

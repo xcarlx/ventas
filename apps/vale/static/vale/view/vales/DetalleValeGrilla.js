@@ -1,7 +1,7 @@
 Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.detallevalegrilla',
-	reference: 'referencegrilladetallepedido',
+	reference: 'detallevalegrillaRef',
 	bind: {
 		store: '{store_detallevale}',
 	},
@@ -11,11 +11,26 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 			text: "Producto",
 			flex: 2,
 			dataIndex: 'producto__descripcion',
+			sortable: false,
 		},
+
 		{
 			text: "Cantidad",
 			width: 100,
 			dataIndex: 'cantidad',
+			sortable: false
+		},
+		{
+			text: "Precio",
+			width: 100,
+			dataIndex: 'precio',
+			sortable: false,
+		},	
+		{
+			text: "Sub total",
+			width: 100,
+			dataIndex: 'subtotal',
+			sortable: false,
 		},
 	],
 	dockedItems:[
@@ -30,30 +45,33 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 					listeners:{
 						click: 'DetallVale_Guardar',
 					},
+					bind: {
+						disabled: "{!comboproductosvale.selection}",
+					},
 				},
 				{
 					xtype: 'button',
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!detallevalegrillaRef.selection}",
 					},
 					listeners:{
-						click: 'PedidoEliminar',
+						click: 'detallevale_Eliminar',
 					}
 				},
-				{
-					xtype: 'tbfill',
+				// {
+				// 	xtype: 'tbfill',
 
-				},
-				{
-					xtype: 'button',
-					text: 'Refrescar',
-					iconCls: 'icono-refrescar',
-					listeners:{
-						click: 'PedidoRefrescar',
-					}
-				},
+				// },
+				// {
+				// 	xtype: 'button',
+				// 	text: 'Refrescar',
+				// 	iconCls: 'icono-refrescar',
+				// 	listeners:{
+				// 		click: 'PedidoRefrescar',
+				// 	}
+				// },
 			],
 		}
 	]

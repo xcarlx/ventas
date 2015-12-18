@@ -11,6 +11,7 @@
 				"valeid": {{ detallevale.vale.id}},
 				"precio": {{ detallevale.precio|unlocalize }},
 				"cantidad":{{ detallevale.cantidad }},
+				"subtotal":{{ detallevale.cantidad }}*{{ detallevale.precio|unlocalize }},
 			},{% endfor %}
 		]
 }
