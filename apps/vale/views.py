@@ -214,21 +214,20 @@ def DetalleValeCrear(request):
 		cantidad = int(registros[0]['cantidad'])
 		idp = Producto.objects.get(pk = idproducto)
 		precio = Producto.objects.filter(pk = idproducto)
-		idvale=Vale.objects.get(pk=idvale)
+		vale=Vale.objects.get(pk=idvale)
 		try:
 			detallevale = DetalleVale.objects.create(
-					vale = idvale,
+					vale = vale,
 					producto = idp,
 					cantidad = cantidad,
 					precio = idp.precio,
 					creador = request.user,
 				)
 			detallevale.save()
-			total = DetalleVale.objects.filter(vale_id = idvale).aggregate(Sum('precio'))
-			cantidad = DetalleVale.objects.filter(vale_id = idvale).aggregate(Sum('cantidad'))
-			print("Precio Total",total['precio__sum'])
-			print("Precio Total",cantidad['cantidad__sum'])
-			print("subtotal", float(total['precio__sum'])*float(cantidad['cantidad__sum']))
+
+			vale.total = GenerarTotalVale(idvale)
+			vale.save()
+			print(GenerarTotalVale(idvale))
 			response_data = {
 				"success": "Producto agregado al Vale correctamente",
 			}
@@ -248,10 +247,15 @@ def DetalleValeEliminar(request):
 	response_data = {}
 	if request.method == 'POST':
 		registros = json.loads(request.POST["data"])
+		idvale = int(registros[0]['valeid'])
 		for reg in registros:
 			ids = reg["id"]
 			reg = DetalleVale.objects.get(pk=ids)
 			reg.delete()
+
+		vale=Vale.objects.get(pk=idvale)
+		vale.total = GenerarTotalVale(idvale)
+		vale.save()
 
 		response_data = {"success": "Los Vales se eliminaron correctamente"}
 	else:
@@ -261,3 +265,10 @@ def DetalleValeEliminar(request):
 		json.dumps(response_data),
 		content_type="application/json"
 	)
+
+def GenerarTotalVale(id_vale):
+	total = 0
+	for v in DetalleVale.objects.filter(vale_id=id_vale):
+		subtotal = v.precio *v.cantidad
+		total = total+subtotal
+	return total  
