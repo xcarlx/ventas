@@ -1,0 +1,15 @@
+{% load l10n %}
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for detalleguia in  detalleguias %}
+			{
+				"id": {{ detalleguia.id}},
+				"producto__descripcion": '{{ detalleguia.producto.descripcion}}',
+				"productoid": {{ detalleguia.producto.id}},
+				"guia_remisionid": {{ detalleguia.guia_remision.id}},
+				"cantidad":{{ detalleguia.cantidad }},
+			},{% endfor %}
+		]
+}

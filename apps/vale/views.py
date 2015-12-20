@@ -60,7 +60,7 @@ def ValeCrear(request):
 		idc = registros[0]['clienteid']
 		obsevaciones = registros[0]['observaciones']
 		idcliente = Cliente.objects.get(pk=idc)
-		v = Vale.objects.filter(venta__isnull=True)
+		v = Vale.objects.filter()
 		try:
 			vale = Vale.objects.create(
 					cliente = idcliente,
@@ -257,9 +257,9 @@ def DetalleValeEliminar(request):
 		vale.total = GenerarTotalVale(idvale)
 		vale.save()
 
-		response_data = {"success": "Los Vales se eliminaron correctamente"}
+		response_data = {"success": "Los Productos se eliminaron correctamente"}
 	else:
-		response_data = {"error": "Error al eliminar los Vales"}
+		response_data = {"error": "Error al eliminar los Productos"}
 
 	return HttpResponse(
 		json.dumps(response_data),

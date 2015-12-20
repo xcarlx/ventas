@@ -13,6 +13,9 @@
 				"clienteid": {{ vale.cliente.id}},
 				"cliente__nombres": '{{ vale.cliente.nombres}}',
 				"cliente__apellidos": '{{ vale.cliente.apellidos}}',
+				"ventaid": {{ vale.venta.id|default:0}},
+				"venta__numero_documento": '{{ vale.venta.numero_documento}}',
+				"venta__numero_correlativo": '{{ vale.venta.numero_correlativo}}',
 			},{% endfor %}
 		]
 }
