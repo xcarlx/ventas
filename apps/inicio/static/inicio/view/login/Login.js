@@ -7,11 +7,11 @@ Ext.define('GRUPOEJ.inicio.view.login.Login',	{
 	controller: 'login',						
 	autoShow:	true,																			
 	// height:	140,																						
-	width:	360,																								
+	width:	400,																								
 	layout:	{
 		type:	'fit'	
 	},
-	// iconCls:	'fa	fa-key	fa-lg',							
+	iconCls: 'icono-llave',					
 	title:	'Inicio de seccion',																				
 	closeAction:	'hide',														
 	closable:	false,																		
@@ -28,7 +28,7 @@ Ext.define('GRUPOEJ.inicio.view.login.Login',	{
 			{													
 				xtype:	'textfield',
 				anchor:	'100%',
-				labelWidth:	60,
+				labelWidth:	75,
 				allowBlank:	false,
 				vtype:	'alphanum',
 				minLength:	3,
@@ -49,7 +49,7 @@ Ext.define('GRUPOEJ.inicio.view.login.Login',	{
 					name:	'password',
 					fieldLabel:	'Contraseña',
 					enableKeyEvents: true,
-					maxLength:	15,
+					maxLength:	25,
 					id:	'password',
 					listeners:	{
 						keypress:	'onTextFieldKeyPress'
@@ -63,24 +63,25 @@ Ext.define('GRUPOEJ.inicio.view.login.Login',	{
 					dock:	'bottom',
 					items:	[
 						{
-							xtype:	'tbfill'	//#25
-						},
-						
-						{
-							xtype:	'button',	//#26
-							// iconCls:	'fa	fa-times	fa-lg',
-							text:	'Cancelar',
-							listeners:{
-								click:'onButtonClickCancel',
-							},
+							xtype:	'tbfill'
 						},
 						{	
-							xtype:	'button',	//#27
-							formBind:	true,		//#28
-							// iconCls:	'fa	fa-sign-in	fa-lg',
-							text:	'Guardar',
+							xtype:	'button',
+							formBind:	true,
+							text:	'Ingresar',
+							iconCls: 'icono-marcar',
 							listeners:{
 								click:'onButtonClickSubmit',
+							},
+						},
+						{
+							xtype:	'button',
+							text:	'Cancelar',
+							style: {
+								background: '#FF5566'
+							},
+							listeners:{
+								click:'onButtonClickCancel',
 							},
 						},
 					]

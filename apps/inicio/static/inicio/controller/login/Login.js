@@ -9,15 +9,15 @@ Ext.define('GRUPOEJ.inicio.controller.login.Login',	{
 	onTextFieldKeyPress:	function(field,	e,	options){
 		var	charCode	=	e.getCharCode(),		
 			me	=	this;
-		if((e.shiftKey	&&	charCode	>=	97	&&	charCode	<=	122)	||	//#2
+		if((e.shiftKey	&&	charCode	>=	97	&&	charCode	<=	122)	||
 			(!e.shiftKey	&&	charCode	>=	65	&&	charCode	<=	90)){
 			if(me.capslockTooltip	===	undefined){																	//#3
-				me.capslockTooltip	=	Ext.widget('capslocktooltip');	//#4
+				me.capslockTooltip	=	Ext.widget('capslocktooltip');
 			}
-			me.capslockTooltip.show();	//#5
+			me.capslockTooltip.show();
 		}else {
-			if(me.capslockTooltip	!==	undefined){	//#6
-				me.capslockTooltip.hide();								//#7
+			if(me.capslockTooltip	!==	undefined){
+				me.capslockTooltip.hide();	
 			}
 			if	(e.getKey()	===	e.ENTER){
 				me.doLogin();
@@ -52,11 +52,11 @@ Ext.define('GRUPOEJ.inicio.controller.login.Login',	{
 			break;
 			
 			case Ext.form.action.Action.CONNECT_FAILURE:
-				GRUPOEJ.utiles.Utiles.showErrorMsg(action.response.responseText); //modificar
+				GRUPOEJ.utiles.Utiles.showErrorMsg(action.response.responseText);
 			break;
 			case Ext.form.action.Action.SERVER_INVALID:
-				result = GRUPOEJ.utiles.Utiles.decodeJSON(action.response.responseText); //modificar
-				GRUPOEJ.utiles.Utiles.showErrorMsg(result.msg);//modificar
+				result = GRUPOEJ.utiles.Utiles.decodeJSON(action.response.responseText);
+				GRUPOEJ.utiles.Utiles.showErrorMsg(result.msg);
 		}
 	},
 	onLoginSuccess:	function(form,	action)	{

@@ -2,9 +2,9 @@ Ext.define('GRUPOEJ.inicio.view.principal.PrincipalModel', {
 	extend: 'Ext.app.ViewModel',
 	alias: 'viewmodel.main',
 	data: {
-		name: 'Ventas',
-		appName: 'Sistema de Ventas',
-		appHeaderIcon: '<span class="fa fa-desktop fa-lg app-headerlogo">',
-		footer: 'Carlos Ruiz'
+		name: 'GRUPOEJ - Ventas',
+		appName: 'GRUPOEJ - Sistema de Ventas',
+		appHeaderIcon: '<span class="sistema-logo-mini">',
+		footer: 'Derechos reservados - Ing Carlos Yosimar Ruiz Vasquez '
 	}
 });

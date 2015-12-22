@@ -9,7 +9,7 @@ Ext.define('GRUPOEJ.inicio.view.principal.Header', {
 	items: [
 		{
 			xtype: 'component',
-			html: 'Sistema Ventas',
+			componentCls: 'sistema-logo-mini',
 		},
 		{
 			xtype: 'component',
@@ -22,11 +22,11 @@ Ext.define('GRUPOEJ.inicio.view.principal.Header', {
 			
 		},
 		{
-			xtype: 'tbseparator',
+			xtype: 'component',
+			html: loginame,
 		},
 		{
-			xtype: 'component',
-			html: "USUARIO:   \t"+loginame,
+			xtype: 'tbseparator',
 		},
 		{
 
@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.inicio.view.principal.Header', {
 			itemId: 'logout',
 			text: 'Logout',
 			reference: 'logout',
-			iconCls: 'fa fa-sign-out fa-lg buttonIcon',
+			iconCls: 'icono-cerrar-sesion',
 			listeners: {
 				click: 'onLogout'
 			},
