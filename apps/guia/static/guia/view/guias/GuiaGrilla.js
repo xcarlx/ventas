@@ -73,7 +73,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 		{
 			reference: 'grillaguia-paginador',
 			bind:{
-				// store: '{store_vale}',
+				store: '{store_guia}',
 			},
 			xtype: 'pagingtoolbar',
 			pageSize: 8,

@@ -6,8 +6,8 @@ Ext.define('GRUPOEJ.guia.model.guias.Guia', {
 		{ name: 'fecha_emision', type: 'date'},
 		{ name: 'fecha_translado', type: 'date' },
 		{ name: 'clienteid' , type: 'int' },
-		{ name: 'cliente__nombre' , type: 'string'},
-		{ name: 'cliente__apellido' , type: 'string'},
+		{ name: 'cliente__nombres' , type: 'string'},
+		{ name: 'cliente__apellidos' , type: 'string'},
 		{ name: 'ventaid' , type: 'int'}
 	],
 	validators: {

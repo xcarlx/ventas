@@ -11,7 +11,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 		store_vale: {
 			model: 'GRUPOEJ.vale.model.vales.Vale', 
 			autoLoad: true,
-			pageSize: gridPageSize,
+			pageSize: 6,
 			remoteSort: true,
 			remoteFilter: true,
 		},

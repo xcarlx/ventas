@@ -26,7 +26,7 @@ def GuiaListar(request):
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
 			filtros = filtros[:-1] + ", venta__isnull=True)"
-			vales = eval(filtros)
+			guias = eval(filtros)
 		else:
 			guias = GuiaRemision.objects.filter(venta__isnull=True)
 		# Orden
