@@ -18,21 +18,21 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaVistaModelo', {
 		store_comboclientesguia:{
 			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
 			autoLoad: true,
-			pageSize: 8,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		},
 		store_productos_guia:{
 			model:'GRUPOEJ.guia.model.guias.Producto', 
 			autoLoad: false,
-			pageSize: 8,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		},
 		store_detalleguia:{
 			model:'GRUPOEJ.guia.model.guias.DetalleGuia',
 			autoLoad: false,
-			pageSize: 8,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		}

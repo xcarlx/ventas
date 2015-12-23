@@ -41,7 +41,7 @@ Ext.application({
 
 				xy = e.getXY();
 				me.startX = xy[0];
-				me.startY = xy[1];
+				me.startY = xy[0];
 
 
 				me.offsetX = me.offsetY = 0;
@@ -63,7 +63,7 @@ Ext.application({
 				remove: true,
 			});
 			meApp.splashscreen.next().fadeOut({
-				duration: 1000,
+				duration: 800,
 				remove: true,
 				listeners:{
 					afteranimate: function(el, startTime, eOpts){

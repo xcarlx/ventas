@@ -11,28 +11,28 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 		store_vale: {
 			model: 'GRUPOEJ.vale.model.vales.Vale', 
 			autoLoad: true,
-			pageSize: 6,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		},
 		store_comboclientes:{
 			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
 			autoLoad: true,
-			pageSize: 8,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		},
 		store_productos:{
 			model:'GRUPOEJ.vale.model.vales.Producto', 
 			autoLoad: false,
-			pageSize: 8,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		},	
 		store_detallevale:{
 			model:'GRUPOEJ.vale.model.vales.DetalleVale',
 			autoLoad: false,
-			pageSize: 8,
+			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
 		}

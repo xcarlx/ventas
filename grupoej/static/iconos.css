@@ -26,9 +26,9 @@
 	margin: auto;
 }
 .x-mask-msg.loading-app {
-	height: 180px;
-	width: 265px;
-	border-radius: 10px;
+	height: 215px;
+	width: 218px;
+	border-radius: 100px;
 	-webkit-box-shadow: -1px 3px 23px -4px rgba(0,0,0,0.75);
 	-moz-box-shadow: -1px 3px 23px -4px rgba(0,0,0,0.75);
 	box-shadow: -1px 3px 23px -4px rgba(0,0,0,0.75);
@@ -45,8 +45,8 @@
 	};
 }
 .x-mask-msg.loading-app div div {
-	background-position: 30px center !important;
-	margin-top: 140px;
+	background-position: 6px center !important;
+	margin-top: 130px;
 }
 .x-splash-icon {
 	background: url(images/logo_sede.png) no-repeat center !important;

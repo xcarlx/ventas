@@ -1,7 +1,7 @@
 Ext.define('GRUPOEJ.inicio.view.menu.Accordion',	{
 	extend:	'Ext.panel.Panel',
 	xtype:	'mainmenu',	
-	width:	250,
+	width:	230,
 	minWidth: 200,
 	maxWidth: 400,
 	layout:	{
@@ -11,6 +11,6 @@ Ext.define('GRUPOEJ.inicio.view.menu.Accordion',	{
 	collapsible:	true,
 	titleCollapse: true,	
 	split:	true,	
-	iconCls:	'fa	fa-sitemap	fa-lg',	
+	iconCls: 'icono-menu',
 	title:	"Menu Principal"
 });

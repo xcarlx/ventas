@@ -60,18 +60,6 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 						click: 'detallevale_Eliminar',
 					}
 				},
-				// {
-				// 	xtype: 'tbfill',
-
-				// },
-				// {
-				// 	xtype: 'button',
-				// 	text: 'Refrescar',
-				// 	iconCls: 'icono-refrescar',
-				// 	listeners:{
-				// 		click: 'PedidoRefrescar',
-				// 	}
-				// },
 			],
 		}
 	]

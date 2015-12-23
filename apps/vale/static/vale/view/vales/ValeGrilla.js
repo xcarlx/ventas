@@ -3,6 +3,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 	alias: 'widget.vale-grilla',
 	reference: 'valeGrilla',
 	bind : '{store_vale}',
+	height: 250,
 	selModel: {
 		mode: 'MULTI'
 	},
@@ -52,15 +53,10 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 	},
 	dockedItems:[
 		{
-			reference: 'grillavale-paginador',
-			bind:{
-				store: '{store_vale}',
-			},
 			xtype: 'pagingtoolbar',
-			pageSize: 6,
+			bind: '{store_vale}',
 			dock: 'bottom',
 			displayInfo: true,
-			displayRefresh: false,
 			listeners:{
 				beforerender: function(){
 					this.down('#refresh').hide();
