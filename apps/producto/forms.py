@@ -9,3 +9,9 @@ class ProductoForm(forms.ModelForm):
 	class Meta:
 		model = Producto
 		fields = ["descripcion","cantidad_actual","precio"]
+
+class ProductoFotoForm(forms.Form):
+	imagen = forms.FileField()
+	class Meta:
+		model = Producto
+		fields = ["imagen"]

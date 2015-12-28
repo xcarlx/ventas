@@ -6,16 +6,17 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoForm', {
 	closeAction: 'hide',
 	closable: true,
 	modal: true,
-	resizable: false,
-	bind: {
-		title: '{titulo}'
-	},
+	resizable: false,	
+	title: 'Producto',
 	items:[
 		{
 			xtype: 'form',
 			reference: 'formProducto',
 			bodyPadding: 10,
 			modelValidation: true,
+			bind:  {
+				title: '{titulo}'
+			},
 			layout:{
 				type: 'vbox',
 				align: 'stretch'
@@ -32,7 +33,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoForm', {
 				{
 					xtype: 'numberfield',
 					name: 'id',
-					hidden: false,
+					hidden: true,
 					fieldLabel: 'Label',
 					bind:'{currentProducto.id}',
 				},

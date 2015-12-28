@@ -95,7 +95,6 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 				store: '{store_clientes}',
 			},
 			xtype: 'pagingtoolbar',
-			pageSize: 8,
 			dock: 'bottom',
 			displayInfo: true,
 			displayRefresh: false,

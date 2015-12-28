@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 	bind: {
 		store: '{store_detallevale}',
 	},
-	height: 250,
+	height: 220,
 	columns: [
 		{
 			text: "Producto",

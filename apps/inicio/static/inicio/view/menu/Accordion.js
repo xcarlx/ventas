@@ -1,7 +1,7 @@
 Ext.define('GRUPOEJ.inicio.view.menu.Accordion',	{
 	extend:	'Ext.panel.Panel',
 	xtype:	'mainmenu',	
-	width:	230,
+	width:	250,
 	minWidth: 200,
 	maxWidth: 400,
 	layout:	{

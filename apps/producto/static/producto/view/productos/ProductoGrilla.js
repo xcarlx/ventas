@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
-	height: 750,
+	height: 600,
 	columns: [
 		{
 			text: "Descripcion",
@@ -49,6 +49,9 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 			height: 30,
 		},
 	],
+	listeners : {
+		itemcontextmenu: 'productos_ContextMenu',
+	},
 	dockedItems:[
 		{
 			xtype: 'toolbar',

@@ -10,7 +10,7 @@
 				"cantidad_actual": {{producto.cantidad_actual}},
 				"precio": {{producto.precio|unlocalize }},
 				"imagen": '{{producto.imagen}}',
-				"imagen2": '<img src=media/'+'{{producto.imagen}}'+' alt="HTML5 Icon" width="128" height="128">',
+				"imagen2": '<img src=media/'+'{{producto.imagen}}'+' alt="HTML5 Icon" width="50" height="50">',
 			},{% endfor %}
 		]
 }

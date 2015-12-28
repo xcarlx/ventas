@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Producto
 from  django.http import HttpResponse
 import json
-from .forms import ProductoForm
+from .forms import ProductoForm,ProductoFotoForm
 from django.core.paginator import Paginator
 # Create your views here.
 def ProductoListar(request):
@@ -118,6 +118,26 @@ def ProductoEditar(request):
 		except Exception:
 			respuesta = {"error": "Al actualizar el registro"}	
 			raise
+	else:
+		 respuesta = {"error": "Debe usar el Metodo Post"}
+
+	return HttpResponse(
+		json.dumps(respuesta),
+		content_type="application/json"
+		)
+
+
+def ProductoFotoSubir(request):
+	respuesta = {}
+	if request.method == 'POST':
+		form = ProductoFotoForm(request.POST, request.FILES)
+		if form.is_valid():
+			newdoc = Producto(imagen = request.FILES['imagen'])
+			newdoc.save()
+			respuesta = {
+							"success": "El producto se creo correctamenta", 
+							"id": tp.id
+						}
 	else:
 		 respuesta = {"error": "Debe usar el Metodo Post"}
 
