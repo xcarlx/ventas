@@ -35,7 +35,7 @@ Ext.define('GRUPOEJ.producto.view.productos.UploadFotoProductoForm', {
 				{
 					xtype: 'numberfield',
 					name: 'id',
-					hidden: false,
+					hidden: true,
 					fieldLabel: 'Label',
 					bind:{
 						value: '{idproducto}'
@@ -56,21 +56,21 @@ Ext.define('GRUPOEJ.producto.view.productos.UploadFotoProductoForm', {
 					}
 				},
 			],
-			buttons: [{
-		        text: 'Upload',
-		        handler: function() {
-		            var form = this.up('form').getForm();
-		            if(form.isValid()){
-		                form.submit({
-		                    url: 'grupoej.producto.productos.producto/subirfoto/',
-		                    waitMsg: 'Uploading your photo...',
-		                    success: function(fp, o) {
-		                        Ext.Msg.alert('Success', 'Your photo "' + o.result.file + '" has been uploaded.');
-		                    }
-		                });
-		            }
-		        }
-		    }]
+			buttons: [
+				{
+			        text: 'Upload',
+			        listeners:{
+			        	click: 'handler',
+			        },
+			    },
+			    {
+			    	text: 'Salir',
+		    		listeners:{
+							click: 'ventana_Cancelar2',
+					},
+			
+			    }
+		    ]
 		}
 	],
 	

@@ -122,6 +122,11 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 	ventana_Cancelar: function(button, e, options){
 		me = this;
 		me.formProducto.hide();
+	},	
+	ventana_Cancelar2: function(button, e, options){
+		me = this;
+		me.editWindowUploadFotoProducto.hide();
+		me.getStore('store_producto').load();
 	},
 	Producto_Refrescar: function(button, e, options){
 		me = this;
@@ -190,5 +195,20 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 		me = view.viewTotal;
 		me.uploadfotoproducto_editWindowShow(record.action, me.currentProductoContextMenu);
 	},
+	handler: function() {
+		me = this;
+        var formupload = me.lookupReference('formUploadFotoProducto').getForm();
+        if(formupload.isValid()){
+            formupload.submit({
+                url: 'grupoej.producto.productos.producto/subirfoto/',
+                waitMsg: 'Uploading your photo...',
+                success: function(fp, o) {
+                    Ext.Msg.alert('Success', 'Tu foto se ha subido correctamente.');
+                    me.editWindowUploadFotoProducto.hide();
+					me.getStore('store_producto').load();
+                }
+            });
+        }
+    }
 
 });

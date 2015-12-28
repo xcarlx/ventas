@@ -12,6 +12,3 @@ class ProductoForm(forms.ModelForm):
 
 class ProductoFotoForm(forms.Form):
 	imagen = forms.FileField()
-	class Meta:
-		model = Producto
-		fields = ["imagen"]

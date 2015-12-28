@@ -131,13 +131,15 @@ def ProductoFotoSubir(request):
 	respuesta = {}
 	if request.method == 'POST':
 		form = ProductoFotoForm(request.POST, request.FILES)
+		idprod = json.loads(request.POST["id"])
 		if form.is_valid():
-			newdoc = Producto(imagen = request.FILES['imagen'])
-			newdoc.save()
+			product = Producto.objects.get(pk=idprod)
+			product.imagen = form.cleaned_data['imagen']
+			product.save()
 			respuesta = {
-							"success": "El producto se creo correctamenta", 
-							"id": tp.id
-						}
+						"success": "El producto se creo correctamenta", 
+						"id": product.id
+					}
 	else:
 		 respuesta = {"error": "Debe usar el Metodo Post"}
 

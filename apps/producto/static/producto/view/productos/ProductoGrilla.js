@@ -47,6 +47,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 			flex: 1,
 			dataIndex: 'imagen2',
 			height: 30,
+			sortable: false,
 		},
 	],
 	listeners : {
