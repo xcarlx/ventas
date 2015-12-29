@@ -2,6 +2,7 @@ __pycache__/
 .pyc
 *.pyc
 __pycache__
+media/
 db.sqlite3
 .DS_Store
 */migrations/*
