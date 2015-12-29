@@ -137,7 +137,7 @@ def ProductoFotoSubir(request):
 			product.imagen = form.cleaned_data['imagen']
 			product.save()
 			respuesta = {
-						"success": "El producto se creo correctamenta", 
+						"success": "Se subio la foto correctamenta", 
 						"id": product.id
 					}
 	else:

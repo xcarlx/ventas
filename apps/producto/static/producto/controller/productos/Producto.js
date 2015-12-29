@@ -198,6 +198,7 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
 	handler: function() {
 		me = this;
         var formupload = me.lookupReference('formUploadFotoProducto').getForm();
+        store = me.getStore("store_producto");
         if(formupload.isValid()){
             formupload.submit({
                 url: 'grupoej.producto.productos.producto/subirfoto/',
@@ -207,6 +208,14 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
                     me.editWindowUploadFotoProducto.hide();
 					me.getStore('store_producto').load();
                 }
+     // 				success: function(rec, op) {
+					// 	GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+					// 	store.reload();
+					// 	me.editWindowUploadFotoProducto.hide();
+					// },
+					// failure: function(rec, op) {
+					// 	store.rejectChanges();
+					// }
             });
         }
     }
