@@ -6,6 +6,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
+	height: 200,
 	columns: [
 		{
 			text: "Cliente - Nombre",
@@ -76,15 +77,8 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 				store: '{store_guia}',
 			},
 			xtype: 'pagingtoolbar',
-			pageSize: 8,
 			dock: 'bottom',
 			displayInfo: true,
-			displayRefresh: false,
-			listeners:{
-				beforerender: function(){
-					this.down('#refresh').hide();
-				}
-			},
 		},
 		{
 			xtype: 'toolbar',

@@ -14,6 +14,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
+
 		},
 		store_comboclientes:{
 			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
