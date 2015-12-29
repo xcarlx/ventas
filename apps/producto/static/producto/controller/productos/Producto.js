@@ -190,8 +190,8 @@ Ext.define('GRUPOEJ.producto.controller.productos.Producto',	{
         currentProductoContextMenu.viewTotal = me;
         currentProductoContextMenu.showAt(evtObj.getXY());
         return false;
-	},
-	productos_ContextMenu_Seleccionar: function(view, record, item, index, eventObj) {
+	}
+,	productos_ContextMenu_Seleccionar: function(view, record, item, index, eventObj) {
 		me = view.viewTotal;
 		me.uploadfotoproducto_editWindowShow(record.action, me.currentProductoContextMenu);
 	},

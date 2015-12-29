@@ -10,6 +10,7 @@ Ext.application({
 		'GRUPOEJ.utiles.CapsLockTooltip',
 		'GRUPOEJ.inicio.controller.menu.Menu',
 		'GRUPOEJ.utiles.SearchTrigger',
+		'GRUPOEJ.inicio.view.principal.Principal'
 	],
 	controllers:[
 		'GRUPOEJ.inicio.controller.menu.Menu',	
@@ -59,11 +60,11 @@ Ext.application({
 		var meApp = this;
 		var task = new Ext.util.DelayedTask(function(){
 			meApp.splashscreen.fadeOut({
-				duration: 800,
+				duration: 1000,
 				remove: true,
 			});
 			meApp.splashscreen.next().fadeOut({
-				duration: 800,
+				duration: 1000,
 				remove: true,
 				listeners:{
 					afteranimate: function(el, startTime, eOpts){

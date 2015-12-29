@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
-	height: 600,
+	height: 520,
 	columns: [
 		{
 			text: "Descripcion",
@@ -106,7 +106,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 			xtype: 'pagingtoolbar',
 			bind:'{store_producto}',
 			xtype: 'pagingtoolbar',
-			pageSize: 8,
+			pageSize: gridPageSize,
 			dock: 'bottom',
 			displayInfo: true,
 			displayRefresh: false,
