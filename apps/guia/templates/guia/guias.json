@@ -16,6 +16,7 @@
 				"ventaid": {{ guia.venta.id|default:0}},
 				"venta__numero_documento": '{{ guia.venta.numero_documento}}',
 				"venta__numero_correlativo": '{{ guia.venta.numero_correlativo}}',
+
 			},{% endfor %}
 		]
 }

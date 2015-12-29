@@ -42,6 +42,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 			xtype: 'datecolumn',
 			text: 'Fecha del Vale',
 			width: 100,
+			format:'d/m/Y',
 			dataIndex: 'fecha',
 		},
 
