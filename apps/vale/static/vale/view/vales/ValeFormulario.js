@@ -39,22 +39,68 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 				{
 					xtype: 'combobox',
 					editable: false,
-		          	fieldLabel: "Cliente: ",
-					// labelWidth: ,
-					// width: 600,
+					fieldLabel: "Cliente: ",
 					reference: 'comboproductos',
-		            bind:{
-		            	store: '{store_comboclientes}',
-		            	value: '{currentVale.clienteid}',
-		            },
+					bind:{
+						store: '{store_comboclientes}',
+						value: '{currentVale.clienteid}',
+					},
 					displayField: 'nombres_apellidos',
 					name: 'clienteid',
 					valueField: 'id',
-					queryMode: 'local',
-					queryDelay: 5,
-					queryChaching: false,
-					forceSelection:true,
-					editable: true,
+					queryMode: 'remote',
+					// queryMode: 'local',
+					// queryDelay: 100,
+					// queryChaching: false,
+					// forceSelection:true,
+					// editable: true,
+
+					typeAhead: false,
+					hideLabel: false,
+					hideTrigger:true,
+					// anchor: '100%',
+					// listConfig: {
+					// 	loadingText: 'Searching...',
+					// 	emptyText: 'No matching posts found.',
+
+					// 	// Custom rendering template for each item
+					// 	getInnerTpl: function() {
+					// 		return '<div class="search-item">' +
+					// 			'<h3><span>{nombres_apellidos}<br /> {tipo_documento} - {nro_documento}</span></h3>' +
+					// 			'{excerpt}' +
+					// 		'</div>';
+					// 	}
+					// },
+					pageSize: 10,
+					// listeners: {
+					// 	assertValue: function() {
+					// 		alert("asa");
+					//         var me = this,
+					//             value = me.getRawValue(),
+					//             rec;
+					//         if (me.multiSelect) {
+					//             // For multiselect, check that the current displayed value matches the current
+					//             // selection, if it does not then revert to the most recent selection.
+					//             if (value !== me.getDisplayValue()) {
+					//                 me.setValue(me.lastSelection);
+					//             }
+					//         } else {
+					//             // For single-select, match the displayed value to a record and select it,
+					//             // if it does not match a record then revert to the most recent selection.
+					//             rec = me.findRecordByDisplay(value);
+					//             if (rec) {
+					//                 me.select(rec);
+					//             } else {
+					//                 if(!value){
+					//                     me.setValue('');
+					//                 }else{
+					//                     me.setValue(me.lastSelection);
+					//                 }
+					//             }
+					//         }
+					//         me.collapse();
+					//     }
+					// }
 				},
 				{
 					fieldLabel: 'Observacion',
