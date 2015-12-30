@@ -3,7 +3,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 	alias: 'widget.vale-grilla',
 	reference: 'valeGrilla',
 	bind : '{store_vale}',
-	height: 200,
+	height: 300,
 	selModel: {
 		mode: 'MULTI'
 	},
