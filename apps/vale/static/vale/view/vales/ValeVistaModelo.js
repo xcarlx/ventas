@@ -19,9 +19,9 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 		store_comboclientes:{
 			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
 			autoLoad: true,
-			pageSize: gridPageSize,
-			remoteSort: true,
-			remoteFilter: true,
+			// pageSize: gridPageSize,
+			// remoteSort: true,
+			// remoteFilter: true,
 		},
 		store_productos:{
 			model:'GRUPOEJ.vale.model.vales.Producto', 

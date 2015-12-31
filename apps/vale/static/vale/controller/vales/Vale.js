@@ -126,7 +126,7 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 	},
 	ventana_Cancelar: function(button, e, options){
 		me = this;
-		me.editValeWindow.hide();
+		me.editValeWindow.close();
 	},
 	modulo_Refrescar: function(button, e, options){
 		me = this;

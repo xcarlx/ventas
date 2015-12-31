@@ -37,42 +37,52 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 					bind : '{currentVale.id}'
 				},
 				{
+					xtype: 'numberfield',
+					name: 'clienteid',
+					hidden: false,
+					fieldLabel: 'Label',
+					bind : '{currentVale.clienteid}'
+				},
+				{
 					xtype: 'combobox',
-					editable: false,
 					fieldLabel: "Cliente: ",
 					reference: 'comboproductos',
+					displayField: 'nombres_apellidos',
 					bind:{
 						store: '{store_comboclientes}',
 						value: '{currentVale.clienteid}',
 					},
-					displayField: 'nombres_apellidos',
-					name: 'clienteid',
-					valueField: 'id',
+
+					// name: 'cliente',
+					// valueField: 'id',
 					queryMode: 'remote',
 					// queryMode: 'local',
 					// queryDelay: 100,
 					// queryChaching: false,
 					// forceSelection:true,
-					// editable: true,
+					editable: true,
 
-					typeAhead: false,
-					hideLabel: false,
+					typeAhead: true,
+					// hideLabel: false,
 					hideTrigger:true,
-					// anchor: '100%',
-					// listConfig: {
-					// 	loadingText: 'Searching...',
-					// 	emptyText: 'No matching posts found.',
+					anchor: '100%',
+					listConfig: {
+						loadingText: 'Searching...',
+						emptyText: 'No matching posts found.',
 
-					// 	// Custom rendering template for each item
-					// 	getInnerTpl: function() {
-					// 		return '<div class="search-item">' +
-					// 			'<h3><span>{nombres_apellidos}<br /> {tipo_documento} - {nro_documento}</span></h3>' +
-					// 			'{excerpt}' +
-					// 		'</div>';
-					// 	}
-					// },
+						// Custom rendering template for each item
+						getInnerTpl: function() {
+							return '<div class="search-item">' +
+								'<h3><span>{nombres_apellidos}<br /> {tipo_documento} - {nro_documento}</span></h3>' +
+								'{excerpt}' +
+							'</div>';
+						}
+					},
 					pageSize: 10,
-					// listeners: {
+					listeners: {
+						beforequery: function(qe){
+				            delete qe.combo.lastQuery;
+				        }
 					// 	assertValue: function() {
 					// 		alert("asa");
 					//         var me = this,
@@ -100,7 +110,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 					//         }
 					//         me.collapse();
 					//     }
-					// }
+					}
 				},
 				{
 					fieldLabel: 'Observacion',

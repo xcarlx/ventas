@@ -8,7 +8,8 @@ Ext.define('GRUPOEJ.vale.model.vales.Vale', {
 		{ name: 'clienteid' , type: 'int' },
 		{ name: 'cliente__nombre' , type: 'string'},
 		{ name: 'cliente__apellido' , type: 'string'},
-		{ name: 'ventaid' , type: 'int'}
+		{ name: 'ventaid' , type: 'int'},
+		{ name: 'cliente_nombre_apellidos' , type: 'string'},
 	],
 	validators: {
 		clienteid: [
