@@ -3,6 +3,7 @@ from .models import *
 from apps.producto.models import Producto
 from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
+from apps.venta.models import *
 import json, datetime
 from django.core.paginator import Paginator
 from django.db.models import Sum
@@ -260,6 +261,49 @@ def DetallePedidoEliminar(request):
 		response_data = {"success": "Los Productos se eliminaron correctamente"}
 	else:
 		response_data = {"error": "Error al eliminar los Productos"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+def VentaPedidoCrear(request):
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idpedido = registros[0]['pedidoid']
+		tipodic = registros[0]['tipo_documento']
+		nro_corre = registros[0]['numero_correlativo']
+		nro_doc = registros[0]['numero_documento']
+		reprogramar = registros[0]['reprogramar']
+		nro_dias = registros[0]['nro_dias']
+		print (reprogramar)
+	# 	if()
+
+
+	# 	idcliente = Cliente.objects.get(pk=idc)
+	# 	p = Pedido.objects.filter()
+	# 	hoy = date.today()
+	# 	fentrega = hoy + timedelta(days=nrodias)
+	# 	try:
+	# 		pedido = Pedido.objects.create(
+	# 				fecha_entrega = fentrega,
+	# 				nro_dias = nrodias,
+	# 				nro_pedido = NroPedido(str(p.count()+1)),
+	# 				cliente = idcliente,
+	# 				estado = False,
+	# 				creador = request.user,
+	# 			)
+	# 		pedido.save()
+	# 		response_data = {
+	# 			"success": "Pedido agregada correctamente",
+	# 		}
+
+	# 	except Exception:
+	# 		response_data = {"error": "Error al crear el Pedido"}
+	# 		raise
+	# else:
+	# 	response_data = {"error": "Error al crear el módulo"}
 
 	return HttpResponse(
 		json.dumps(response_data),

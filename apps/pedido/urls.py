@@ -10,5 +10,7 @@ urlpatterns = [
 	url(r'detallepedidos.detallepedido/listar/(?P<idPe>\d+)$', "apps.pedido.views.DetallePedidoListar", name='detallepedido_listar'),
 	url(r'pedidos.detallepedido/crear/$', "apps.pedido.views.DetallePedidoCrear", name='detallepedido_crear'),
 	url(r'pedidos.detallepedido/eliminar/$', "apps.pedido.views.DetallePedidoEliminar", name='detallepedido_eliminar'),
+
+	url(r'pedidos.ventapedido/crear/$', "apps.pedido.views.VentaPedidoCrear", name='ventapedido_crear'),
 ]
 

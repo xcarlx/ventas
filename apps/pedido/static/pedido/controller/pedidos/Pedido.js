@@ -245,6 +245,13 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	},
 	ventapedido_Agregar: function(button, e, options){
 		me = this;
+		me.editVentaPedidoWindow.on("show", function(win) {
+				me.lookupReference("ventaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
+				me.lookupReference("ventaFormulariopedido").getForm().findField("numero_correlativo").setValue(0);
+				me.lookupReference("ventaFormulariopedido").getForm().findField("numero_documento").setValue(0);
+				me.lookupReference("ventaFormulariopedido").getForm().findField("reprogramar").setValue(false);
+				me.lookupReference("ventaFormulariopedido").getForm().findField("nro_dias").setValue(0);
+			});
 		me.ventapedido_AbrirVentanaEditar(null, button);
 	},
 
