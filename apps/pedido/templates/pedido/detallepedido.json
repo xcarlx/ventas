@@ -1,3 +1,4 @@
+{% load l10n %}
 {
 	"success": true,
 	"message": "OK",
@@ -6,10 +7,11 @@
 			{
 				"id": {{detallepedido.id}},
 				"pedidoid": {{detallepedido.pedido.id }},
-				"pedido__nro_pedido": '{{detallepedido.pedido.nro_pedido}}',
 				"producto__descripcion": '{{detallepedido.producto.descripcion}}',
 				"productoid": {{detallepedido.producto.id}},
-				"cantidad": '{{detallepedido.cantidad}}',
+				"cantidad": {{detallepedido.cantidad}},
+				"producto__precio": {{detallepedido.producto.precio|unlocalize }},
+				"subtotal": {{ detallepedido.cantidad }}*{{ detallepedido.producto.precio|unlocalize }},
 			},{% endfor %}
 		]
 }

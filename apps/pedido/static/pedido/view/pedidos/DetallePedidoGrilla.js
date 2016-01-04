@@ -17,6 +17,18 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 			width: 100,
 			dataIndex: 'cantidad',
 		},
+		{
+			text: "Precio",
+			width: 100,
+			dataIndex: 'producto__precio',
+			sortable: false,
+		},	
+		{
+			text: "Sub total",
+			width: 100,
+			dataIndex: 'subtotal',
+			sortable: false,
+		},
 	],
 	dockedItems:[
 		{
@@ -28,7 +40,10 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 					text: 'Agregar',
 					iconCls: 'icono-agregar',
 					listeners:{
-						click: 'PedidoAgregar',
+						click: 'DetallPedido_Guardar',
+					},
+					bind: {
+						disabled: "{!comboproductos.selection}",
 					},
 				},
 				{
@@ -36,22 +51,10 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!detallepedido-grilladetallepedido.selection}",
 					},
 					listeners:{
-						click: 'PedidoEliminar',
-					}
-				},
-				{
-					xtype: 'tbfill',
-
-				},
-				{
-					xtype: 'button',
-					text: 'Refrescar',
-					iconCls: 'icono-refrescar',
-					listeners:{
-						click: 'PedidoRefrescar',
+						click: 'detallepedido_Eliminar',
 					}
 				},
 			],

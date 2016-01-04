@@ -4,20 +4,14 @@ Ext.define('GRUPOEJ.pedido.model.pedidos.Pedido', {
 		{name: 'fecha_pedido', type: 'date'},
 		{name: 'fecha_entrega', type: 'date'},
 		{name: 'clienteid', type: 'int'},
-		{name: 'cliente__nombre', type: 'number'},
+		{name: 'cliente__nombre', type: 'string'},
+		{name: 'cliente__apellidos', type: 'string'},
+		{name: 'nro_dias', type: 'number'},
+		{name: 'nro_pedido', type: 'string'},
 		{name: 'estado', type: 'boolean'},
 	],
 	validators:{
-		fecha_pedido: [
-			{type: 'presence', message: 'Este campo es obligatorio'},
-		],
-		fecha_entrega: [
-			{type: 'presence', message: 'Este campo es obligatorio'},
-		],
-		precio: [
-			{type: 'presence', message: 'Este campo es obligatorio'},
-		],
-		cliente__nombre: [
+		nro_dias: [
 			{type: 'presence', message: 'Este campo es obligatorio'},
 		],
 	},

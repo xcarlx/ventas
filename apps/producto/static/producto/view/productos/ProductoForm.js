@@ -47,16 +47,6 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoForm', {
 				},
 				{
 					xtype: 'numberfield',
-					name: 'cantidad_actual',
-					fieldLabel: 'Cantidad',
-					anchor: '100%',
-					value: 1,
-					maxValue: 1000,
-					minValue: 1,
-					bind:'{currentProducto.cantidad_actual}',
-				},
-				{
-					xtype: 'numberfield',
 					name: 'precio',
 					fieldLabel: 'Precio',
 					anchor: '100%',

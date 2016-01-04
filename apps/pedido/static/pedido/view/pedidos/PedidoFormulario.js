@@ -1,6 +1,6 @@
-Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
+Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoFormulario', {
 	extend: 'Ext.window.Window',
-	alias: 'widget.vale-formulario',
+	alias: 'widget.pedido-formulario',
 	width: 400,
 	action: '',
 	closeAction: 'hide',
@@ -13,7 +13,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 	items: [
 		{
 			xtype: 'form',
-			reference: 'valeFormulario',
+			reference: 'pedidoFormulario',
 			bodyPadding: 5,
 			modelValidation: true,
 			layout: {
@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 				anchor: '100%',
 				xtype: 'textfield',
 				msgTarget: 'side',
-				labelWidth: 75,
+				labelWidth: 105,
 				labelAlign: 'right',
 			},
 			items: [
@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 					name: 'id',
 					hidden: true,
 					fieldLabel: 'Label',
-					bind : '{currentVale.id}'
+					bind : '{currentPedido.id}'
 				},
 				{
 					xtype: 'combobox',
@@ -43,8 +43,8 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 					displayField: 'nombres_apellidos',
 					valueField: 'id',
 					bind:{
-						store: '{store_comboclientes}',
-						value: '{currentVale.clienteid}',
+						store: '{store_comboclientespedido}',
+						value: '{currentPedido.clienteid}',
 					},
 					name: 'clienteid',
 					queryMode: 'local',
@@ -63,9 +63,13 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 				    }
 				},
 				{
-					fieldLabel: 'Observacion',
-					name: 'observaciones',
-					bind : '{currentVale.observaciones}',
+					xtype: 'numberfield',
+					name: 'nro_dias',
+					fieldLabel: 'Numero de Dias',
+					bind: '{currentPedido.nro_dias}',
+					allowNegative: false,
+					allowBlank: false,
+					minValue : 1,
 				},
 			],
 			dockedItems: [

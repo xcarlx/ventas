@@ -6,7 +6,7 @@ from apps.inicio.models import *
 class Producto(Auditoria):
 
 	descripcion = models.CharField(max_length=200)
-	cantidad_actual = models.PositiveSmallIntegerField()
+	# cantidad_actual = models.PositiveSmallIntegerField()
 	precio = models.DecimalField(max_digits=10, decimal_places=2)
 	imagen = models.ImageField(upload_to = 'photos', blank=True, null=True)
 	

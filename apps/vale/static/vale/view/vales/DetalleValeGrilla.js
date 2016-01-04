@@ -23,7 +23,7 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 		{
 			text: "Precio",
 			width: 100,
-			dataIndex: 'precio',
+			dataIndex: 'producto__precio',
 			sortable: false,
 		},	
 		{

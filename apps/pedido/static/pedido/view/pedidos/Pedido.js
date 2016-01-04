@@ -1,14 +1,12 @@
 Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 	extend: 'GRUPOEJ.inicio.view.PlantillaContenido',
-	layout: {
-		type: 'vbox',
-		align: 'stretch'
-	},
 	requires:[
 		'GRUPOEJ.pedido.view.pedidos.PedidoModelo',
+		'GRUPOEJ.pedido.model.pedidos.VentaPedido',
 		'GRUPOEJ.pedido.view.pedidos.PedidoGrilla',
 		'GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla',
 		'GRUPOEJ.pedido.controller.pedidos.Pedido',
+
 	],
 	viewModel:{
 		type: 'pedido',
@@ -22,7 +20,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 			xtype: 'form',
 			extend: 'Ext.window.Window',
 		    title: 'AGREGAR PRODUCTOS AL DETALLE',
-		    reference: 'from-pedidos',
+		    reference: 'frompedidos',
 		    renderTo: Ext.getBody(),
 			bodyPadding: 10,
 			modelValidation: true,
@@ -34,12 +32,19 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 			},
 			items:[
 				{
+					xtype: 'numberfield',
+					name: 'pedidoid',
+					hidden: true,
+					reference: 'idpedidoreference',
+				},
+				{
 					xtype: 'combobox',
 					editable: false,
 		          	fieldLabel: "Seleccionar el Producto: ",
 					labelWidth: 150,
 					width: 600,
-					reference: 'comboproductos',
+					name: 'productoid',
+					reference: 'comboproductospedido',
 		            bind:{
 		            	store: '{store_productos}',
 		            },
@@ -53,13 +58,16 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 				},
 				{
 					labelWidth: 150,
-					reference: 'cantidadproductos',
+					name: 'cantidad',
+					reference: 'cantidadproductospedido',
 					xtype: 'numberfield',
 					fieldLabel: 'Cantidad',
 					allowNegative: false,
 					allowBlank: false,
 					minValue : 1,
-
+					bind:{
+						disabled: "{!comboproductospedido.selection}",
+					}
 				}
 			],
 		},

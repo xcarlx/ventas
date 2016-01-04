@@ -8,6 +8,7 @@
 				"fecha_pedido": '{{pedido.fecha_pedido|date:'m/d/Y' }}',
 				"fecha_entrega": '{{pedido.fecha_entrega|date:'m/d/Y' }}',
 				"clienteid": {{pedido.cliente.id }},
+				"nro_dias": {{pedido.nro_dias }},
 				"nro_pedido": '{{pedido.nro_pedido}}',
 				"cliente__nombres": '{{pedido.cliente.nombres}}',
 				"cliente__apellidos": '{{pedido.cliente.apellidos}}',

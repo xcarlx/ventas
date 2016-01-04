@@ -21,16 +21,6 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 			],
 		},
 		{
-			text: "Cantidad Actual",
-			width: 100,
-			dataIndex: 'cantidad_actual',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
 			xtype: 'numbercolumn',
 			text: "Precio",
 			width: 100,

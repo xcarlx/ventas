@@ -66,7 +66,6 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 					bind:{
 						disabled: "{!comboproductosvale.selection}",
 					}
-
 				}
 			],
 		},
@@ -78,4 +77,3 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 		},
 	],
 });
-

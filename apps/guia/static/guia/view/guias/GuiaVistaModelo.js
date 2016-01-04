@@ -18,9 +18,9 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaVistaModelo', {
 		store_comboclientesguia:{
 			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
 			autoLoad: true,
-			pageSize: gridPageSize,
-			remoteSort: true,
-			remoteFilter: true,
+			// pageSize: gridPageSize,
+			// remoteSort: true,
+			// remoteFilter: true,
 		},
 		store_productos_guia:{
 			model:'GRUPOEJ.guia.model.guias.Producto', 

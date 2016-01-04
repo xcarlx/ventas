@@ -3,7 +3,7 @@ from apps.inicio.models import *
 from apps.cliente.models import * 
 from apps.pedido.models import * 
 from apps.producto.models import Producto
-
+from django.utils import timezone
 
 # Create your models here.
 
@@ -11,13 +11,15 @@ class Venta(Auditoria):
 
 	BOLETA = 'BOLETA'
 	FACTURA = 'FACTURA'
+	SIN_COMPOROBANTE = 'SIN_COMPOROBANTE' 
 	
 	TIPO_DOCUMENTO = (
 		(BOLETA, 'BOLETA'),
 		(FACTURA, 'FACTURA'),
+		(SIN_COMPOROBANTE, 'SIN_COMPOROBANTE' ),
 	)
-	fecha = models.DateField()
-	tipo_documento = models.CharField(max_length=7, choices=TIPO_DOCUMENTO, default=BOLETA)
+	fecha = models.DateField(default=timezone.now, blank=True)
+	tipo_documento = models.CharField(max_length=30, choices=TIPO_DOCUMENTO, default=BOLETA)
 	numero_documento = models.CharField(max_length=10)
 	numero_correlativo = models.CharField(max_length=4)
 	sub_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True,null=True)

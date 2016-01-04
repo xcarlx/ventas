@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	bind: {
 		store: '{store_pedidos}',
 	},
-	height: 350,
+	height: 300,
 	columns: [
 		{
 			text: "Cliente - Nombre",
@@ -38,16 +38,28 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			],
 		},
 		{
+			text: "Nro de Dias",
+			width: 100,
+			dataIndex: 'nro_dias',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
+		{
 			xtype: 'datecolumn',
 			text: 'Fecha del Pedido',
-			width: 100,
+			width: 150,
 			dataIndex: 'fecha_pedido',
+			format:'d/m/Y',
 		},
 		{
 			xtype: 'datecolumn',
 			text: 'Fecha de Entrega',
-			width: 100,
+			width: 150,
 			dataIndex: 'fecha_entrega',
+			format:'d/m/Y',
 		},
 			{
 			xtype: 'booleancolumn',
@@ -66,20 +78,12 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	},
 	dockedItems:[
 		{
-			reference: 'grillapedidos-paginador',
 			bind:{
 				store: '{store_pedidos}',
 			},
 			xtype: 'pagingtoolbar',
-			pageSize: 8,
 			dock: 'bottom',
 			displayInfo: true,
-			displayRefresh: false,
-			listeners:{
-				beforerender: function(){
-					this.down('#refresh').hide();
-				}
-			},
 		},
 		{
 			xtype: 'toolbar',
@@ -90,7 +94,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 					text: 'Agregar',
 					iconCls: 'icono-agregar',
 					listeners:{
-						click: 'PedidoAgregar',
+						click: 'pedido_Agregar',
 					},
 				},
 				{
@@ -98,10 +102,10 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 					text: 'Editar',
 					iconCls: 'icono-editar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!pedido-grillapedidos.selection}",
 					},
 					listeners:{
-						click: 'PedidoEditar'
+						click: 'pedido_Editar'
 					},
 				},
 				{
@@ -109,10 +113,10 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
-						disabled: "{!producto-grillaproductos.selection}",
+						disabled: "{!pedido-grillapedidos.selection}",
 					},
 					listeners:{
-						click: 'PedidoEliminar',
+						click: 'pedido_Eliminar',
 					}
 				},
 				{
@@ -125,8 +129,11 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 					text: 'Vender',
 					iconCls: 'icono-agregar-azul',
 					listeners:{
-						click: 'PedidoRefrescar',
-					}
+						click: 'ventapedido_Agregar',
+					},
+					bind: {
+						disabled: "{!pedido-grillapedidos.selection}",
+					},
 				},
 				{
 					xtype: 'tbfill',
@@ -142,7 +149,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 					text: 'Refrescar',
 					iconCls: 'icono-refrescar',
 					listeners:{
-						click: 'PedidoRefrescar',
+						click: 'modulo_Refrescar',
 					}
 				},
 			],

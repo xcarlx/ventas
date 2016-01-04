@@ -38,7 +38,6 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaFormulario', {
 				},
 				{
 					xtype: 'combobox',
-					editable: false,
 		          	fieldLabel: "Cliente",
 					reference: 'comboclientesguia',
 		            bind:{
@@ -53,6 +52,15 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaFormulario', {
 					queryChaching: false,
 					forceSelection:true,
 					editable: true,
+					triggerAction: 'all',
+    				lastQuery: '',
+    				listeners: {
+				        // delete the previous query in the beforequery event or set
+				        // combo.lastQuery = null (this will reload the store the next time it expands)
+				        beforequery: function(qe){
+				            delete qe.combo.lastQuery;
+				        }
+				    }
 				},
 				{
 					fieldLabel: 'Punto de Partida',

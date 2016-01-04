@@ -2,11 +2,13 @@ from django.db import models
 from apps.inicio.models import *
 from apps.cliente.models import Cliente
 from apps.producto.models import Producto
+from django.utils import timezone
 # Create your models here.
 
 class Pedido(Auditoria):
-	fecha_pedido = models.DateField()
+	fecha_pedido = models.DateField(default=timezone.now, blank=True)
 	fecha_entrega = models.DateField(blank=True, null=True)
+	nro_dias = models.PositiveSmallIntegerField(default=1)
 	nro_pedido = models.CharField(max_length=10)
 	cliente = models.ForeignKey(Cliente)
 	estado = models.BooleanField(default=False)
