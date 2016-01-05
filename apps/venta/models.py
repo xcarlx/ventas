@@ -29,7 +29,7 @@ class Venta(Auditoria):
 	detalleventas = models.ManyToManyField(Producto, through='DetalleVenta')
 
 	def __str__(self):
-		return self.tipo_documento+" Nro"+self.numero_documento
+		return self.tipo_documento + " Nro"+self.numero_documento
 
 class DetalleVenta(Auditoria):
 	venta = models.ForeignKey(Venta)
@@ -38,4 +38,4 @@ class DetalleVenta(Auditoria):
 	precio = models.DecimalField(max_digits=10, decimal_places=2)
 
 	def __str__(self):
-		return self.venta.numero_documento+" "+self.producto
+		return self.venta.numero_documento+" "+self.producto.descripcion

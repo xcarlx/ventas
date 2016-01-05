@@ -32,7 +32,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 				{
 					xtype: 'numberfield',
 					name: 'pedidoid',
-					hidden: false,
+					hidden: true,
 					fieldLabel: 'Label',
 					reference: 'ventapedidoid',
 				},
