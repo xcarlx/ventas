@@ -36,7 +36,6 @@ class DetalleVenta(Auditoria):
 	producto = models.ForeignKey(Producto)
 	cantidad = models.PositiveSmallIntegerField()
 	precio = models.DecimalField(max_digits=10, decimal_places=2)
-	descuento = models.DecimalField(max_digits=10, decimal_places=2)
 
 	def __str__(self):
 		return self.venta.numero_documento+" "+self.producto

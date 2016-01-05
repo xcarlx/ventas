@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from django.db.models import Sum
 from datetime import date, time, timedelta
 from django.utils import timezone
+from decimal import Decimal
 
 def PedidoListar(request):
 	
@@ -62,7 +63,7 @@ def PedidoCrear(request):
 		idc = registros[0]['clienteid']
 		nrodias = int(registros[0]['nro_dias'])
 		idcliente = Cliente.objects.get(pk=idc)
-		p = Pedido.objects.filter()
+		p = Pedido.objects.all()
 		hoy = date.today()
 		fentrega = hoy + timedelta(days=nrodias)
 		try:
@@ -272,40 +273,120 @@ def VentaPedidoCrear(request):
 	if request.method == 'POST':
 		registros = json.loads(request.POST["data"])
 		idpedido = registros[0]['pedidoid']
-		tipodic = registros[0]['tipo_documento']
+		tipodoc = registros[0]['tipo_documento']
 		nro_corre = registros[0]['numero_correlativo']
 		nro_doc = registros[0]['numero_documento']
 		reprogramar = registros[0]['reprogramar']
 		nro_dias = registros[0]['nro_dias']
-		print (reprogramar)
-	# 	if()
+		total = GenerarTotalPedido(idpedido)
+		igv = total * Decimal(0.18)
+		subtotal = total - igv
 
+		try:
+			if reprogramar == False :
+				venta = Venta.objects.create(
+						tipo_documento = tipodoc,
+						numero_documento = NroPedido(str(nro_doc)),
+						numero_correlativo = NroCorrelativo(str(nro_corre)),
+						sub_total = subtotal,
+						igv = igv,
+						total = total,
+						pedido_id = idpedido,
+						creador = request.user,
+					)
+				venta.save()
+				GenerarDetalleVenta(idpedido, venta.id,request)
+			else:
+				venta = Venta.objects.create(
+						tipo_documento = tipodoc,
+						numero_documento = NroPedido(str(nro_doc)),
+						numero_correlativo = NroCorrelativo(str(nro_corre)),
+						sub_total = subtotal,
+						igv = igv,
+						total = total,
+						pedido_id = idpedido,
+						creador = request.user,
+					)
+				venta.save()
+				GenerarDetalleVenta(idpedido, venta.id, request)
+				Reprogramar(idpedido, nro_dias, request)
+			registro = Pedido.objects.get(pk=int(idpedido))
+			registro.estado = True
+			registro.save()
 
-	# 	idcliente = Cliente.objects.get(pk=idc)
-	# 	p = Pedido.objects.filter()
-	# 	hoy = date.today()
-	# 	fentrega = hoy + timedelta(days=nrodias)
-	# 	try:
-	# 		pedido = Pedido.objects.create(
-	# 				fecha_entrega = fentrega,
-	# 				nro_dias = nrodias,
-	# 				nro_pedido = NroPedido(str(p.count()+1)),
-	# 				cliente = idcliente,
-	# 				estado = False,
-	# 				creador = request.user,
-	# 			)
-	# 		pedido.save()
-	# 		response_data = {
-	# 			"success": "Pedido agregada correctamente",
-	# 		}
+			response_data = {
+				"success": "Venta generada correctamente",
+			}
 
-	# 	except Exception:
-	# 		response_data = {"error": "Error al crear el Pedido"}
-	# 		raise
-	# else:
-	# 	response_data = {"error": "Error al crear el módulo"}
+		except ValueError:
+			response_data = {"success":"Error al crear la Venta"}
+			raise
+
+	else:
+		response_data = {"error": "Error al crear el la Venta"}
 
 	return HttpResponse(
 		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+def GenerarDetalleVenta(id_pedido, id_venta, request):
+	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
+		dv = DetalleVenta.objects.create(
+				venta_id = id_venta,
+				producto_id = dp.producto.id,
+				cantidad = dp.cantidad,
+				precio = dp.producto.precio,
+				creador = request.user,
+			)
+		dv.save()
+
+def Reprogramar(id_pedido, nrodias, request):
+	pedido = Pedido.objects.filter(id=id_pedido)
+	hoy = date.today()
+	fentrega = hoy + timedelta(days=nrodias)
+
+	pe = Pedido.objects.all()
+	p = Pedido.objects.create(
+			fecha_entrega = fentrega,
+			nro_dias = nrodias,
+			nro_pedido = NroPedido(str(pe.count()+1)),
+			cliente_id = pedido[0].cliente.id,
+			estado = False,
+			creador = request.user,
+		)
+	p.save()
+
+	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
+		dp1 = DetallePedido.objects.create(
+				pedido_id = p.id,
+				producto_id = dp.producto.id,
+				cantidad = dp.cantidad,
+				creador = request.user,
+			)
+		dp1.save()
+			
+
+def GenerarTotalPedido(id_pedido):
+	total = 0
+	for v in DetallePedido.objects.filter(pedido_id=id_pedido):
+		subtotal = v.producto.precio * v.cantidad
+		total = total+subtotal
+	return total  
+
+
+def NroCorrelativo(numero):
+	if(len(numero)==4):
+		n = numero
+	elif(len(numero)==3):
+		n = "0"+str(numero)
+	elif(len(numero)==2):
+		n = "00"+str(numero)
+	elif(len(numero)==1):
+		n = "000"+str(numero)
+
+	return n
+def VentaPedidoListar(request):
+	return HttpResponse("",
 		content_type="application/json"
 	)

@@ -275,7 +275,11 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 					success: function(rec, op) {
 						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
 						store.reload();
-						me.ventana_Cancelar();
+						me.venta_ventana_Cancelar();
+						me.getStore('store_pedidos').load();
+						me.getStore('store_detallepedidos').load({
+							url: 'grupoej.pedido.detallepedidos.detallepedido/listar/0'
+						});
 					},
 					failure: function(rec, op) {
 						store.rejectChanges();
