@@ -279,8 +279,8 @@ def VentaPedidoCrear(request):
 		reprogramar = registros[0]['reprogramar']
 		nro_dias = registros[0]['nro_dias']
 		total = GenerarTotalPedido(idpedido)
-		igv = total * Decimal(0.18)
-		subtotal = total - igv
+		subtotal = total / Decimal(1.18)
+		igv = total - subtotal
 
 		try:
 			if reprogramar == False :

@@ -3,7 +3,7 @@ Ext.define('GRUPOEJ.vale.model.vales.Producto', {
 	fields:[
 		{name: 'descripcion', type: 'string'},
 		{name: 'cantidad_actual', type: 'int'},
-		{name: 'precio', type: 'number'},
+		{name: 'producto__precio', type: 'number'},
 		{name: 'imagen', type: 'string'},
 	],
 	validators:{
@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.vale.model.vales.Producto', {
 		cantidad_actual: [
 			{type: 'presence', message: 'Este campo es obligatorio'},
 		],
-		precio: [
+		producto__precio: [
 			{type: 'presence', message: 'Este campo es obligatorio'},
 		],
 	},

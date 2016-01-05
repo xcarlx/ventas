@@ -11,11 +11,13 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 			text: "Producto",
 			flex: 2,
 			dataIndex: 'producto__descripcion',
+			sortable: false,
 		},
 		{
 			text: "Cantidad",
 			width: 100,
 			dataIndex: 'cantidad',
+			sortable: false,
 		},
 		{
 			text: "Precio",
