@@ -30,7 +30,7 @@ Ext.define('GRUPOEJ.inicio.view.login.Login',	{
 				anchor:	'100%',
 				labelWidth:	75,
 				allowBlank:	false,
-				vtype:	'alphanum',
+				// vtype:	'alphanum',
 				minLength:	3,
 				msgTarget:	'side',
 				listeners:	{

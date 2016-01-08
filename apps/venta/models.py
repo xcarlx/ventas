@@ -25,6 +25,7 @@ class Venta(Auditoria):
 	sub_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True,null=True)
 	igv = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
 	total = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
+	estado= models.CharField(max_length=20, default="ACTIVO")
 	pedido = models.ForeignKey(Pedido)
 	detalleventas = models.ManyToManyField(Producto, through='DetalleVenta')
 
