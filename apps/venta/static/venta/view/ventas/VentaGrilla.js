@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	bind: {
 		store: '{store_ventas}',
 	},
-	height: 400,
+	height: 370,
 	columns: [
 		{
 			text: "Cliente - Nombre",
@@ -58,6 +58,8 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 			],
 		},
 		{
+			xtype: 'numbercolumn', 
+			format:'0.00',			
 			text: "Sub Total",
 			width: 100,
 			dataIndex: 'sub_total',
@@ -68,6 +70,8 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 			],
 		},
 		{
+			xtype: 'numbercolumn', 
+			format:'0.00',
 			text: "IGV",
 			width: 75,
 			dataIndex: 'igv',
@@ -78,6 +82,8 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 			],
 		},
 		{
+			xtype: 'numbercolumn', 
+			format:'0.00',
 			text: "Total",
 			width: 75,
 			dataIndex: 'total',

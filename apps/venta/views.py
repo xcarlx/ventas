@@ -49,3 +49,18 @@ def VentaListar(request):
 		},
 		content_type="application/json",
 	)
+
+def DetalleVentaListar(request):
+
+	ventaid = request.GET.get("idventa", 0)
+	detalleventas = DetalleVenta.objects.filter(venta_id=ventaid)
+	total = detalleventas.count()
+	return render(
+		request,
+		'venta/detalleventa.json',
+		{
+			'detalleventas': detalleventas,
+			'total' : total,
+		},
+		content_type="application/json",
+	)

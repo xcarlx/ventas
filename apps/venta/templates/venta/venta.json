@@ -1,3 +1,4 @@
+{% load l10n %}
 {
 	"success": true,
 	"message": "OK",
@@ -10,9 +11,9 @@
 				"numero_documento1": '{{ venta.numero_documento }}',
 				"numero_correlativo": '{{venta.numero_correlativo }}',
 				"numero_documento": "{{venta.numero_correlativo }} - {{ venta.numero_documento }}" ,
-				"sub_total": '{{venta.sub_total}}',
-				"igv": '{{venta.igv}}',
-				"total": '{{ venta.total }}',
+				"sub_total": '{{venta.sub_total|unlocalize  }}',
+				"igv": '{{venta.igv|unlocalize }}',
+				"total": '{{ venta.total|unlocalize }}',
 				"pedido__cliente__nombre": '{{ venta.pedido.cliente.nombres }}',
 				"pedido__cliente__apellidos": '{{venta.pedido.cliente.apellidos}}',
 				"pedido__nro_pedido": '{{venta.pedido.nro_pedido}}',

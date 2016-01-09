@@ -10,7 +10,9 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
 		if (!st_venta.ventaId){
 			st_venta.ventaId = 0;
 		}
-		this.getStore('store_detalleventas').load();
+		this.getStore('store_detalleventas').load({
+			params:{idventa: st_venta.ventaId}
+		});
 		// this.getStore('store_detalleventas').load({
 		// 	url: 'grupoej.venta.detalleventas.detalleventa/listar/' + st_venta.ventaId
 		// });
@@ -19,10 +21,11 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
 		st_venta = this.getStore('store_ventas');
 		st_venta.ventaId = record.get("id");
 		this.refrescarPedido();
+		this.lookupReference('totalventa').setText("Total: "+record.get("total"));
 	},
 	deSeleccionarVenta: function(sm, selectedRecords){
 		this.getStore('store_detalleventas').load({
-			url: 'grupoej.venta.detalleventas.detalleventa/listar/0'
+			params:{idventa: 0}
 		});		
 		// this.getStore('store_detalleventas').load({
 		// 	url: 'grupoej.venta.detalleventas.detalleventa/listar/0'

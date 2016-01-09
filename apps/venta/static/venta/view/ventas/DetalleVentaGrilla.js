@@ -20,12 +20,16 @@ Ext.define('GRUPOEJ.venta.view.ventas.DetalleVentaGrilla', {
 			sortable: false,
 		},
 		{
+			xtype: 'numbercolumn', 
+			format:'0.00',
 			text: "Precio",
 			width: 100,
-			dataIndex: 'producto__precio',
+			dataIndex: 'precio',
 			sortable: false,
 		},	
 		{
+			xtype: 'numbercolumn', 
+			format:'0.00',
 			text: "Sub total",
 			width: 100,
 			dataIndex: 'subtotal',

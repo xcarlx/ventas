@@ -18,6 +18,22 @@ Ext.define('GRUPOEJ.venta.view.ventas.Venta', {
 		{
 			xtype: 'detalleventa-grilla',
 		},
-
+		{
+			xtype: 'container',
+                layout: 'hbox',
+                flex: 1,
+                align:'right',
+                // THIS ITEM SHOULD BE ALIGNED RIGHT:
+                items: [
+                	{
+                		xtype: 'tbfill'
+                	},
+                	{
+                    	xtype: 'label',
+                    	reference: 'totalventa',
+                    	style: 'font-weight:bold;',
+                	},
+                ]
+		},
 	],
 });
