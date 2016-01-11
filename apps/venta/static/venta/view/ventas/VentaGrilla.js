@@ -139,11 +139,14 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 					xtype: 'button',
 					text: 'Imprimir',
 					iconCls: 'icono-agregar',
-					listeners:{
-						click: 'pedido_Agregar',
-					},
+				    renderTo: Ext.getBody(), 
+				    url: 'grupoej.venta.ventas.venta/imprimir/',      
+				    handler: function() {
+				        alert('You clicked the button!')
+				    }
 				},
 			],
 		}
 	]
 });
+

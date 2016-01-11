@@ -1,9 +1,20 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from apps.producto.models import Producto
 from django.http import HttpResponse, JsonResponse
 import json, datetime
 from django.core.paginator import Paginator
+
+ #report lab
+from reportlab.pdfgen import canvas
+from apps.cliente.models import *
+from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import Table
+from io import BytesIO
 
 def VentaListar(request):
 	
@@ -64,3 +75,46 @@ def DetalleVentaListar(request):
 		},
 		content_type="application/json",
 	)
+
+
+
+def ImprimirVenta(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "clientes.pdf"  # llamado clientes
+    # la linea 26 es por si deseas descargar el pdf a tu computadora
+    # response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=letter,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Listado de Clientes", styles['Heading1'])
+    clientes.append(header)
+    headings = ('Nombre', 'Apellidos', 'Tipo Documento', 'Numero')
+    allclientes = [(p.nombres, p.apellidos, p.tipo_documento, p.nro_documento) for p in Cliente.objects.all()]
+
+    t = Table([headings] + allclientes)
+    t.setStyle(TableStyle(
+        # [
+        #     ('GRID', (0, 0), (3, -1), 1, colors.dodgerblue),
+        #     ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
+        #     ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
+        # ]
+        [
+        	('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+	     	('BOX', (0, 0), (-1, -1), 0.5, colors.black),
+	     	('VALIGN', (0, 0), (-1, 0), 'MIDDLE'),
+	     	('BACKGROUND', (0, 0), (-1, 0), colors.gray)
+	    ]
+    ))
+    clientes.append(t)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
