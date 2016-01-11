@@ -3,6 +3,9 @@ from django.http import HttpResponse
 import json
 from django.contrib.auth import authenticate, login, logout
 from .models import *
+from apps.pedido.models import * 
+from django.core.paginator import Paginator
+from django.utils import timezone
 
 # Create your views here.
 
@@ -62,3 +65,93 @@ def Menus(request):
 		content_type ="application/json"
 		)
 
+
+def PedidoVencidosListar(request):
+
+	findID = request.GET.get("id", 0)
+
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Pedido.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ", fecha_entrega__lt = timezone.now(), estado=False)"
+			pedidos = eval(filtros)
+		else:
+			pedidos = Pedido.objects.filter(fecha_entrega__lt = timezone.now(), estado=False)
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			pedidos = pedidos.order_by(tipo_orden+campo_orden)
+		total = pedidos.count()
+		# Paginacion
+		if pagina > 0:
+			pedidos = Paginator(pedidos, limite)
+			pedidos = pedidos.page(pagina)
+	else:
+		pedidos = Pedido.objects.filter(fecha_entrega__lt = timezone.now(), estado=False)
+		total = pedidos.count()
+	
+	return render(
+		request,
+		'pedido/pedido.json',
+		{
+			'pedidos': pedidos,
+			'total' : total,
+		},
+		content_type="application/json",
+	)
+
+def PedidoPendienteListar(request):
+
+	findID = request.GET.get("id", 0)
+
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Pedido.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ", fecha_entrega__gte = timezone.now(), estado=False)"
+			pedidos = eval(filtros)
+		else:
+			pedidos = Pedido.objects.filter(fecha_entrega__gte= timezone.now(), estado=False)
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			pedidos = pedidos.order_by(tipo_orden+campo_orden)
+		total = pedidos.count()
+		# Paginacion
+		if pagina > 0:
+			pedidos = Paginator(pedidos, limite)
+			pedidos = pedidos.page(pagina)
+	else:
+		pedidos = Pedido.objects.filter(fecha_entrega__gte = timezone.now(), estado=False)
+		total = pedidos.count()
+	
+	return render(
+		request,
+		'pedido/pedido.json',
+		{
+			'pedidos': pedidos,
+			'total' : total,
+		},
+		content_type="application/json",
+	)
