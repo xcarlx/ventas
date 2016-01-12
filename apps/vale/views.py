@@ -24,10 +24,10 @@ def ValeListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", venta__isnull=True)"
+			filtros = filtros[:-1] + ", pedido__isnull=True)"
 			vales = eval(filtros)
 		else:
-			vales = Vale.objects.filter(venta__isnull=True)
+			vales = Vale.objects.filter(pedido__isnull=True)
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -120,20 +120,36 @@ def ValeEliminar(request):
 	)
 
 def ValeEditar(request):
-
 	response_data = {}
+	cont = 0
 	if request.method == 'POST':
 		registros = json.loads(request.POST["data"])
-		idReg = registros[0]["id"]
-		registro = Vale.objects.get(pk=idReg)
-		registro.cliente = Cliente.objects.get(pk = int(registros[0]["clienteid"]))
-		registro.observaciones = str(registros[0]["observaciones"])
-		try:
-			registro.save()
-			response_data = {"success": "Registro actualizado correctamente"}
-		except ValueError:
-			response_data = {"error": sys.exc_info()[0]}
-			raise
+		activo = registros[0]["active"]
+
+		if len(str(activo)) == 0 :
+			idReg = registros[0]["id"]
+			registro = Vale.objects.get(pk=idReg)
+			registro.cliente = Cliente.objects.get(pk = int(registros[0]["clienteid"]))
+			registro.observaciones = str(registros[0]["observaciones"])
+			try:
+				registro.save()
+				response_data = {"success": "Registro actualizado correctamente"}
+			except ValueError:
+				response_data = {"error": sys.exc_info()[0]}
+				raise
+		elif activo == True:
+			idcliente = registros[0]["clienteid"]
+			for reg in registros:
+				if int(idcliente)==int(reg["clienteid"]):
+					cont = 0
+				else:
+					cont = 1
+					break
+			if cont == 0 :
+				idsvales=[]
+				for reg in registros:
+					idsvales.append(reg["id"])
+				print ("IDS ", idsvales)
 
 	else:
 		response_data = {"error": "Error al actualizar el registro"}

@@ -244,6 +244,46 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 			}
 		});
 	},
+	generarPedido: function(button){
+		me = this;
+		record = [];
+		i=0;
+		grid = me.lookupReference('valeGrilla');
+		try {
+			for(; i <= grid.getStore().getCount(); i++){
+				record = grid.getStore().getAt(i);
+				store = me.getStore('store_vale');
+				Ext.Msg.show({
+					title:'Alerta!!',
+					msg: '¿Está seguro de Generar Pedido de los Vales seleccionados?',
+					buttons: Ext.Msg.YESNO,
+					icon: Ext.Msg.QUESTION,
+					iconCls: button.iconCls,
+					fn: function (buttonId) {
+						if (buttonId == 'yes') {
+							store.remove(record);
+							store.save({
+								success: function(rec, op) {
+									GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+									store.reload();
+									me.refrescarVale();
+								},
+								failure: function(rec, op) {
+									store.rejectChanges();
+									me.refrescarVale();
+								}
+							});
+						}
+					}
+				});
+			}
+		} catch(err){
+		  console.log(err.message);
+		}
+
+	
+
+	},
 
 });
 

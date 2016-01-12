@@ -45,6 +45,12 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 			format:'d/m/Y',
 			dataIndex: 'fecha',
 		},
+		{ 
+			xtype: 'checkcolumn', 
+			text: 'Selecione', 
+			name: 'valeselect',
+			dataIndex: 'active',
+		}
 
 	],
 	listeners : {
@@ -93,6 +99,21 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 					listeners:{
 						click: 'vale_Eliminar',
 					}
+				},
+				{
+					xtype: 'tbfill',
+
+				},
+				{
+					xtype: 'button',
+					text: 'Generar Pedido',
+					listeners:{
+						click: 'generarPedido',
+					}
+				},
+				{
+					xtype: 'tbfill',
+
 				},
 				{
 					xtype: 'tbfill',

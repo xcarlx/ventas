@@ -1,7 +1,7 @@
 from django.db import models
 from apps.inicio.models import *
 from apps.cliente.models import * 
-from apps.venta.models import * 
+from apps.pedido.models import * 
 from apps.producto.models import * 
 from django.utils import timezone
 # Create your models here.
@@ -13,7 +13,7 @@ class Vale(Auditoria):
 	total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 	observaciones = models.TextField(blank=True, null=True)
 	cliente = models.ForeignKey(Cliente, on_delete = models.PROTECT)
-	venta = models.ForeignKey(Venta, blank=True, null=True)
+	pedido = models.ForeignKey(Pedido, blank=True, null=True)
 	detallevales = models.ManyToManyField(Producto, through='DetalleVale')
 
 	def __str__(self):

@@ -5,4 +5,4 @@ class ValeForm(forms.ModelForm):
 
 	class Meta:
 		model = Vale
-		fields = ('fecha', 'numero', 'total', 'observaciones', 'cliente', 'venta')
+		fields = ('fecha', 'numero', 'total', 'observaciones', 'cliente',)
