@@ -5,9 +5,13 @@ from .forms import ValeForm
 from apps.producto.models import Producto
 from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
-import json
 from django.core.paginator import Paginator
 from django.db.models import Sum
+import json, datetime
+from datetime import date, time, timedelta
+from django.utils import timezone
+from decimal import Decimal
+from apps.pedido.models import *
 
 def ValeListar(request):
 	findID = request.GET.get("id", 0)
@@ -149,7 +153,28 @@ def ValeEditar(request):
 				idsvales=[]
 				for reg in registros:
 					idsvales.append(reg["id"])
-				print ("IDS ", idsvales)
+				dv = DetalleVale.objects.filter(vale_id__in = idsvales).values("producto_id", "cantidad")
+				total = dv.count()
+				idproductos= []
+				prod = []
+				for p in dv:
+					prod.append(p["producto_id"])
+
+				for i in prod :
+					if i not in idproductos:
+						idproductos.append(i)
+				idpedido = GenerarPedido(idcliente,request)
+				for idp in idproductos:
+					cantidad = 0
+					for i in dv:
+						if int(i["producto_id"]) == idp:
+							cantidad = cantidad+i["cantidad"]
+					GenerarDetallePedido(idpedido,idp, cantidad, request)
+				for i in idsvales:
+					registro = Vale.objects.get(pk=i)
+					registro.pedido = Pedido.objects.get(pk=idpedido)
+					registro.save()
+
 
 	else:
 		response_data = {"error": "Error al actualizar el registro"}
@@ -158,6 +183,7 @@ def ValeEditar(request):
 		json.dumps(response_data),
 		content_type="application/json"
 	)
+
 
 
 def ProductoListar(request,idVa):
@@ -243,7 +269,6 @@ def DetalleValeCrear(request):
 
 			vale.total = GenerarTotalVale(idvale)
 			vale.save()
-			print(GenerarTotalVale(idvale))
 			response_data = {
 				"success": "Producto agregado al Vale correctamente",
 			}
@@ -288,3 +313,53 @@ def GenerarTotalVale(id_vale):
 		subtotal = v.precio *v.cantidad
 		total = total+subtotal
 	return total  
+
+
+
+def NroPedido(numero):
+	if(len(numero)==6):
+		n = numero
+	elif(len(numero)==5):
+		n = "0"+str(numero)
+	elif(len(numero)==4):
+		n = "00"+str(numero)
+	elif(len(numero)==3):
+		n = "000"+str(numero)
+	elif(len(numero)==2):
+		n = "0000"+str(numero)
+	elif(len(numero)==1):
+		n = "00000"+str(numero)
+
+	return n
+
+def GenerarPedido(idcliente, request):
+	p = Pedido.objects.all()
+	hoy = date.today()
+	fentrega = hoy + timedelta(days=0)
+	try:
+		pedido = Pedido.objects.create(
+				fecha_entrega = fentrega,
+				nro_dias = 0,
+				nro_pedido = NroPedido(str(p.count()+1)),
+				cliente_id = idcliente,
+				estado = False,
+				creador = request.user,
+			)
+		pedido.save()
+		response_data = {
+			"success": "Pedido agregada correctamente",
+		}
+
+	except Exception:
+		response_data = {"error": "Error al crear el Pedido"}
+		raise
+	return int(pedido.id)
+
+def GenerarDetallePedido(idpedido, idproducto, cantidad, request):
+	dp1 = DetallePedido.objects.create(
+			pedido_id = idpedido,
+			producto_id = idproducto,
+			cantidad = cantidad,
+			creador = request.user,
+		)
+	dp1.save()
