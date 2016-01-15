@@ -5,9 +5,13 @@ from .forms import GuiaForm
 from apps.producto.models import Producto
 from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
-import json, datetime
 from django.core.paginator import Paginator
 from django.db.models import Sum
+import json, datetime
+from django.utils import timezone
+from decimal import Decimal
+from datetime import date, time, timedelta
+from apps.pedido.models import *
 
 
 def GuiaListar(request):
@@ -25,10 +29,10 @@ def GuiaListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", venta__isnull=True)"
+			filtros = filtros[:-1] + ", pedido__isnull=True)"
 			guias = eval(filtros)
 		else:
-			guias = GuiaRemision.objects.filter(venta__isnull=True)
+			guias = GuiaRemision.objects.filter(pedido__isnull=True)
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -64,7 +68,7 @@ def GuiaCrear(request):
 		fecha_emision = datetime.datetime.fromtimestamp(int(registros[0]['fecha_emision'])).date()
 		fecha_translado = datetime.datetime.fromtimestamp(int(registros[0]['fecha_translado'])).date()
 		idcliente = Cliente.objects.get(pk=idc)
-		g = GuiaRemision.objects.filter(venta__isnull=True)
+		g = GuiaRemision.objects.filter(pedido__isnull=True)
 		try:
 			guia = GuiaRemision.objects.create(
 					punto_partida = punto_partida,
@@ -114,23 +118,59 @@ def GuiaEditar(request):
 	response_data = {}
 	if request.method == 'POST':
 		registros = json.loads(request.POST["data"])
-		idReg = registros[0]["id"]
-		punto_partida = registros[0]['punto_partida']
-		punto_llegada = registros[0]['punto_llegada']
-		fecha_emision = datetime.datetime.fromtimestamp(int(registros[0]['fecha_emision'])).date()
-		fecha_translado = datetime.datetime.fromtimestamp(int(registros[0]['fecha_translado'])).date()
-		registro = GuiaRemision.objects.get(pk=idReg)
-		registro.cliente = Cliente.objects.get(pk = int(registros[0]["clienteid"]))
-		registro.punto_partida = str(punto_partida)
-		registro.punto_llegada = str(punto_llegada)
-		registro.fecha_emision = fecha_emision
-		registro.fecha_translado = fecha_translado
-		try:
-			registro.save()
-			response_data = {"success": "Registro actualizado correctamente"}
-		except ValueError:
-			response_data = {"error": sys.exc_info()[0]}
-			raise
+		activo = registros[0]["active"]
+		if len(str(activo)) == 0 :
+			idReg = registros[0]["id"]
+			punto_partida = registros[0]['punto_partida']
+			punto_llegada = registros[0]['punto_llegada']
+			fecha_emision = datetime.datetime.fromtimestamp(int(registros[0]['fecha_emision'])).date()
+			fecha_translado = datetime.datetime.fromtimestamp(int(registros[0]['fecha_translado'])).date()
+			registro = GuiaRemision.objects.get(pk=idReg)
+			registro.cliente = Cliente.objects.get(pk = int(registros[0]["clienteid"]))
+			registro.punto_partida = str(punto_partida)
+			registro.punto_llegada = str(punto_llegada)
+			registro.fecha_emision = fecha_emision
+			registro.fecha_translado = fecha_translado
+			try:
+				registro.save()
+				response_data = {"success": "Registro actualizado correctamente"}
+			except ValueError:
+				response_data = {"error": sys.exc_info()[0]}
+				raise
+		elif activo == True:
+			idcliente = registros[0]["clienteid"]
+			for reg in registros:
+				if int(idcliente)==int(reg["clienteid"]):
+					cont = 0
+				else:
+					cont = 1
+					break
+			if cont == 0 :
+				idsguias=[]
+				for reg in registros:
+					idsguias.append(reg["id"])
+				dg = DetalleGuia.objects.filter(guia_remision_id__in = idsguias).values("producto_id", "cantidad")
+				total = dg.count()
+				idproductos= []
+				prod = []
+				for p in dg:
+					prod.append(p["producto_id"])
+
+				for i in prod :
+					if i not in idproductos:
+						idproductos.append(i)
+				idpedido = GenerarPedido(idcliente,request)
+				for idp in idproductos:
+					cantidad = 0
+					for i in dg:
+						if int(i["producto_id"]) == idp:
+							cantidad = cantidad+i["cantidad"]
+					GenerarDetallePedido(idpedido,idp, cantidad, request)
+				for i in idsguias:
+					registro = GuiaRemision.objects.get(pk=i)
+					registro.pedido = Pedido.objects.get(pk=idpedido)
+					registro.save()
+
 
 	else:
 		response_data = {"error": "Error al actualizar el registro"}
@@ -251,3 +291,52 @@ def DetalleGuiaEliminar(request):
 		json.dumps(response_data),
 		content_type="application/json"
 	)
+
+
+def NroPedido(numero):
+	if(len(numero)==6):
+		n = numero
+	elif(len(numero)==5):
+		n = "0"+str(numero)
+	elif(len(numero)==4):
+		n = "00"+str(numero)
+	elif(len(numero)==3):
+		n = "000"+str(numero)
+	elif(len(numero)==2):
+		n = "0000"+str(numero)
+	elif(len(numero)==1):
+		n = "00000"+str(numero)
+
+	return n
+
+def GenerarPedido(idcliente, request):
+	p = Pedido.objects.all()
+	hoy = date.today()
+	fentrega = hoy + timedelta(days=0)
+	try:
+		pedido = Pedido.objects.create(
+				fecha_entrega = fentrega,
+				nro_dias = 0,
+				nro_pedido = NroPedido(str(p.count()+1)),
+				cliente_id = idcliente,
+				estado = False,
+				creador = request.user,
+			)
+		pedido.save()
+		response_data = {
+			"success": "Pedido agregada correctamente",
+		}
+
+	except Exception:
+		response_data = {"error": "Error al crear el Pedido"}
+		raise
+	return int(pedido.id)
+
+def GenerarDetallePedido(idpedido, idproducto, cantidad, request):
+	dp1 = DetallePedido.objects.create(
+			pedido_id = idpedido,
+			producto_id = idproducto,
+			cantidad = cantidad,
+			creador = request.user,
+		)
+	dp1.save()

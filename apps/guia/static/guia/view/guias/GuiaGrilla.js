@@ -64,6 +64,12 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 			width: 100,
 			dataIndex: 'fecha_translado',
 		},
+		{ 
+			xtype: 'checkcolumn', 
+			text: 'Selecione', 
+			name: 'valeselect',
+			dataIndex: 'active',
+		}
 	],
 	listeners : {
 		select: 'seleccionarGuia',
@@ -113,6 +119,21 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 					listeners:{
 						click: 'guia_Eliminar',
 					}
+				},
+				{
+					xtype: 'tbfill',
+
+				},
+				{
+					xtype: 'button',
+					text: 'Generar Pedido',
+					listeners:{
+						click: 'generarGuia',
+					}
+				},
+				{
+					xtype: 'tbfill',
+
 				},
 				{
 					xtype: 'tbfill',

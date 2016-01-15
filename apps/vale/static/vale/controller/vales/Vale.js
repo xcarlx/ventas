@@ -280,9 +280,6 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		} catch(err){
 		  console.log(err.message);
 		}
-
-	
-
 	},
 
 });

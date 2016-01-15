@@ -13,10 +13,10 @@
 				"clienteid": {{ guia.cliente.id}},
 				"cliente__nombres": '{{ guia.cliente.nombres}}',
 				"cliente__apellidos": '{{ guia.cliente.apellidos}}',	
-				"ventaid": {{ guia.venta.id|default:0}},
-				"venta__numero_documento": '{{ guia.venta.numero_documento}}',
-				"venta__numero_correlativo": '{{ guia.venta.numero_correlativo}}',
-
+				"ventaid": {{ guia.pedido.venta.id|default:0}},
+				"pedido__venta__numero_documento": '{{ guia.pedido.venta.numero_documento}}',
+				"pedido__venta__numero_correlativo": '{{ guia.pedido.venta.numero_correlativo}}',
+				"active" : "",
 			},{% endfor %}
 		]
 }

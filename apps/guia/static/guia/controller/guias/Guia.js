@@ -240,5 +240,43 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 		});
 	},
 
+	generarGuia: function(button){
+		me = this;
+		record = [];
+		i=0;
+		grid = me.lookupReference('guiaGrilla');
+		try {
+			for(; i <= grid.getStore().getCount(); i++){
+				record = grid.getStore().getAt(i);
+				store = me.getStore('store_guia');
+				Ext.Msg.show({
+					title:'Alerta!!',
+					msg: '¿Está seguro de Generar Guia de los Vales seleccionados?',
+					buttons: Ext.Msg.YESNO,
+					icon: Ext.Msg.QUESTION,
+					iconCls: button.iconCls,
+					fn: function (buttonId) {
+						if (buttonId == 'yes') {
+							store.remove(record);
+							store.save({
+								success: function(rec, op) {
+									GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+									store.reload();
+									me.refrescarGuia();
+								},
+								failure: function(rec, op) {
+									store.rejectChanges();
+									me.refrescarGuia();
+								}
+							});
+						}
+					}
+				});
+			}
+		} catch(err){
+		  console.log(err.message);
+		}
+	},
+
 });
 

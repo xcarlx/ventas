@@ -12,6 +12,7 @@
 				"nro_pedido": '{{pedido.nro_pedido}}',
 				"cliente__nombres": '{{pedido.cliente.nombres}}',
 				"cliente__apellidos": '{{pedido.cliente.apellidos}}',
+				"cliente__telefono": '{{pedido.cliente.telefono}}',
 				"estado": '{{pedido.estado}}',
 			},{% endfor %}
 		]
