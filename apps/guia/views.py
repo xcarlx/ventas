@@ -29,10 +29,10 @@ def GuiaListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", pedido__isnull=True)"
+			filtros = filtros[:-1] + ", pedido__isnull=True).order_by('-pk')"
 			guias = eval(filtros)
 		else:
-			guias = GuiaRemision.objects.filter(pedido__isnull=True)
+			guias = GuiaRemision.objects.filter(pedido__isnull=True).order_by('-pk')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -45,7 +45,7 @@ def GuiaListar(request):
 			guias = Paginator(guias, limite)
 			guias = guias.page(pagina)
 	else:
-		guias = GuiaRemision.objects.filter(pk=findID)
+		guias = GuiaRemision.objects.filter(pk=findID).order_by('-pk')
 		total = guias.count()
 	
 	return render(

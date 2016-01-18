@@ -27,10 +27,10 @@ def PedidoListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", estado=False)"
+			filtros = filtros[:-1] + ", estado=False).order_by('-id')"
 			pedidos = eval(filtros)
 		else:
-			pedidos = Pedido.objects.filter(estado=False)
+			pedidos = Pedido.objects.filter(estado=False).order_by('-id')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -43,7 +43,7 @@ def PedidoListar(request):
 			pedidos = Paginator(pedidos, limite)
 			pedidos = pedidos.page(pagina)
 	else:
-		pedidos = Pedido.objects.filter(pk=findID)
+		pedidos = Pedido.objects.filter(pk=findID).order_by('-id')
 		total = pedidos.count()
 	
 	return render(

@@ -28,10 +28,10 @@ def ValeListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", pedido__isnull=True)"
+			filtros = filtros[:-1] + ", pedido__isnull=True).order_by('-numero')"
 			vales = eval(filtros)
 		else:
-			vales = Vale.objects.filter(pedido__isnull=True)
+			vales = Vale.objects.filter(pedido__isnull=True).order_by('-numero')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -44,7 +44,7 @@ def ValeListar(request):
 			vales = Paginator(vales, limite)
 			vales = vales.page(pagina)
 	else:
-		vales = Vale.objects.filter(pk=findID)
+		vales = Vale.objects.filter(pk=findID).order_by('-numero')
 		total = vales.count()
 	
 	return render(

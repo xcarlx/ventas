@@ -32,10 +32,10 @@ def VentaListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ")"
+			filtros = filtros[:-1] + ").order_by('-numero_documento')"
 			ventas = eval(filtros)
 		else:
-			ventas = Venta.objects.all()
+			ventas = Venta.objects.all().order_by('-numero_documento')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -48,7 +48,7 @@ def VentaListar(request):
 			ventas = Paginator(ventas, limite)
 			ventas = ventas.page(pagina)
 	else:
-		ventas = Venta.objects.filter(pk=findID)
+		ventas = Venta.objects.filter(pk=findID).order_by('-numero_documento')
 		total = ventas.count()
 	
 	return render(

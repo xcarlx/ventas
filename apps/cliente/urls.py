@@ -5,5 +5,6 @@ urlpatterns = [
 	url(r'clientes.cliente/eliminar/$', "apps.cliente.views.ClienteEliminar", name='cliente_eliminar'),
 	url(r'clientes.cliente/crear/$', "apps.cliente.views.ClienteCrear", name='cliente_crear'),
 	url(r'clientes.cliente/editar/$', "apps.cliente.views.ClienteEditar", name='cliente_editar'),
+	url(r'clientes.cliente/editar/$', "apps.cliente.views.ClienteEditar", name='cliente_editar'),
 ]
 

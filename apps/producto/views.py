@@ -147,3 +147,48 @@ def ProductoFotoSubir(request):
 		json.dumps(respuesta),
 		content_type="application/json"
 		)
+
+def ControlProductoListar(request):
+	
+	findID = request.GET.get("id", 0)
+
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Producto.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ")"
+			producto = eval(filtros)
+		else:
+			producto = Producto.objects.all()
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			producto = producto.order_by(tipo_orden+campo_orden)
+		total = producto.count()
+		# Paginacion
+		if pagina > 0:
+			producto = Paginator(producto, limite)
+			producto = producto.page(pagina)
+	else:
+		producto = Producto.objects.filter(pk=findID)
+		total = producto.count()
+
+	return render(
+		request, 
+		"producto/producto.json",
+		{
+			'productos': producto,
+			'total':total
+		},
+		content_type= "application/json",
+	)

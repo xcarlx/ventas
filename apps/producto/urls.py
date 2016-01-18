@@ -6,6 +6,6 @@ urlpatterns = [
 	url(r'productos.producto/crear/$', "apps.producto.views.ProductoCrear", name='tipoproducto_crear'),
 	url(r'productos.producto/editar/$', "apps.producto.views.ProductoEditar", name='tipoproducto_editar'),
 	url(r'productos.producto/subirfoto/$', "apps.producto.views.ProductoFotoSubir", name='tipoproducto_editar'),
-	
+	url(r'controles.controlproducto/listar/$', "apps.producto.views.ControlProductoListar", name='controlproducto_listar'),
 ]
 
