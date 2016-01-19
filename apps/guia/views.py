@@ -152,8 +152,8 @@ def GuiaEditar(request):
 				dg = DetalleGuia.objects.filter(guia_remision_id__in = idsguias).values("producto_id", "cantidad")
 
 				verificarDetalle = True
-				for idv in idsvales:
-					dv1 = DetalleVale.objects.filter(vale_id = idv)
+				for idv in idsguias:
+					dv1 = DetalleGuia.objects.filter(guia_remision_id = idv)
 					if dv1.count() == 0:
 						verificarDetalle = False
 				if verificarDetalle == True:
