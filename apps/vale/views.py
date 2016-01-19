@@ -154,30 +154,43 @@ def ValeEditar(request):
 				for reg in registros:
 					idsvales.append(reg["id"])
 				dv = DetalleVale.objects.filter(vale_id__in = idsvales).values("producto_id", "cantidad")
-				total = dv.count()
-				idproductos= []
-				prod = []
-				for p in dv:
-					prod.append(p["producto_id"])
 
-				for i in prod :
-					if i not in idproductos:
-						idproductos.append(i)
-				idpedido = GenerarPedido(idcliente,request)
-				for idp in idproductos:
-					cantidad = 0
-					for i in dv:
-						if int(i["producto_id"]) == idp:
-							cantidad = cantidad+i["cantidad"]
-					GenerarDetallePedido(idpedido,idp, cantidad, request)
-				for i in idsvales:
-					registro = Vale.objects.get(pk=i)
-					registro.pedido = Pedido.objects.get(pk=idpedido)
-					registro.save()
+				verificarDetalle = True
+				for idv in idsvales:
+					dv1 = DetalleVale.objects.filter(vale_id = idv)
+					if dv1.count() == 0:
+						verificarDetalle = False
+				if verificarDetalle == True:
+					idproductos= []
+					prod = []
+					for p in dv:
+						prod.append(p["producto_id"])
 
+					for i in prod :
+						if i not in idproductos:
+							idproductos.append(i)
+					idpedido = GenerarPedido(idcliente,request)
+					for idp in idproductos:
+						cantidad = 0
+						for i in dv:
+							if int(i["producto_id"]) == idp:
+								cantidad = cantidad+i["cantidad"]
+						GenerarDetallePedido(idpedido,idp, cantidad, request)
+					for i in idsvales:
+						registro = Vale.objects.get(pk=i)
+						registro.pedido = Pedido.objects.get(pk=idpedido)
+						registro.save()
+
+					response_data = {"success": "Pedido Generado Correctamente"}
+				else:
+					response_data = {"success": "Hay Algunos Vales sin Productos"}
+			else:
+				response_data = {"success": "Ha seleccionaod algunos Clientes Diferentes"}
+		else:
+			response_data = {"success": "Error al actualizar el registro"}
 
 	else:
-		response_data = {"error": "Error al actualizar el registro"}
+		response_data = {"success": "Error al actualizar el registro"}
 
 	return HttpResponse(
 		json.dumps(response_data),

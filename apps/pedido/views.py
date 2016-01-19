@@ -281,46 +281,49 @@ def VentaPedidoCrear(request):
 		total = GenerarTotalPedido(idpedido)
 		subtotal = total / Decimal(1.18)
 		igv = total - subtotal
+		dp1 = DetallePedido.objects.filter(pedido_id=idpedido)
+		if dp1.count()>0:
+			try:
+				if reprogramar == False :
+					venta = Venta.objects.create(
+							tipo_documento = tipodoc,
+							numero_documento = NroPedido(str(nro_doc)),
+							numero_correlativo = NroCorrelativo(str(nro_corre)),
+							sub_total = subtotal,
+							igv = igv,
+							total = total,
+							pedido_id = idpedido,
+							creador = request.user,
+						)
+					venta.save()
+					GenerarDetalleVenta(idpedido, venta.id,request)
+				else:
+					venta = Venta.objects.create(
+							tipo_documento = tipodoc,
+							numero_documento = NroPedido(str(nro_doc)),
+							numero_correlativo = NroCorrelativo(str(nro_corre)),
+							sub_total = subtotal,
+							igv = igv,
+							total = total,
+							pedido_id = idpedido,
+							creador = request.user,
+						)
+					venta.save()
+					GenerarDetalleVenta(idpedido, venta.id, request)
+					Reprogramar(idpedido, nro_dias, request)
+				registro = Pedido.objects.get(pk=int(idpedido))
+				registro.estado = True
+				registro.save()
 
-		try:
-			if reprogramar == False :
-				venta = Venta.objects.create(
-						tipo_documento = tipodoc,
-						numero_documento = NroPedido(str(nro_doc)),
-						numero_correlativo = NroCorrelativo(str(nro_corre)),
-						sub_total = subtotal,
-						igv = igv,
-						total = total,
-						pedido_id = idpedido,
-						creador = request.user,
-					)
-				venta.save()
-				GenerarDetalleVenta(idpedido, venta.id,request)
-			else:
-				venta = Venta.objects.create(
-						tipo_documento = tipodoc,
-						numero_documento = NroPedido(str(nro_doc)),
-						numero_correlativo = NroCorrelativo(str(nro_corre)),
-						sub_total = subtotal,
-						igv = igv,
-						total = total,
-						pedido_id = idpedido,
-						creador = request.user,
-					)
-				venta.save()
-				GenerarDetalleVenta(idpedido, venta.id, request)
-				Reprogramar(idpedido, nro_dias, request)
-			registro = Pedido.objects.get(pk=int(idpedido))
-			registro.estado = True
-			registro.save()
+				response_data = {
+					"success": "Venta generada correctamente",
+				}
 
-			response_data = {
-				"success": "Venta generada correctamente",
-			}
-
-		except ValueError:
-			response_data = {"success":"Error al crear la Venta"}
-			raise
+			except ValueError:
+				response_data = {"success":"Error al crear la Venta"}
+				raise
+		else:
+			response_data = {"success":"No hay Productos del Pedido Seleccionado"}
 
 	else:
 		response_data = {"error": "Error al crear el la Venta"}
