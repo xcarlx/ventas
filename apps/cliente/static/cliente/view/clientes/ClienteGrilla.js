@@ -18,17 +18,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 			],
 		},
 		{
-			text: "Documento",
-			width: 100,
-			dataIndex: 'tipo_documento',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
-			text: "Numero",
+			text: "DNI/RUC",
 			width: 100,
 			dataIndex: 'nro_documento',
 			items:[
@@ -49,7 +39,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},
 		{
 			text: "Telefono",
-			width: 80,
+			width: 150,
 			dataIndex: 'telefono',
 			items:[
 				{

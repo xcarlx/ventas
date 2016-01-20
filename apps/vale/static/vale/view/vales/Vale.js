@@ -38,7 +38,7 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 				{
 					xtype: 'combobox',
 					editable: false,
-		          	fieldLabel: "Seleccionar el Producto: ",
+		          	fieldLabel: "Seleccionar el Producto ",
 					labelWidth: 150,
 					width: 600,
 					reference: 'comboproductosvale',
@@ -55,18 +55,47 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 					editable: true,
 				},
 				{
-					labelWidth: 150,
-					name: 'cantidad',
-					reference: 'cantidadproductosvale',
-					xtype: 'numberfield',
-					fieldLabel: 'Cantidad',
-					allowNegative: false,
-					allowBlank: false,
-					minValue : 1,
-					bind:{
-						disabled: "{!comboproductosvale.selection}",
-					}
-				}
+					xtype: 'panel',
+					border: false,
+					width: '100%',
+					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
+					layout:{
+						type: 'hbox',
+					},
+					items:[
+						{
+							labelWidth: 150,
+							name: 'cantidad',
+							reference: 'cantidadproductosvale',
+							xtype: 'numberfield',
+							fieldLabel: 'Cantidad ',
+							allowNegative: false,
+							allowBlank: false,
+							minValue : 1,
+							bind:{
+								disabled: "{!comboproductosvale.selection}",
+							}
+						},
+						{
+							// id: "precio_producto",
+							labelWidth: 96,
+							xtype: 'numberfield',
+							name: 'precio',
+							margin: 2,
+							fieldLabel: 'Precio ',
+							anchor: '100%',
+							maxValue: 1000,
+							minValue: 0.00,
+							forcePrecision: true,
+							decimalSeparator : ".",
+							decimalPrecision : 2,
+							bind:{
+								disabled: "{!comboproductosvale.selection}",
+								value:"{comboproductosvale.selection.precio}",
+							},
+						},
+					],
+				},
 			],
 		},
 		{

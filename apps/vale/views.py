@@ -267,15 +267,15 @@ def DetalleValeCrear(request):
 		idvale = int(registros[0]['valeid'])
 		idproducto = int(registros[0]['productoid'])
 		cantidad = int(registros[0]['cantidad'])
+		precio = float(registros[0]['precio'])
 		idp = Producto.objects.get(pk = idproducto)
-		precio = Producto.objects.filter(pk = idproducto)
 		vale=Vale.objects.get(pk=idvale)
 		try:
 			detallevale = DetalleVale.objects.create(
 					vale = vale,
 					producto = idp,
 					cantidad = cantidad,
-					precio = idp.precio,
+					precio = precio,
 					creador = request.user,
 				)
 			detallevale.save()

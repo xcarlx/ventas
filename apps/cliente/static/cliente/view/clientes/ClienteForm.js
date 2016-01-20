@@ -44,7 +44,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					anchor: '100%',
 					msgTarget: 'side',
 					bind:{
-						value: '{recordCliente.nombres}'
+						value: '{recordCliente.nombre}'
 					}
 				},
 				{

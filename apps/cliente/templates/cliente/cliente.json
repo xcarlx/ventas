@@ -7,6 +7,7 @@
 				"id": {{cliente.id}},
 				"apellidos": '{{cliente.apellidos}}',
 				"nombres":'{{cliente.nombres}} {{cliente.apellidos}}',
+				"nombre":'{{cliente.nombres}}',
 				"cliente": '{{cliente.nombres}} {{cliente.apellidos}} / {{cliente.area}} / {{cliente.responsable}}',
 				"tipo_documento": '{{cliente.tipo_documento}}',
 				"nro_documento": '{{cliente.nro_documento}}',
