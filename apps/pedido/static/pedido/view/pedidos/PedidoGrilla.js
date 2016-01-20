@@ -29,7 +29,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 		},
 		{
 			text: "Telefono",
-			width: 100,
+			width: 150,
 			dataIndex: 'cliente__telefono',
 			items:[
 				{

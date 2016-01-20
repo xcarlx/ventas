@@ -57,17 +57,46 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 					editable: true,
 				},
 				{
-					labelWidth: 150,
-					name: 'cantidad',
-					reference: 'cantidadproductospedido',
-					xtype: 'numberfield',
-					fieldLabel: 'Cantidad',
-					allowNegative: false,
-					allowBlank: false,
-					minValue : 1,
-					bind:{
-						disabled: "{!comboproductospedido.selection}",
-					}
+					xtype: 'panel',
+					border: false,
+					width: '100%',
+					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
+					layout:{
+						type: 'hbox',
+					},
+					items:[
+						{
+							labelWidth: 150,
+							name: 'cantidad',
+							reference: 'cantidadproductospedido',
+							xtype: 'numberfield',
+							fieldLabel: 'Cantidad',
+							allowNegative: false,
+							allowBlank: false,
+							minValue : 1,
+							bind:{
+								disabled: "{!comboproductospedido.selection}",
+							}
+						},
+						{
+							// id: "precio_producto",
+							labelWidth: 96,
+							xtype: 'numberfield',
+							name: 'precio',
+							margin: 2,
+							fieldLabel: 'Precio ',
+							anchor: '100%',
+							maxValue: 1000,
+							minValue: 0.00,
+							forcePrecision: true,
+							decimalSeparator : ".",
+							decimalPrecision : 2,
+							bind:{
+								disabled: "{!comboproductospedido.selection}",
+								value:"{comboproductospedido.selection.precio}",
+							},
+						},
+					],
 				}
 			],
 		},

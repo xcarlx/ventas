@@ -223,14 +223,15 @@ def DetallePedidoCrear(request):
 		idpedido = int(registros[0]['pedidoid'])
 		idproducto = int(registros[0]['productoid'])
 		cantidad = int(registros[0]['cantidad'])
+		precio = float(registros[0]['precio'])
 		idp = Producto.objects.get(pk = idproducto)
-		precio = Producto.objects.filter(pk = idproducto)
 		pedido=Pedido.objects.get(pk=idpedido)
 		try:
 			detallepedido = DetallePedido.objects.create(
 					pedido = pedido,
 					producto = idp,
 					cantidad = cantidad,
+					precio = precio,
 					creador = request.user,
 				)
 			detallepedido.save()

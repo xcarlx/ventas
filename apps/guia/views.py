@@ -29,10 +29,10 @@ def GuiaListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", pedido__isnull=True).order_by('-pk')"
+			filtros = filtros[:-1] + ", venta__isnull=True).order_by('-pk')"
 			guias = eval(filtros)
 		else:
-			guias = GuiaRemision.objects.filter(pedido__isnull=True).order_by('-pk')
+			guias = GuiaRemision.objects.filter(venta__isnull=True).order_by('-pk')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -68,7 +68,7 @@ def GuiaCrear(request):
 		fecha_emision = datetime.datetime.fromtimestamp(int(registros[0]['fecha_emision'])).date()
 		fecha_translado = datetime.datetime.fromtimestamp(int(registros[0]['fecha_translado'])).date()
 		idcliente = Cliente.objects.get(pk=idc)
-		g = GuiaRemision.objects.filter(pedido__isnull=True)
+		g = GuiaRemision.objects.filter(venta__isnull=True)
 		try:
 			guia = GuiaRemision.objects.create(
 					punto_partida = punto_partida,
@@ -261,6 +261,7 @@ def DetalleGuiaCrear(request):
 		idguia = int(registros[0]['guia_remisionid'])
 		idproducto = int(registros[0]['productoid'])
 		cantidad = int(registros[0]['cantidad'])
+		precio = float(registros[0]['precio'])
 		idp = Producto.objects.get(pk = idproducto)
 		guia=GuiaRemision.objects.get(pk=idguia)
 		try:
@@ -268,6 +269,7 @@ def DetalleGuiaCrear(request):
 					guia_remision = guia,
 					producto = idp,
 					cantidad = cantidad,
+					precio = precio,
 					creador = request.user,
 				)
 			detalleguia.save()
@@ -327,7 +329,7 @@ def GenerarPedido(idcliente, request):
 	fentrega = hoy + timedelta(days=0)
 	try:
 		pedido = Pedido.objects.create(
-				fecha_entrega = fentrega,
+				fecha = fentrega,
 				nro_dias = 0,
 				nro_pedido = NroPedido(str(p.count()+1)),
 				cliente_id = idcliente,

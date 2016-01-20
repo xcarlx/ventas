@@ -10,8 +10,8 @@
 				"producto__descripcion": '{{detallepedido.producto.descripcion}}',
 				"productoid": {{detallepedido.producto.id}},
 				"cantidad": {{detallepedido.cantidad}},
-				"producto__precio": {{detallepedido.producto.precio|unlocalize }},
-				"subtotal": {{ detallepedido.cantidad }}*{{ detallepedido.producto.precio|unlocalize }},
+				"precio": {{detallepedido.precio|unlocalize }},
+				"subtotal": {{ detallepedido.cantidad }}*{{ detallepedido.precio|unlocalize }},
 			},{% endfor %}
 		]
 }

@@ -9,7 +9,7 @@
 				"producto__descripcion": '{{ detallevale.producto.descripcion}}',
 				"productoid": {{ detallevale.producto.id}},
 				"valeid": {{ detallevale.vale.id}},
-				"producto__precio": {{ detallevale.precio|unlocalize }},
+				"precio": {{ detallevale.precio|unlocalize }},
 				"cantidad":{{ detallevale.cantidad }},
 				"subtotal":{{ detallevale.cantidad }}*{{ detallevale.precio|unlocalize }},
 			},{% endfor %}

@@ -11,7 +11,7 @@ import json, datetime
 from datetime import date, time, timedelta
 from django.utils import timezone
 from decimal import Decimal
-from apps.pedido.models import *
+from apps.venta.models import *
 
 def ValeListar(request):
 	findID = request.GET.get("id", 0)
@@ -28,10 +28,10 @@ def ValeListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", pedido__isnull=True).order_by('-numero')"
+			filtros = filtros[:-1] + ", venta__isnull=True).order_by('-id')"
 			vales = eval(filtros)
 		else:
-			vales = Vale.objects.filter(pedido__isnull=True).order_by('-numero')
+			vales = Vale.objects.filter(venta__isnull=True).order_by('-id')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -44,7 +44,7 @@ def ValeListar(request):
 			vales = Paginator(vales, limite)
 			vales = vales.page(pagina)
 	else:
-		vales = Vale.objects.filter(pk=findID).order_by('-numero')
+		vales = Vale.objects.filter(pk=findID).order_by('-id')
 		total = vales.count()
 	
 	return render(

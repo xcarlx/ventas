@@ -19,9 +19,9 @@
 -- Current Database: `grupoej$grupoej`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `grupoej$grupoej` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `grupoej` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `grupoej$grupoej`;
+USE `grupoej`;
 
 --
 -- Table structure for table `auth_group`

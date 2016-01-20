@@ -24,7 +24,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 			format:'0.00',
 			text: "Precio",
 			width: 100,
-			dataIndex: 'producto__precio',
+			dataIndex: 'precio',
 			sortable: false,
 		},	
 		{

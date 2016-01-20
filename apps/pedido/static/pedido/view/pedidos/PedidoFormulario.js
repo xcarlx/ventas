@@ -69,7 +69,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoFormulario', {
 					bind: '{currentPedido.nro_dias}',
 					allowNegative: false,
 					allowBlank: false,
-					minValue : 1,
+					minValue : 0,
 				},
 			],
 			dockedItems: [

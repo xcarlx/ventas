@@ -19,6 +19,22 @@ Ext.define('GRUPOEJ.guia.view.guias.DetalleGuiaGrilla', {
 			width: 100,
 			dataIndex: 'cantidad',
 			sortable: false
+		},		
+		{
+			xtype: "numbercolumn",
+			text: "Precio",
+			width: 100,
+			dataIndex: 'precio',
+			sortable: false,
+			format:'0.00',
+		},	
+		{
+			xtype: "numbercolumn",
+			text: "Sub total",
+			width: 100,
+			dataIndex: 'subtotal',
+			sortable: false,
+			format:'0.00',
 		},
 	],
 	dockedItems:[
