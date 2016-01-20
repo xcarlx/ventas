@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	height: 300,
 	columns: [
 		{
-			text: "Cliente - Nombre",
+			text: "Cliente / Razon Social",
 			flex: 2,
 			dataIndex: 'cliente__nombres',
 			items:[
@@ -18,9 +18,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			],
 		},
 		{
-			text: "Cliente - Apellido",
+			text: "Area Responsable",
 			flex: 2,
-			dataIndex: 'cliente__apellidos',
+			dataIndex: 'cliente__area',
 			items:[
 				{
 					xtype: 'searchtrigger'

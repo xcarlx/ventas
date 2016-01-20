@@ -23,9 +23,9 @@ class Cliente(Auditoria):
 	nombres = models.CharField(max_length=150)
 	apellidos = models.CharField(max_length=80, blank=True, null=True, default="")
 	tipo_documento = models.CharField(max_length=3, choices=TIPO_DOCUMENTO_IDENTIDAD, default=DNI)
-	nro_documento = models.CharField(max_length=11, unique=True)
-	email = models.CharField(max_length=45, unique=True,blank=True, null=True)
-	telefono = models.CharField(max_length=10, unique=True,blank=True, null=True)
+	nro_documento = models.CharField(max_length=11)
+	email = models.CharField(max_length=45, blank=True, null=True)
+	telefono = models.CharField(max_length=45, blank=True, null=True)
 	direccion = models.CharField(max_length=150,blank=True, null=True)
 	area = models.CharField(max_length=200,blank=True, null=True)
 	responsable = models.CharField(max_length=45, blank=True, null=True)
@@ -34,30 +34,6 @@ class Cliente(Auditoria):
 
 	def __str__(self):
 		return self.nombres+ ' - '+self.apellidos
-
-	def getDepaId(self):
-		return self.ubigeo[:2] if len(self.ubigeo) >= 2 else ""
-
-	def getProvId(self):
-		return self.ubigeo[2:4] if len(self.ubigeo) >= 4 else ""
-
-	def getDistId(self):
-		return self.ubigeo[4:6] if len(self.ubigeo) >= 6 else ""
-
-	def getDepaName(self):
-		return "" if len(self.getDepaId())==0 else Ubigeo.objects.get(coddpto=self.getDepaId(),codprov="00",coddist="00").nombre
-
-	def getProvName(self):
-		return "" if len(self.getProvId())==0 else Ubigeo.objects.get(coddpto=self.getDepaId(),codprov=self.getProvId(),coddist="00").nombre
-
-	def getDistName(self):
-		return "" if len(self.getDistId())==0 else Ubigeo.objects.get(coddpto=self.getDepaId(),codprov=self.getProvId(),coddist=self.getDistId()).nombre
-
-	def getUbigeo(self):
-		return self.getDepaName() + " / " + self.getProvName() + " / " + self.getDistName()
-
-	def getUbigeoProv(self):
-		return self.getDepaName() + " / " + self.getProvName()
 
 class Prestamo(Auditoria):
 	BOLETA = 'BOLETA'

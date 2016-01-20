@@ -44,7 +44,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaFormulario', {
 		            	store: '{store_comboclientesguia}',
 		            	value: '{currentGuia.clienteid}',
 		            },
-					displayField: 'nombres_apellidos',
+					displayField: 'cliente',
 					name: 'clienteid',
 					valueField: 'id',
 					queryMode: 'local',

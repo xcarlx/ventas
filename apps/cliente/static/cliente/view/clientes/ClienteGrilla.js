@@ -8,8 +8,8 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 	height: 500,
 	columns: [
 		{
-			text: "Nombre",
-			width: 250,
+			text: "Cliente / Razon Social",
+			flex: 1,
 			dataIndex: 'nombres',
 			items:[
 				{
@@ -18,17 +18,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 			],
 		},
 		{
-			text: "Apellidos",
-			width: 250,
-			dataIndex: 'apellidos',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
-			text: "Tipo de Documento",
+			text: "Documento",
 			width: 100,
 			dataIndex: 'tipo_documento',
 			items:[
@@ -49,7 +39,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},
 		{
 			text: "E-MAIL",
-			width: 250,
+			width: 200,
 			dataIndex: 'email',
 			items:[
 				{
@@ -69,8 +59,18 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},	
 		{
 			text: "Direccion",
-			width: 250,
+			width: 200,
 			dataIndex: 'direccion',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
+				{
+			text: "Area",
+			width: 200,
+			dataIndex: 'area',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -79,14 +79,14 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},	
 		{
 			text: "Responsable",
-			width: 250,
+			width: 200,
 			dataIndex: 'responsable',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
-		},
+		},		
 	],
 	dockedItems:[
 		{

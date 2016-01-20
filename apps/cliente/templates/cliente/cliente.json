@@ -5,9 +5,9 @@
 	"data":	[{% for cliente in  cliente %}
 			{
 				"id": {{cliente.id}},
-				"nombres": '{{cliente.nombres}}',
 				"apellidos": '{{cliente.apellidos}}',
-				"nombres_apellidos":'{{cliente.nombres}} {{cliente.apellidos}}',
+				"nombres":'{{cliente.nombres}} {{cliente.apellidos}}',
+				"cliente": '{{cliente.nombres}} {{cliente.apellidos}} / {{cliente.area}} / {{cliente.responsable}}',
 				"tipo_documento": '{{cliente.tipo_documento}}',
 				"nro_documento": '{{cliente.nro_documento}}',
 				"email": '{{cliente.email}}',

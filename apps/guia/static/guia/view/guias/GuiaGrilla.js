@@ -9,7 +9,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 	height: 300,
 	columns: [
 		{
-			text: "Cliente - Nombre",
+			text: "Cliente / Razon Social",
 			flex: 2,
 			dataIndex: 'cliente__nombres',
 			items:[
@@ -19,15 +19,15 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 			],
 		},
 		{
-			text: "Cliente - Apellido",
+			text: "Area - Responsable",
 			flex: 2,
-			dataIndex: 'cliente__apellidos',
+			dataIndex: 'cliente__area',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
-		},	
+		},
 		{
 			text: "Punto de Partida",
 			flex: 2,
