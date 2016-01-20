@@ -9,7 +9,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 	},
 	columns: [
 		{
-			text: "Cliente - Nombre",
+			text: "Cliente / Razon Social",
 			flex: 2,
 			dataIndex: 'cliente__nombres',
 			items:[
@@ -19,9 +19,9 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 			],
 		},
 		{
-			text: "Cliente - Apellido",
+			text: "Area - Responsable",
 			flex: 2,
-			dataIndex: 'cliente__apellidos',
+			dataIndex: 'cliente__area',
 			items:[
 				{
 					xtype: 'searchtrigger'

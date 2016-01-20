@@ -40,7 +40,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoFormulario', {
 					xtype: 'combobox',
 					fieldLabel: "Cliente",
 					reference: 'comboproductos',
-					displayField: 'nombres_apellidos',
+					displayField: 'cliente',
 					valueField: 'id',
 					bind:{
 						store: '{store_comboclientespedido}',

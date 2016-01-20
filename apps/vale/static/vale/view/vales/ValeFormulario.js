@@ -40,7 +40,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeFormulario', {
 					xtype: 'combobox',
 					fieldLabel: "Cliente",
 					reference: 'comboproductos',
-					displayField: 'nombres_apellidos',
+					displayField: 'cliente',
 					valueField: 'id',
 					bind:{
 						store: '{store_comboclientes}',

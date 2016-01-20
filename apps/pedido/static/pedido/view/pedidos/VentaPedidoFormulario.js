@@ -67,7 +67,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							fieldLabel: 'Correlativo',
 							allowNegative: false,
 							allowBlank: false,
-							minValue : 1,
+							minValue : 0,
 						},
 						{
 							xtype: 'numberfield',
@@ -78,7 +78,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							fieldLabel: ' Nro',
 							allowNegative: false,
 							allowBlank: false,
-							minValue : 1,
+							minValue : 0,
 						},
 					],
 				},
@@ -111,7 +111,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							fieldLabel: ' Nro de Dias',
 							allowNegative: false,
 							allowBlank: true,
-							minValue : 1,
+							minValue : 0,
 							bind:{
 								disabled: "{!reprogramarpedidoventa.checked}",
 							}
