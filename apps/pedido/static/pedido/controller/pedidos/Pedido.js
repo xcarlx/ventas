@@ -134,7 +134,8 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	},
 	ventana_Cancelar: function(button, e, options){
 		me = this;
-		me.editPedidoWindow.close();
+		me.editPedidoWindow.hide();
+		// me.getStore("store_comboclientespedido").load();
 	},
 	modulo_Refrescar: function(button, e, options){
 		me = this;

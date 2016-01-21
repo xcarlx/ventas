@@ -1,7 +1,7 @@
 Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoFormulario', {
 	extend: 'Ext.window.Window',
 	alias: 'widget.pedido-formulario',
-	width: 400,
+	width: 500,
 	action: '',
 	closeAction: 'hide',
 	closable: true,
@@ -51,9 +51,13 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoFormulario', {
 					queryDelay: 5,
 					queryChaching: false,
 					forceSelection:true,
+					hideTrigger: true,
 					editable: true,
 					triggerAction: 'all',
+					typeAheadDelay: 100,
+    				// minChars: 3,
     				lastQuery: '',
+    				typeAhead: true,
     				listeners: {
 				        // delete the previous query in the beforequery event or set
 				        // combo.lastQuery = null (this will reload the store the next time it expands)
