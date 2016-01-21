@@ -83,6 +83,14 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 					],
 				},
 				{
+					xtype: 'checkboxfield',
+					name: 'credito',
+					labelWidth: 85,
+					labelAlign: 'right',
+					width: '40%',
+					fieldLabel: 'Credito',
+				},
+				{
 					xtype: 'panel',
 					bodyPadding: 5,
 					margin: 5,

@@ -6,6 +6,7 @@ Ext.define('GRUPOEJ.pedido.model.pedidos.VentaPedido', {
 		{name: 'numero_correlativo', type: 'int'},
 		{name: 'numero_documento', type: 'int'},
 		{name: 'reprogramar', type: 'boolean'},
+		{name: 'credito', type: 'boolean'},
 		{name: 'nro_dias', type: 'int'},
 
 	],

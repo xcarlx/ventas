@@ -279,6 +279,7 @@ def VentaPedidoCrear(request):
 		nro_doc = registros[0]['numero_documento']
 		reprogramar = registros[0]['reprogramar']
 		nro_dias = registros[0]['nro_dias']
+		credito = registros[0]['credito']
 		total = GenerarTotalPedido(idpedido)
 		subtotal = total / Decimal(1.18)
 		igv = total - subtotal
@@ -294,6 +295,7 @@ def VentaPedidoCrear(request):
 							igv = igv,
 							total = total,
 							pedido_id = idpedido,
+							credito = credito,
 							creador = request.user,
 						)
 					venta.save()
@@ -306,6 +308,7 @@ def VentaPedidoCrear(request):
 							sub_total = subtotal,
 							igv = igv,
 							total = total,
+							credito = credito,
 							pedido_id = idpedido,
 							creador = request.user,
 						)
@@ -340,7 +343,7 @@ def GenerarDetalleVenta(id_pedido, id_venta, request):
 				venta_id = id_venta,
 				producto_id = dp.producto.id,
 				cantidad = dp.cantidad,
-				precio = dp.producto.precio,
+				precio = dp.precio,
 				creador = request.user,
 			)
 		dv.save()
@@ -366,6 +369,7 @@ def Reprogramar(id_pedido, nrodias, request):
 				pedido_id = p.id,
 				producto_id = dp.producto.id,
 				cantidad = dp.cantidad,
+				precio = dp.precio,
 				creador = request.user,
 			)
 		dp1.save()
@@ -374,7 +378,7 @@ def Reprogramar(id_pedido, nrodias, request):
 def GenerarTotalPedido(id_pedido):
 	total = 0
 	for v in DetallePedido.objects.filter(pedido_id=id_pedido):
-		subtotal = v.producto.precio * v.cantidad
+		subtotal = v.precio * v.cantidad
 		total = total+subtotal
 	return total  
 

@@ -14,8 +14,9 @@
 				"sub_total": '{{venta.sub_total|unlocalize  }}',
 				"igv": '{{venta.igv|unlocalize }}',
 				"total": '{{ venta.total|unlocalize }}',
-				"pedido__cliente__nombre": '{{ venta.pedido.cliente.nombres }}',
-				"pedido__cliente__apellidos": '{{venta.pedido.cliente.apellidos}}',
+				"credito": '{{ venta.credito|lower}}',
+				"pedido__cliente__nombre": '{{ venta.pedido.cliente.nombres }} {{venta.pedido.cliente.apellidos}}',
+				"pedido__cliente__area": '{{venta.pedido.cliente.area}} - {{venta.pedido.cliente.responsable}}',
 				"pedido__nro_pedido": '{{venta.pedido.nro_pedido}}',
 				"estado": '{{venta.estado}}',
 			},{% endfor %}

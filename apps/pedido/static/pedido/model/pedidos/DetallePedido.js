@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.pedido.model.pedidos.DetallePedido', {
 		{name: 'producto__descripcion', type: 'string'},
 		{name: 'productoid', type: 'int'},
 		{name: 'cantidad', type: 'int'},
-		{name: 'producto__precio', type: 'number'},
+		{name: 'precio', type: 'number'},
 	],
 	validators:{
 		cantidad: [

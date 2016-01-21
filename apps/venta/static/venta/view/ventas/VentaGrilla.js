@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	height: 370,
 	columns: [
 		{
-			text: "Cliente - Nombre",
+			text: "Cliente - Razon Social",
 			flex: 2,
 			dataIndex: 'pedido__cliente__nombre',
 			items:[
@@ -18,9 +18,9 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 			],
 		},
 		{
-			text: "Cliente - Apellido",
+			text: "Area - Responsable",
 			flex: 2,
-			dataIndex: 'pedido__cliente__apellidos',
+			dataIndex: 'pedido__cliente__area',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -105,6 +105,13 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 				}
 			],
 		},
+		{
+            xtype: 'booleancolumn', 
+            text: 'CREDITO',
+            trueText: 'DEBE',
+            falseText: 'PAGO', 
+            dataIndex: 'credito'
+        },
 		{
 			text: "Estado",
 			width: 75,
