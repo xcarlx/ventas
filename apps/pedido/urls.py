@@ -13,5 +13,7 @@ urlpatterns = [
 
 	url(r'pedidos.ventapedido/crear/$', "apps.pedido.views.VentaPedidoCrear", name='ventapedido_crear'),
 	url(r'pedidos.ventapedido/listar/$', "apps.pedido.views.VentaPedidoListar", name='ventapedido_crear'),
+	url(r'pedidos.valeguiapedido/crear/$', "apps.pedido.views.ValeGuiaPedidoCrear", name='valeguiapedido_crear'),
+	# url(r'pedidos.ventapedido/listar/$', "apps.pedido.views.VentaPedidoListar", name='ventapedido_crear'),
 ]
 

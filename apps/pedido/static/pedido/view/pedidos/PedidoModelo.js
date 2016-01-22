@@ -5,6 +5,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoModelo', {
 		'GRUPOEJ.pedido.model.pedidos.DetallePedido',
 		'GRUPOEJ.pedido.model.pedidos.Producto', 
 		'GRUPOEJ.cliente.model.clientes.Cliente',
+		'GRUPOEJ.pedido.model.pedidos.VentaPedido',
+		'GRUPOEJ.pedido.model.pedidos.ValeGuiaPedido',
+
 	],
 	alias: 'viewmodel.pedido',
 	stores:{
@@ -35,6 +38,13 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoModelo', {
 		},		
 		store_ventapedido:{
 			model: 'GRUPOEJ.pedido.model.pedidos.VentaPedido',
+			autoLoad: false,
+			// pageSize: gridPageSize,
+			// remoteSort: true,
+			// remoteFilter: true,
+		},		
+		store_valeguiapedido:{
+			model: 'GRUPOEJ.pedido.model.pedidos.ValeGuiaPedido',
 			autoLoad: false,
 			// pageSize: gridPageSize,
 			// remoteSort: true,

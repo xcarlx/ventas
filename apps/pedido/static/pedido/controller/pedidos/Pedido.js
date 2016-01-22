@@ -4,6 +4,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	requires:[
 		'GRUPOEJ.pedido.view.pedidos.PedidoFormulario', 
 		'GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario',
+		'GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario',
 	],
 	init: function(){
 		me = this;
@@ -28,9 +29,15 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				constrainTo: panelCentral.id,		
 				viewModel: { data: { titulo: "", }, },
 			});
-			// me.editVentaPedidoWindow.on("show", function(win) {
-			// 	me.lookupReference("pedidoFormulario").getForm().findField("clienteid").focus();
-			// });
+		}; 
+		if (!me.editValeGuiaPedidoWindow) {
+			me.editValeGuiaPedidoWindow = me.getView().add({
+				xtype: 'valeguia-formulario',
+				constrain: true,
+				renderTo: panelCentral.id,
+				constrainTo: panelCentral.id,		
+				viewModel: { data: { titulo: "", }, },
+			});
 		}; 
 	},
 	pedido_Agregar: function(button, e, options){
@@ -148,6 +155,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		this.refrescarPedido();
 		this.lookupReference("idpedidoreference").setValue(record.get("id"));
 		me.lookupReference('ventapedidoid').setValue(record.get("id"));
+		me.lookupReference('valeguiapedidoid').setValue(record.get("id"));
 	},
 	deSeleccionarPedido: function(sm, selectedRecords){
 		this.getStore('store_productos').load({
@@ -268,6 +276,71 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		if (form && form.isValid()) {
 			with (store) {
 				if (me.editVentaPedidoWindow.action == "add") {
+					add(
+						form.getFieldValues()
+					);
+				}
+				save({
+					success: function(rec, op) {
+						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+						store.reload();
+						me.venta_ventana_Cancelar();
+						me.getStore('store_pedidos').load();
+						me.getStore('store_detallepedidos').load({
+							url: 'grupoej.pedido.detallepedidos.detallepedido/listar/0'
+						});
+					},
+					failure: function(rec, op) {
+						store.rejectChanges();
+					}
+				});
+			}
+		}
+	},
+
+	// Vales Guia
+
+
+	valeguia_AbrirVentanaEditar: function(record, button) {
+		var me = this;
+		with (me.editValeGuiaPedidoWindow) {
+			setIconCls(button.iconCls);
+			action = !record ? "add" : "edit";
+			with (getViewModel()) {
+				setData({
+					titulo: 'Cambiar a Vale o Guia'
+				});
+				setLinks({
+					currentValeGuia: record || {
+						type: 'GRUPOEJ.pedido.model.pedidos.ValeGuiaPedido',
+						create: true
+					}
+				});
+			}
+			show();
+		}
+	},
+
+	valeguiapedido_Agregar: function(button, e, options){
+		me = this;
+		me.editValeGuiaPedidoWindow.on("show", function(win) {
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("reprogramar").setValue(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("nro_dias").setValue(0);
+			});
+		me.valeguia_AbrirVentanaEditar(null, button);
+	},
+	valeguia_ventana_Cancelar: function(button, e, options){
+		me = this;
+		me.editValeGuiaPedidoWindow.close();
+	},
+
+	valeguia_ventana_Guardar: function(button, e, options){
+		me = this;
+		form = me.lookupReference('valeguiaFormulariopedido').getForm();
+		store = me.getStore("store_valeguiapedido");
+		if (form && form.isValid()) {
+			with (store) {
+				if (me.editValeGuiaPedidoWindow.action == "add") {
 					add(
 						form.getFieldValues()
 					);

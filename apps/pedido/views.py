@@ -337,6 +337,76 @@ def VentaPedidoCrear(request):
 		content_type="application/json"
 	)
 
+def ValeGuiaPedidoCrear(request):
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idpedido = registros[0]['pedidoid']
+		tipodoc = registros[0]['tipo_documento']
+		reprogramar = registros[0]['reprogramar']
+		nro_dias = registros[0]['nro_dias']
+
+		print("AAA", idpedido)
+		print("BBB", tipodoc)
+		print("CCC", reprogramar)
+
+		# total = GenerarTotalPedido(idpedido)
+		# subtotal = total / Decimal(1.18)
+		# igv = total - subtotal
+		# dp1 = DetallePedido.objects.filter(pedido_id=idpedido)
+		# if dp1.count()>0:
+		# 	try:
+		# 		if reprogramar == False :
+		# 			venta = Venta.objects.create(
+		# 					tipo_documento = tipodoc,
+		# 					numero_documento = NroPedido(str(nro_doc)),
+		# 					numero_correlativo = NroCorrelativo(str(nro_corre)),
+		# 					sub_total = subtotal,
+		# 					igv = igv,
+		# 					total = total,
+		# 					pedido_id = idpedido,
+		# 					credito = credito,
+		# 					creador = request.user,
+		# 				)
+		# 			venta.save()
+		# 			GenerarDetalleVenta(idpedido, venta.id,request)
+		# 		else:
+		# 			venta = Venta.objects.create(
+		# 					tipo_documento = tipodoc,
+		# 					numero_documento = NroPedido(str(nro_doc)),
+		# 					numero_correlativo = NroCorrelativo(str(nro_corre)),
+		# 					sub_total = subtotal,
+		# 					igv = igv,
+		# 					total = total,
+		# 					credito = credito,
+		# 					pedido_id = idpedido,
+		# 					creador = request.user,
+		# 				)
+		# 			venta.save()
+		# 			GenerarDetalleVenta(idpedido, venta.id, request)
+		# 			Reprogramar(idpedido, nro_dias, request)
+		# 		registro = Pedido.objects.get(pk=int(idpedido))
+		# 		registro.estado = True
+		# 		registro.save()
+
+		# 		response_data = {
+		# 			"success": "Venta generada correctamente",
+		# 		}
+
+		# 	except ValueError:
+		# 		response_data = {"success":"Error al crear la Venta"}
+		# 		raise
+		# else:
+		# 	response_data = {"success":"No hay Productos del Pedido Seleccionado"}
+
+	else:
+		response_data = {"error": "Error al crear el la Venta"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
 def GenerarDetalleVenta(id_pedido, id_venta, request):
 	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
 		dv = DetalleVenta.objects.create(

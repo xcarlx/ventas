@@ -149,7 +149,22 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 					xtype: 'tbfill',
 
 				},
+				{
+					xtype: 'button',
+					text: 'Generar Vale / Guia',
+					iconCls: 'icono-agregar-azul',
+					listeners:{
+						click: 'valeguiapedido_Agregar',
+					},
+					bind: {
+						disabled: "{!pedido-grillapedidos.selection}",
+					},
+				},
 
+				{
+					xtype: 'tbfill',
+
+				},
 				{
 					xtype: 'tbfill',
 
