@@ -45,6 +45,10 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 					store: [['VALE', 'VALE'], ['GUIA', 'GUIA REMISION']],
 					anchor: '100%',
 					msgTarget: 'side',
+					reference: 'combodocvaleguia',
+					listeners: {
+						select: 'SeleccionarCombo',
+					},
 				},
 				{
 					xtype: 'panel',

@@ -260,6 +260,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				me.lookupReference("ventaFormulariopedido").getForm().findField("numero_documento").setValue(0);
 				me.lookupReference("ventaFormulariopedido").getForm().findField("reprogramar").setValue(false);
 				me.lookupReference("ventaFormulariopedido").getForm().findField("nro_dias").setValue(0);
+				me.lookupReference("ventaFormulariopedido").getForm().findField("credito").setValue(false);
 			});
 		me.ventapedido_AbrirVentanaEditar(null, button);
 	},
@@ -283,7 +284,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				save({
 					success: function(rec, op) {
 						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
-						store.reload();
+						// store.reload();
 						me.venta_ventana_Cancelar();
 						me.getStore('store_pedidos').load();
 						me.getStore('store_detallepedidos').load({
@@ -326,6 +327,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		me.editValeGuiaPedidoWindow.on("show", function(win) {
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("reprogramar").setValue(false);
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("nro_dias").setValue(0);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
 			});
 		me.valeguia_AbrirVentanaEditar(null, button);
 	},
@@ -348,8 +350,8 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				save({
 					success: function(rec, op) {
 						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
-						store.reload();
-						me.venta_ventana_Cancelar();
+						// store.reload();
+						me.valeguia_ventana_Cancelar();
 						me.getStore('store_pedidos').load();
 						me.getStore('store_detallepedidos').load({
 							url: 'grupoej.pedido.detallepedidos.detallepedido/listar/0'
@@ -360,6 +362,14 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 					}
 				});
 			}
+		}
+	},
+
+	SeleccionarCombo: function(){
+		me = this;
+		if(me.lookupReference("combodocvaleguia").getValue()=="GUIA"){
+			alert("ASA");
+
 		}
 	},
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from apps.producto.models import Producto
+from apps.vale.models import *
 from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
 from apps.venta.models import *
@@ -345,59 +346,48 @@ def ValeGuiaPedidoCrear(request):
 		tipodoc = registros[0]['tipo_documento']
 		reprogramar = registros[0]['reprogramar']
 		nro_dias = registros[0]['nro_dias']
+		pedido = Pedido.objects.filter(id = idpedido)
+		dp1 = DetallePedido.objects.filter(pedido_id=idpedido)
+		if dp1.count()>0:
+			if tipodoc == "VALE":
+				try:
+					if reprogramar == True :
+						Reprogramar(idpedido, nro_dias, request)
 
-		print("AAA", idpedido)
-		print("BBB", tipodoc)
-		print("CCC", reprogramar)
+					GemnerarDetalleVale(request, idpedido, pedido[0].cliente_id)
+					registro = Pedido.objects.get(pk=int(idpedido))
+					registro.estado = True
+					registro.save()
 
-		# total = GenerarTotalPedido(idpedido)
-		# subtotal = total / Decimal(1.18)
-		# igv = total - subtotal
-		# dp1 = DetallePedido.objects.filter(pedido_id=idpedido)
-		# if dp1.count()>0:
-		# 	try:
-		# 		if reprogramar == False :
-		# 			venta = Venta.objects.create(
-		# 					tipo_documento = tipodoc,
-		# 					numero_documento = NroPedido(str(nro_doc)),
-		# 					numero_correlativo = NroCorrelativo(str(nro_corre)),
-		# 					sub_total = subtotal,
-		# 					igv = igv,
-		# 					total = total,
-		# 					pedido_id = idpedido,
-		# 					credito = credito,
-		# 					creador = request.user,
-		# 				)
-		# 			venta.save()
-		# 			GenerarDetalleVenta(idpedido, venta.id,request)
-		# 		else:
-		# 			venta = Venta.objects.create(
-		# 					tipo_documento = tipodoc,
-		# 					numero_documento = NroPedido(str(nro_doc)),
-		# 					numero_correlativo = NroCorrelativo(str(nro_corre)),
-		# 					sub_total = subtotal,
-		# 					igv = igv,
-		# 					total = total,
-		# 					credito = credito,
-		# 					pedido_id = idpedido,
-		# 					creador = request.user,
-		# 				)
-		# 			venta.save()
-		# 			GenerarDetalleVenta(idpedido, venta.id, request)
-		# 			Reprogramar(idpedido, nro_dias, request)
-		# 		registro = Pedido.objects.get(pk=int(idpedido))
-		# 		registro.estado = True
-		# 		registro.save()
+					response_data = {
+						"success": "Vale generado correctamente",
+					}
 
-		# 		response_data = {
-		# 			"success": "Venta generada correctamente",
-		# 		}
+				except ValueError:
+					response_data = {"success":"Error al crear el Vale"}
+					raise
+			elif tipodoc == "GUIA":
+				try:
+					if reprogramar == True :
+						Reprogramar(idpedido, nro_dias, request)
 
-		# 	except ValueError:
-		# 		response_data = {"success":"Error al crear la Venta"}
-		# 		raise
-		# else:
-		# 	response_data = {"success":"No hay Productos del Pedido Seleccionado"}
+
+					registro = Pedido.objects.get(pk=int(idpedido))
+					registro.estado = True
+					registro.save()
+
+					response_data = {
+						"success": "Venta generada correctamente",
+					}
+
+				except ValueError:
+					response_data = {"success":"Error al crear la Venta"}
+					raise
+			else:
+				response_data = {"success":"No hay Productos del Pedido Seleccionado"}
+
+		else:
+			response_data = {"success":"No hay Productos del Pedido Seleccionado"}
 
 	else:
 		response_data = {"error": "Error al crear el la Venta"}
@@ -406,6 +396,56 @@ def ValeGuiaPedidoCrear(request):
 		json.dumps(response_data),
 		content_type="application/json"
 	)
+
+
+def GenerarVale(request, idc):
+	idcliente = Cliente.objects.get(pk=idc)
+	v = Vale.objects.filter()
+	vale = Vale.objects.create(
+			cliente = idcliente,
+			numero = NroVale(str(v.count()+1)),
+			creador = request.user,
+		)
+	vale.save()
+	return vale.id
+
+def GemnerarDetalleVale(request, id_pedido, idcliente):
+	idvale = GenerarVale(request, idcliente)
+	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
+		dv = DetalleVale.objects.create(
+				vale_id = idvale,
+				producto_id = dp.producto.id,
+				cantidad = dp.cantidad,
+				precio = dp.precio,
+				creador = request.user,
+			)
+		dv.save()
+	vale=Vale.objects.get(pk=idvale)
+	vale.total = GenerarTotalVale(idvale)
+	vale.save()
+
+def GenerarTotalVale(id_vale):
+	total = 0
+	for v in DetalleVale.objects.filter(vale_id=id_vale):
+		subtotal = v.precio *v.cantidad
+		total = total+subtotal
+	return total  
+
+def NroVale(numero):
+	if(len(numero)==6):
+		n = numero
+	elif(len(numero)==5):
+		n = "0"+str(numero)
+	elif(len(numero)==4):
+		n = "00"+str(numero)
+	elif(len(numero)==3):
+		n = "000"+str(numero)
+	elif(len(numero)==2):
+		n = "0000"+str(numero)
+	elif(len(numero)==1):
+		n = "00000"+str(numero)
+
+	return n
 
 def GenerarDetalleVenta(id_pedido, id_venta, request):
 	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
@@ -433,6 +473,8 @@ def Reprogramar(id_pedido, nrodias, request):
 			creador = request.user,
 		)
 	p.save()
+
+
 
 	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
 		dp1 = DetallePedido.objects.create(
