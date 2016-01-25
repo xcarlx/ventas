@@ -274,37 +274,41 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 			show();
 		}
 	},
+
 	ventavale_Agregar: function(button, e, options){
 		me = this;
 		record = "(";
 		i=0;
+		j = 0;
+		arr = [];
+		n=0;
+		cont = 0; 
 		cliente = false;
-		cont = 0;
 		grid = me.lookupReference('valeGrilla');
 		try {
 			for(; i <= grid.getStore().getCount(); i++){
+				idc = 0	
 				if(grid.getStore().getAt(i).data['active']){
+					arr[cont] = grid.getStore().getAt(i).data['clienteid'];
 					cont++;
 					record = record + grid.getStore().getAt(i).data['id']+",";
 				}
-				if(grid.getStore().getAt(i).data['active']){
-					idc = grid.getStore().getAt(i).data['clienteid'];
-					if(grid.getStore().getAt(i+1).data['active']){
-						if(idc != grid.getStore().getAt(i+1).data['clienteid']){
-							cliente = true;
-							break;
-						}
-					}
-				}
-					
-			}
 
+			}
+		
 		} catch(err){
-		  console.log(err.message);
+		  // console.log(err.message);
 		}
-		console.log(cliente);
+		while(n<arr.length){
+			arr[n+1]==arr[n] ? arr.splice(n,1) : n++
+		}
+		if(arr.length!=1){
+			cliente=true;
+		}
+
 		record = record+")";
 		if(record != "()" && cliente == false){
+			// console.log(record);
 			me.editValeVentaWindow.on("show", function(win) {
 					me.lookupReference("ventaFormulariovale").getForm().findField("valesid").setValue(record);
 					me.lookupReference("ventaFormulariovale").getForm().findField("tipo_documento").setValue(0);
@@ -313,6 +317,9 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 					me.lookupReference("ventaFormulariovale").getForm().findField("credito").setValue(false);
 				});
 			me.ventavale_AbrirVentanaEditar(null, button);
+		}
+		else{
+			Ext.Msg.alert('Alerta','"Ha seleccionado a ninguno o mas de dos Clientes"');
 		}
 	},
 

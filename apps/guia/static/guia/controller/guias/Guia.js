@@ -275,31 +275,29 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 		me = this;
 		record = "(";
 		i=0;
+		arr = [];
+		n=0;
 		cliente = false;
 		cont = 0;
 		grid = me.lookupReference('guiaGrilla');
 		try {
 			for(; i <= grid.getStore().getCount(); i++){
 				if(grid.getStore().getAt(i).data['active']){
+					arr[cont] = grid.getStore().getAt(i).data['clienteid'];
 					cont++;
 					record = record + grid.getStore().getAt(i).data['id']+",";
-				}
-				if(grid.getStore().getAt(i).data['active']){
-					idc = grid.getStore().getAt(i).data['clienteid'];
-					if(grid.getStore().getAt(i+1).data['active']){
-						if(idc != grid.getStore().getAt(i+1).data['clienteid']){
-							cliente = true;
-							break;
-						}
-					}
-				}
-					
+				}					
 			}
 
 		} catch(err){
 		  console.log(err.message);
 		}
-		console.log(cliente);
+		while(n<arr.length){
+			arr[n+1]==arr[n] ? arr.splice(n,1) : n++
+		}
+		if(arr.length!=1){
+			cliente=true;
+		}
 		record = record+")";
 		if(record != "()" && cliente == false){
 			me.editGuiaVentaWindow.on("show", function(win) {
