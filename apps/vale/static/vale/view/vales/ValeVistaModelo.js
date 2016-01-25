@@ -6,6 +6,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 		'GRUPOEJ.cliente.model.clientes.Cliente',
 		'GRUPOEJ.vale.model.vales.Producto',
 		'GRUPOEJ.vale.model.vales.DetalleVale',
+		'GRUPOEJ.vale.model.vales.VentaVale',
 	],
 	stores: {
 		store_vale: {
@@ -36,6 +37,14 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeVistaModelo', {
 			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
-		}
+		},
+
+		store_ventavale:{
+			model: 'GRUPOEJ.vale.model.vales.VentaVale',
+			autoLoad: false,
+			// pageSize: gridPageSize,
+			// remoteSort: true,
+			// remoteFilter: true,
+		},	
 	}
 });

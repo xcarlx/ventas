@@ -3,14 +3,15 @@ Ext.define('GRUPOEJ.pedido.model.pedidos.ValeGuiaPedido', {
 	fields:[
 		{name: 'pedidoid', type: 'int'},
 		{name: 'tipo_documento', type: 'string'},
+		{name: 'punto_partida', type: 'string'},
+		{name: 'punto_llegada', type: 'string'},
+		{name: 'fecha_emision', type: 'date'},
+		{name: 'fecha_translado', type: 'date'},
 		{name: 'reprogramar', type: 'boolean'},
 		{name: 'nro_dias', type: 'int'},
 
 	],
 	validators:{
-		pedidoid: [
-			{type: 'presence', message: 'Este campo es obligatorio'},
-		],
 		tipo_documento: [
 			{type: 'presence', message: 'Este campo es obligatorio'},
 		],

@@ -5,4 +5,4 @@ class GuiaForm(forms.ModelForm):
 
 	class Meta:
 		model = GuiaRemision
-		fields = ('punto_partida', 'punto_llegada', 'fecha_emision', 'fecha_translado', 'cliente', 'venta')
+		fields = ('punto_partida', 'punto_llegada', 'fecha_emision', 'fecha_translado', 'cliente')

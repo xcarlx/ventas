@@ -10,4 +10,7 @@ urlpatterns = [
 	url(r'guias.detalleguia/listar/(?P<idGuia>\d+)$', "apps.guia.views.DetalleGuiaListar", name='detalleguia_listar'),
 	url(r'guias.detalleguia/crear/$', "apps.guia.views.DetalleGuiaCrear", name='detalleguia_crear'),
 	url(r'guias.detalleguia/eliminar/$', "apps.guia.views.DetalleGuiaEliminar", name='detalleguia_eliminar'),
+
+	url(r'guias.ventaguia/crear/$', "apps.guia.views.VentaGuiaCrear", name='ventaguia_crear'),
+	
 ]

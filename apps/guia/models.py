@@ -1,7 +1,7 @@
 from django.db import models
 from apps.inicio.models import *
 from apps.cliente.models import * 
-from apps.venta.models import * 
+from apps.pedido.models import * 
 from apps.producto.models import *
 # Create your models here.
 
@@ -11,7 +11,7 @@ class GuiaRemision(Auditoria):
 	fecha_emision = models.DateField()
 	fecha_translado = models.DateField()
 	cliente = models.ForeignKey(Cliente)
-	venta = models.ForeignKey(Venta, blank=True,null=True)
+	pedido = models.ForeignKey(Pedido, blank=True,null=True)
 	detalleguias = models.ManyToManyField(Producto, through='DetalleGuia')
 
 	def __str__(self):

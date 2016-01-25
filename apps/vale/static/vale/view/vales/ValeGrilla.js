@@ -50,6 +50,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 			text: 'Selecione', 
 			name: 'valeselect',
 			dataIndex: 'active',
+			sortable: false,
 		}
 
 	],
@@ -107,8 +108,9 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 				{
 					xtype: 'button',
 					text: 'Generar Pedido',
+					iconCls: 'icono-agregar-azul',
 					listeners:{
-						click: 'generarPedido',
+						click: 'ventavale_Agregar',
 					}
 				},
 				{

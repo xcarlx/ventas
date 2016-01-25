@@ -1,7 +1,7 @@
-Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
+Ext.define('GRUPOEJ.vale.view.vales.VentaValeFormulario', {
 	extend: 'Ext.window.Window',
-	alias: 'widget.ventapedido-formulario',
-	width: 400,
+	alias: 'widget.ventavale-formulario',
+	width: 387,
 	action: '',
 	closeAction: 'hide',
 	closable: true,
@@ -13,7 +13,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 	items: [
 		{
 			xtype: 'form',
-			reference: 'ventaFormulariopedido',
+			reference: 'ventaFormulariovale',
 			bodyPadding: 5,
 			modelValidation: true,
 			layout: {
@@ -30,16 +30,15 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 			},
 			items: [
 				{
-					xtype: 'numberfield',
-					name: 'pedidoid',
+					name: 'valesid',
 					hidden: true,
 					fieldLabel: 'Label',
-					reference: 'ventapedidoid',
 				},
 				{
 					xtype: 'combobox',
 					name: 'tipo_documento',
 					forceSelection: true,
+					allowBlank: false,
 					editable: true,
 					fieldLabel: 'Documento',
 					store: [['SIN_COMPOROBANTE', 'SIN COMPOROBANTE'], ['BOLETA', 'BOLETA'],['FACTURA', 'FACTURA']],
@@ -89,42 +88,6 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 					width: '40%',
 					fieldLabel: 'Credito',
 				},
-				{
-					xtype: 'panel',
-					bodyPadding: 5,
-					margin: 5,
-					border: true,
-					width: '100%',
-					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
-					layout:{
-						type: 'vbox',
-					},
-					items:[
-						{
-							xtype: 'checkboxfield',
-							name: 'reprogramar',
-							labelWidth: 75,
-							labelAlign: 'right',
-							reference: 'reprogramarpedidoventa',
-							width: '40%',
-							fieldLabel: 'Reprogramar',
-						},
-						{
-							xtype: 'numberfield',
-							name: 'nro_dias',
-							labelWidth: 75,
-							labelAlign: 'right',
-							// width: '40%',
-							fieldLabel: ' Nro de Dias',
-							allowNegative: false,
-							allowBlank: true,
-							minValue : 0,
-							bind:{
-								disabled: "{!reprogramarpedidoventa.checked}",
-							}
-						},
-					],
-				},
 			],
 			dockedItems: [
 				{
@@ -142,7 +105,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							text: 'Guardar',
 							formBind: true,
 							listeners:{
-								click: 'ventapedido_ventana_Guardar',
+								click: 'ventavale_ventana_Guardar',
 							},
 						},
 						{
@@ -150,7 +113,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							iconCls: 'icono-cancelar',
 							text: 'Cancelar',
 							listeners:{
-								click: 'venta_ventana_Cancelar',
+								click: 'valeventa_ventana_Cancelar',
 							},
 						},
 

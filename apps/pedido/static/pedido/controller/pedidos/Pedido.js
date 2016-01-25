@@ -328,6 +328,22 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("reprogramar").setValue(false);
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("nro_dias").setValue(0);
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
+
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setValue("");
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setValue("");
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setValue(null);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setValue(null);
+
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setDisabled(true);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setDisabled(true);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setDisabled(true);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setDisabled(true);
+
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setVisible(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setVisible(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setVisible(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setVisible(false);
+
 			});
 		me.valeguia_AbrirVentanaEditar(null, button);
 	},
@@ -368,9 +384,29 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	SeleccionarCombo: function(){
 		me = this;
 		if(me.lookupReference("combodocvaleguia").getValue()=="GUIA"){
-			alert("ASA");
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setDisabled(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setDisabled(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setDisabled(false);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setDisabled(false);
+
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setVisible(true);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setVisible(true);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setVisible(true);
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setVisible(true);
 
 		}
-	},
+		else{
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setDisabled(true);
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setDisabled(true);
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setDisabled(true);
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setDisabled(true);
+
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_partida").setVisible(false);
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setVisible(false);
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setVisible(false);
+			me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setVisible(false);
+
+		}
+	},	
 
 });

@@ -3,6 +3,7 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 	alias: 'controller.vale',
 	requires: [
 		'GRUPOEJ.vale.view.vales.ValeFormulario',
+		'GRUPOEJ.vale.view.vales.VentaValeFormulario', 
 		'GRUPOEJ.vale.view.vales.ValeContext',
 	],
 	init: function(application) {
@@ -19,11 +20,17 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 				me.lookupReference("valeFormulario").getForm().findField("clienteid").focus();
 			});
 		}
-		// me.getStore("store_detallevale").on("load", function(pstore){
-		// 	pstore.getProxy().setExtraParams({
-		// 		valeid,
-		// 	})
-		// });
+		if (!me.editValeVentaWindow) {
+			me.editValeVentaWindow = me.getView().add({
+				xtype: 'ventavale-formulario',
+				constrain: true,
+				renderTo: panelCentral.id,
+				constrainTo: panelCentral.id,		
+				viewModel: { data: { titulo: "", }, },
+			});
+		}; 
+
+
 	},
 	vale_Agregar: function(button, e, options){
 		this.vale_AbrirVentanaEditar(null, button);
@@ -244,6 +251,76 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 			}
 		});
 	},
+
+
+	//Venta de Vales
+
+	ventavale_AbrirVentanaEditar: function(record, button) {
+		var me = this;
+		with (me.editValeVentaWindow) {
+			setIconCls(button.iconCls);
+			action = !record ? "add" : "edit";
+			with (getViewModel()) {
+				setData({
+					titulo: 'Agregando Venta del Pedido'
+				});
+				setLinks({
+					currentVentaPedido: record || {
+						type: 'GRUPOEJ.vale.model.vales.VentaVale',
+						create: true
+					}
+				});
+			}
+			show();
+		}
+	},
+	ventavale_Agregar: function(button, e, options){
+		me = this;
+		record = "(";
+		i=0;
+		cliente = false;
+		cont = 0;
+		grid = me.lookupReference('valeGrilla');
+		try {
+			for(; i <= grid.getStore().getCount(); i++){
+				if(grid.getStore().getAt(i).data['active']){
+					cont++;
+					record = record + grid.getStore().getAt(i).data['id']+",";
+				}
+				if(grid.getStore().getAt(i).data['active']){
+					idc = grid.getStore().getAt(i).data['clienteid'];
+					if(grid.getStore().getAt(i+1).data['active']){
+						if(idc != grid.getStore().getAt(i+1).data['clienteid']){
+							cliente = true;
+							break;
+						}
+					}
+				}
+					
+			}
+
+		} catch(err){
+		  console.log(err.message);
+		}
+		console.log(cliente);
+		record = record+")";
+		if(record != "()" && cliente == false){
+			me.editValeVentaWindow.on("show", function(win) {
+					me.lookupReference("ventaFormulariovale").getForm().findField("valesid").setValue(record);
+					me.lookupReference("ventaFormulariovale").getForm().findField("tipo_documento").setValue(0);
+					me.lookupReference("ventaFormulariovale").getForm().findField("numero_correlativo").setValue(0);
+					me.lookupReference("ventaFormulariovale").getForm().findField("numero_documento").setValue(0);
+					me.lookupReference("ventaFormulariovale").getForm().findField("credito").setValue(false);
+				});
+			me.ventavale_AbrirVentanaEditar(null, button);
+		}
+	},
+
+	valeventa_ventana_Cancelar: function(button, e, options){
+		me = this;
+		me.editValeVentaWindow.close();
+	},
+
 	generarPedido: function(button){
 		me = this;
 		record = [];
@@ -281,6 +358,35 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		  console.log(err.message);
 		}
 	},
+
+	ventavale_ventana_Guardar: function(button, e, options){
+		me = this;
+		form = me.lookupReference('ventaFormulariovale').getForm();
+		store = me.getStore("store_ventavale");
+		if (form && form.isValid()) {
+			with (store) {
+				if (me.editValeVentaWindow.action == "add") {
+					add(
+						form.getFieldValues()
+					);
+				}
+				save({
+					success: function(rec, op) {
+						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+						me.valeventa_ventana_Cancelar();
+						me.getStore('store_vale').load();
+						me.getStore('store_detallevale').load({
+							url: 'grupoej.vale.vales.detallevales/listar/0'
+						});
+					},
+					failure: function(rec, op) {
+						store.rejectChanges();
+					}
+				});
+			}
+		}
+	},
+
 
 });
 

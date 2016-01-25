@@ -5,6 +5,7 @@ from apps.vale.models import *
 from django.http import HttpResponse, JsonResponse
 from apps.cliente.models import Cliente
 from apps.venta.models import *
+from apps.guia.models import *
 import json, datetime
 from django.core.paginator import Paginator
 from django.db.models import Sum
@@ -367,11 +368,15 @@ def ValeGuiaPedidoCrear(request):
 					response_data = {"success":"Error al crear el Vale"}
 					raise
 			elif tipodoc == "GUIA":
+				punto_partida = registros[0]['punto_partida']
+				punto_llegada = registros[0]['punto_llegada']
+				fecha_emision = datetime.datetime.fromtimestamp(int(registros[0]['fecha_emision'])).date()
+				fecha_translado = datetime.datetime.fromtimestamp(int(registros[0]['fecha_translado'])).date()
 				try:
 					if reprogramar == True :
 						Reprogramar(idpedido, nro_dias, request)
 
-
+					GenerarDetalleGuia(request, idpedido,pedido[0].cliente_id,punto_partida,punto_llegada,fecha_emision,fecha_translado)
 					registro = Pedido.objects.get(pk=int(idpedido))
 					registro.estado = True
 					registro.save()
@@ -397,6 +402,31 @@ def ValeGuiaPedidoCrear(request):
 		content_type="application/json"
 	)
 
+
+def GenerarGuia(request, idc,punto_partida,punto_llegada,fecha_emision,fecha_translado):
+	idcliente = Cliente.objects.get(pk=idc)
+	guia = GuiaRemision.objects.create(
+			punto_partida = punto_partida,
+			punto_llegada = punto_llegada,
+			fecha_emision = fecha_emision,
+			fecha_translado = fecha_translado,
+			cliente = idcliente,
+			creador = request.user,
+		)
+	guia.save()
+	return guia.id
+
+def GenerarDetalleGuia(request, id_pedido, idcliente,punto_partida,punto_llegada,fecha_emision,fecha_translado):
+	guia = GenerarGuia(request, idcliente, punto_partida,punto_llegada,fecha_emision,fecha_translado)
+	for dp in DetallePedido.objects.filter(pedido_id=id_pedido):
+		detalleguia = DetalleGuia.objects.create(
+				guia_remision_id = guia,
+				producto_id = dp.producto.id,
+				cantidad = dp.cantidad,
+				precio = dp.precio,
+				creador = request.user,
+			)
+		detalleguia.save()
 
 def GenerarVale(request, idc):
 	idcliente = Cliente.objects.get(pk=idc)

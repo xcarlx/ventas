@@ -6,6 +6,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaVistaModelo', {
 		'GRUPOEJ.cliente.model.clientes.Cliente',
 		'GRUPOEJ.guia.model.guias.Producto', 
 		'GRUPOEJ.guia.model.guias.DetalleGuia',
+		'GRUPOEJ.guia.model.guias.VentaGuia',
 	],
 	stores: {
 		store_guia: {
@@ -35,6 +36,13 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaVistaModelo', {
 			pageSize: gridPageSize,
 			remoteSort: true,
 			remoteFilter: true,
-		}
+		},
+		store_ventaguia:{
+			model: 'GRUPOEJ.guia.model.guias.VentaGuia',
+			autoLoad: false,
+			// pageSize: gridPageSize,
+			// remoteSort: true,
+			// remoteFilter: true,
+		},	
 	}
 });

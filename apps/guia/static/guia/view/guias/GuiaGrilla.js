@@ -69,6 +69,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 			text: 'Selecione', 
 			name: 'valeselect',
 			dataIndex: 'active',
+			sortable: false,
 		}
 	],
 	listeners : {
@@ -126,9 +127,10 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 				},
 				{
 					xtype: 'button',
-					text: 'Generar Pedido',
+					text: 'Generar Venta',
+					iconCls: 'icono-agregar-azul',
 					listeners:{
-						click: 'generarGuia',
+						click: 'ventaguia_Agregar',
 					}
 				},
 				{

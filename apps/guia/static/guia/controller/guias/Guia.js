@@ -3,7 +3,7 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 	alias: 'controller.guia',
 	requires: [
 		'GRUPOEJ.guia.view.guias.GuiaFormulario',
-		// 'GRUPOEJ.vale.view.vales.ValeContext',
+		'GRUPOEJ.guia.view.guias.VentaGuiaFormulario', 
 	],
 	init: function(application) {
 		me = this;
@@ -19,6 +19,16 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 				me.lookupReference("guiaFormulario").getForm().findField("clienteid").focus();
 			});
 		}
+		if (!me.editGuiaVentaWindow) {
+			me.editGuiaVentaWindow = me.getView().add({
+				xtype: 'ventaguia-formulario',
+				constrain: true,
+				renderTo: panelCentral.id,
+				constrainTo: panelCentral.id,		
+				viewModel: { data: { titulo: "", }, },
+			});
+		}; 
+
 	},
 	guia_Agregar: function(button, e, options){
 		this.guia_AbrirVentanaEditar(null, button);
@@ -240,41 +250,100 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 		});
 	},
 
-	generarGuia: function(button){
-		me = this;
-		record = [];
-		i=0;
-		grid = me.lookupReference('guiaGrilla');
-		try {
-			for(; i <= grid.getStore().getCount(); i++){
-				record = grid.getStore().getAt(i);
-				store = me.getStore('store_guia');
-				Ext.Msg.show({
-					title:'Alerta!!',
-					msg: '¿Está seguro de Generar Guia de los Vales seleccionados?',
-					buttons: Ext.Msg.YESNO,
-					icon: Ext.Msg.QUESTION,
-					iconCls: button.iconCls,
-					fn: function (buttonId) {
-						if (buttonId == 'yes') {
-							store.remove(record);
-							store.save({
-								success: function(rec, op) {
-									GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
-									store.reload();
-									me.refrescarGuia();
-								},
-								failure: function(rec, op) {
-									store.rejectChanges();
-									me.refrescarGuia();
-								}
-							});
-						}
+	//Venta de Guia
+
+	ventaguia_AbrirVentanaEditar: function(record, button) {
+		var me = this;
+		with (me.editGuiaVentaWindow) {
+			setIconCls(button.iconCls);
+			action = !record ? "add" : "edit";
+			with (getViewModel()) {
+				setData({
+					titulo: 'Agregando Venta de Guias'
+				});
+				setLinks({
+					currentVentaPedido: record || {
+						type: 'GRUPOEJ.guia.model.guias.VentaGuia',
+						create: true
 					}
 				});
 			}
+			show();
+		}
+	},
+	ventaguia_Agregar: function(button, e, options){
+		me = this;
+		record = "(";
+		i=0;
+		cliente = false;
+		cont = 0;
+		grid = me.lookupReference('guiaGrilla');
+		try {
+			for(; i <= grid.getStore().getCount(); i++){
+				if(grid.getStore().getAt(i).data['active']){
+					cont++;
+					record = record + grid.getStore().getAt(i).data['id']+",";
+				}
+				if(grid.getStore().getAt(i).data['active']){
+					idc = grid.getStore().getAt(i).data['clienteid'];
+					if(grid.getStore().getAt(i+1).data['active']){
+						if(idc != grid.getStore().getAt(i+1).data['clienteid']){
+							cliente = true;
+							break;
+						}
+					}
+				}
+					
+			}
+
 		} catch(err){
 		  console.log(err.message);
+		}
+		console.log(cliente);
+		record = record+")";
+		if(record != "()" && cliente == false){
+			me.editGuiaVentaWindow.on("show", function(win) {
+					me.lookupReference("ventaFormularioguia").getForm().findField("guiasid").setValue(record);
+					me.lookupReference("ventaFormularioguia").getForm().findField("tipo_documento").setValue(0);
+					me.lookupReference("ventaFormularioguia").getForm().findField("numero_correlativo").setValue(0);
+					me.lookupReference("ventaFormularioguia").getForm().findField("numero_documento").setValue(0);
+					me.lookupReference("ventaFormularioguia").getForm().findField("credito").setValue(false);
+				});
+			me.ventaguia_AbrirVentanaEditar(null, button);
+		}
+	},
+
+	guiaventa_ventana_Cancelar: function(button, e, options){
+		me = this;
+		me.editGuiaVentaWindow.close();
+	},
+
+
+	ventaguia_ventana_Guardar: function(button, e, options){
+		me = this;
+		form = me.lookupReference('ventaFormularioguia').getForm();
+		store = me.getStore("store_ventaguia");
+		if (form && form.isValid()) {
+			with (store) {
+				if (me.editGuiaVentaWindow.action == "add") {
+					add(
+						form.getFieldValues()
+					);
+				}
+				save({
+					success: function(rec, op) {
+						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+						me.guiaventa_ventana_Cancelar();
+						me.getStore('store_guia').load();
+						me.getStore('store_detalleguia').load({
+							url: 'grupoej.guia.guias.detalleguia/listar/0'
+						});
+					},
+					failure: function(rec, op) {
+						store.rejectChanges();
+					}
+				});
+			}
 		}
 	},
 

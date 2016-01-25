@@ -18,9 +18,9 @@ Ext.define('GRUPOEJ.inicio.view.pedidospendientes.PedidoPendienteGrilla', {
 			],
 		},
 		{
-			text: "Cliente - Apellido",
+			text: "Area - Responsable",
 			flex: 2,
-			dataIndex: 'cliente__apellidos',
+			dataIndex: 'cliente__area',
 			items:[
 				{
 					xtype: 'searchtrigger'
