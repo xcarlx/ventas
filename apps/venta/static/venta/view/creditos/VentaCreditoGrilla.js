@@ -1,9 +1,9 @@
-Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
+Ext.define('GRUPOEJ.venta.view.creditos.VentaCreditoGrilla', {
 	extend: 'Ext.grid.Panel',
-	alias: 'widget.ventas-grilla',
-	reference: 'ventagrilla',
+	alias: 'widget.ventascredito-grilla',
+	reference: 'ventacreditogrilla',
 	bind: {
-		store: '{store_ventas}',
+		store: '{store_ventascredito}',
 	},
 	height: 370,
 	columns: [
@@ -129,31 +129,31 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 		select: 'seleccionarVenta',
 		deselect: 'deSeleccionarVenta',
 	},
-	dockedItems:[
-		{
-			// bind:{
-			// 	store: '{store_pedidos}',
-			// },
-			xtype: 'pagingtoolbar',
-			dock: 'bottom',
-			displayInfo: true,
-		},
-		{
-			xtype: 'toolbar',
-			dock: 'top',
-			items:[
-				{
-					xtype: 'button',
-					text: 'Imprimir',
-					iconCls: 'icono-agregar',
-				    renderTo: Ext.getBody(), 
-				    url: 'grupoej.venta.ventas.venta/imprimir/',      
-				    handler: function() {
-				        alert('You clicked the button!')
-				    }
-				},
-			],
-		}
-	]
+	// dockedItems:[
+	// 	{
+	// 		// bind:{
+	// 		// 	store: '{store_pedidos}',
+	// 		// },
+	// 		xtype: 'pagingtoolbar',
+	// 		dock: 'bottom',
+	// 		displayInfo: true,
+	// 	},
+	// 	{
+	// 		xtype: 'toolbar',
+	// 		dock: 'top',
+	// 		items:[
+	// 			{
+	// 				xtype: 'button',
+	// 				text: 'Imprimir',
+	// 				iconCls: 'icono-agregar',
+	// 			    renderTo: Ext.getBody(), 
+	// 			    url: 'grupoej.venta.ventas.venta/imprimir/',      
+	// 			    handler: function() {
+	// 			        alert('You clicked the button!')
+	// 			    }
+	// 			},
+	// 		],
+	// 	}
+	// ]
 });
 
