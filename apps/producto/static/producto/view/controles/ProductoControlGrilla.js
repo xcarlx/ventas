@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 		},		
 		{
 			xtype: 'numbercolumn',
-			text: "Entregado",
+			text: "Devuelto",
 			width: 100,
 			dataIndex: 'devuelto',
 			items:[

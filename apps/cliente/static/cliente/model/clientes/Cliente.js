@@ -31,7 +31,7 @@ Ext.define('GRUPOEJ.cliente.model.clientes.Cliente', {
 		],
 		telefono: [
 			{type: 'presence', message: 'Este campo es obligatorio'},
-			{type: 'length', min:6, max: 20, message: 'Debe tener entre {0} y {1} caracteres'},
+			{type: 'length', min:6, max: 45, message: 'Debe tener entre {0} y {1} caracteres'},
 		],
 		direccion: [
 			{type: 'presence', message: 'Este campo es obligatorio'},

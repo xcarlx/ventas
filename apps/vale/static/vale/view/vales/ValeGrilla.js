@@ -107,7 +107,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 				},
 				{
 					xtype: 'button',
-					text: 'Generar Pedido',
+					text: 'Generar Venta',
 					iconCls: 'icono-agregar-azul',
 					listeners:{
 						click: 'ventavale_Agregar',
