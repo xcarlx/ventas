@@ -1,0 +1,16 @@
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for prestamo in  prestamos %}
+			{
+				"id": {{prestamo.id}},
+				"cliente__nombres": '{{prestamo.cliente.nombres}}',
+				"producto__descripcion": '{{prestamo.producto.descripcion}}',
+				"productoid": {{prestamo.producto.id}},
+				"entregado": {{prestamo.entregado}},
+				"devuelto": {{prestamo.devuelto}},
+				"resto": {{prestamo.entregado}} - {{prestamo.devuelto}},
+			},{% endfor %}
+		]
+}

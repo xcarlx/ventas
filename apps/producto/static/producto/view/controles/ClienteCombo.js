@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ClienteCombo', {
 	labelWidth: 120,
 	width: 600,
 	reference: 'clientecombo',
-	 bind:{
+	bind:{
 	 	store: '{store_clientes}'
 	 },
 	displayField: 'cliente',
@@ -30,9 +30,9 @@ Ext.define('GRUPOEJ.producto.view.controles.ClienteCombo', {
         beforequery: function(qe){
             delete qe.combo.lastQuery;
         }
-    }
-	// listeners:{
-	// 	select: 'PlanSelect'
-	// },
+    },
+	listeners:{
+		select: 'ClienteSelect'
+	},
 
 });

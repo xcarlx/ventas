@@ -42,17 +42,15 @@ class Prestamo(Auditoria):
 	GUIA_REMISION = 'GUIA_REMISION'
 	
 	TIPO_DOCUMENTO = (
-		(BOLETA, 'DNI'),
-		(FACTURA, 'RUC'),
-		(VALE, 'RUC'),
-		(GUIA_REMISION, 'RUC'),
+		(BOLETA, 'BOLETA'),
+		(FACTURA, 'FACTURA'),
+		(VALE, 'VALE'),
+		(GUIA_REMISION, 'GUIA_REMISION'),
 	)
 	cliente = models.ForeignKey(Cliente)
 	producto = models.ForeignKey(Producto)
-	cantidad_entrega = models.PositiveSmallIntegerField()
-	cantidad_devuelta = models.PositiveSmallIntegerField()
-	tipo_documento = models.CharField(max_length=30, choices=TIPO_DOCUMENTO, default=BOLETA)
-	nro_documento = models.CharField(max_length=45, blank=True, null=True)
+	entregado = models.PositiveSmallIntegerField()
+	devuelto = models.PositiveSmallIntegerField()
 
 	def __str__(self):
 		return self.tipo_documento+ ' ' +self.nro_documento

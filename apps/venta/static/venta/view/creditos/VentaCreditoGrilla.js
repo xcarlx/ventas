@@ -28,9 +28,19 @@ Ext.define('GRUPOEJ.venta.view.creditos.VentaCreditoGrilla', {
 			],
 		},
 		{
-			text: "Documento",
-			width: 170,
-			dataIndex: 'tipo_documento',
+			text: "Doc - Identidad",
+			width: 120,
+			dataIndex: 'pedido__cliente__nro_documento',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},	
+		{
+			text: "Direccion",
+			flex: 2,
+			dataIndex: 'pedido__cliente__direccion',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -38,15 +48,15 @@ Ext.define('GRUPOEJ.venta.view.creditos.VentaCreditoGrilla', {
 			],
 		},
 		{
-			text: "Numero",
-			width: 110,
+			text: "Documento - Venta",
+			width: 170,
 			dataIndex: 'numero_documento',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
-		},		
+		},			
 		{
 			text: "Nro Pedido",
 			width: 100,
@@ -105,55 +115,29 @@ Ext.define('GRUPOEJ.venta.view.creditos.VentaCreditoGrilla', {
 				}
 			],
 		},
-		{
-            xtype: 'booleancolumn', 
-            text: 'CREDITO',
-            trueText: 'DEBE',
-            falseText: 'PAGO', 
-            dataIndex: 'credito'
-        },
-		{
-			text: "Estado",
-			width: 75,
-			dataIndex: 'estado',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-
-
 	],
 	listeners : {
 		select: 'seleccionarVenta',
 		deselect: 'deSeleccionarVenta',
 	},
-	// dockedItems:[
-	// 	{
-	// 		// bind:{
-	// 		// 	store: '{store_pedidos}',
-	// 		// },
-	// 		xtype: 'pagingtoolbar',
-	// 		dock: 'bottom',
-	// 		displayInfo: true,
-	// 	},
-	// 	{
-	// 		xtype: 'toolbar',
-	// 		dock: 'top',
-	// 		items:[
-	// 			{
-	// 				xtype: 'button',
-	// 				text: 'Imprimir',
-	// 				iconCls: 'icono-agregar',
-	// 			    renderTo: Ext.getBody(), 
-	// 			    url: 'grupoej.venta.ventas.venta/imprimir/',      
-	// 			    handler: function() {
-	// 			        alert('You clicked the button!')
-	// 			    }
-	// 			},
-	// 		],
-	// 	}
-	// ]
+	dockedItems:[
+		{
+			xtype: 'toolbar',
+			dock: 'top',
+			items:[
+				{
+					xtype: 'button',
+					text: 'Pagar',
+					iconCls: 'icono-agregar',
+					bind: {
+						disabled: "{!ventacreditogrilla.selection}",
+					},
+					listeners:{
+						click: 'PagarVenta',
+					}
+				},
+			],
+		}
+	]
 });
 

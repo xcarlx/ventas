@@ -1,9 +1,10 @@
 Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.productocontrol-Grilla',
-	reference: 'referenceproductogrilla',
+	reference: 'referenceprestamogrilla',
 	bind: {
 		store: '{store_controlarproducto}',
+		disabled: '{!clientecombo.selection}'
 	},
 	selModel: {
 		mode: 'MULTI'
@@ -13,7 +14,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 		{
 			text: "Descripcion",
 			flex: 5,
-			dataIndex: 'descripcion',
+			dataIndex: 'producto__descripcion',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -22,23 +23,38 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 		},
 		{
 			xtype: 'numbercolumn',
-			text: "Precio",
+			text: "Entregado",
 			width: 100,
-			dataIndex: 'precio',
-			format:'0.00',
+			dataIndex: 'entregado',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},		
+		{
+			xtype: 'numbercolumn',
+			text: "Entregado",
+			width: 100,
+			dataIndex: 'devuelto',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},		
+		{
+			xtype: 'numbercolumn',
+			text: "Debe",
+			width: 100,
+			dataIndex: 'resto',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
 		},
-		{
-			text: "Foto",
-			flex: 1,
-			dataIndex: 'imagen2',
-			height: 30,
-			sortable: false,
-		},
+
 	],
 	listeners : {
 		itemcontextmenu: 'productos_ContextMenu',
@@ -53,7 +69,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 					text: 'Agregar',
 					iconCls: 'icono-agregar',
 					listeners:{
-						click: 'Producto_Agregar',
+						click: 'Prestamo_Agregar',
 					},
 				},
 				{
@@ -61,10 +77,10 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 					text: 'Editar',
 					iconCls: 'icono-editar',
 					bind: {
-						disabled: "{!referenceproductogrilla.selection}",
+						disabled: "{!referenceprestamogrilla.selection}",
 					},
 					listeners:{
-						click: 'Producto_Editar'
+						click: 'Prestamo_Editar'
 					},
 				},
 				{
@@ -72,10 +88,10 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
-						disabled: "{!referenceproductogrilla.selection}",
+						disabled: "{!referenceprestamogrilla.selection}",
 					},
 					listeners:{
-						click: 'Producto_Eliminar',
+						click: 'Prestamo_Eliminar',
 					}
 				},
 				{
@@ -87,7 +103,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 					text: 'Refrescar',
 					iconCls: 'icono-refrescar',
 					listeners:{
-						click: 'Producto_Refrescar',
+						click: 'Prestamo_Refrescar',
 					}
 				},
 			],

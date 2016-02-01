@@ -41,7 +41,7 @@ Ext.define('GRUPOEJ.vale.view.vales.VentaValeFormulario', {
 					allowBlank: false,
 					editable: true,
 					fieldLabel: 'Documento',
-					store: [['SIN_COMPOROBANTE', 'SIN COMPOROBANTE'], ['BOLETA', 'BOLETA'],['FACTURA', 'FACTURA']],
+					store: [['SIN_COMPROBANTE', 'SIN COMPROBANTE'], ['BOLETA', 'BOLETA'],['FACTURA', 'FACTURA']],
 					anchor: '100%',
 					msgTarget: 'side',
 				},

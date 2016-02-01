@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Producto
+from apps.cliente.models import Prestamo
 from  django.http import HttpResponse
 import json
 from .forms import ProductoForm,ProductoFotoForm
@@ -154,41 +155,129 @@ def ControlProductoListar(request):
 
 	if findID == 0:
 		# Campos
+		clienteid = int(request.GET.get("clienteid", 0))
 		orden = request.GET.get("sort", "")
 		filtro = request.GET.get("filter", "")
 		limite = int(request.GET.get("limit", "0"))
 		pagina = int(request.GET.get("page", "0"))
 		# Filtro
 		if len(filtro) > 0:
-			filtros = "Producto.objects.filter("
+			filtros = "Prestamo.objects.filter("
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ")"
-			producto = eval(filtros)
+			filtros = filtros[:-1] + ", cliente_id = "+clienteid+")"
+			prestamo = eval(filtros)
 		else:
-			producto = Producto.objects.all()
+			prestamo = Prestamo.objects.filter(cliente_id=clienteid)
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
 			tipo_orden = "-" if orden["direction"] == "DESC" else ""
 			campo_orden = orden["property"]
-			producto = producto.order_by(tipo_orden+campo_orden)
-		total = producto.count()
+			prestamo = prestamo.order_by(tipo_orden+campo_orden)
+		total = prestamo.count()
 		# Paginacion
 		if pagina > 0:
-			producto = Paginator(producto, limite)
-			producto = producto.page(pagina)
+			prestamo = Paginator(prestamo, limite)
+			prestamo = prestamo.page(pagina)
 	else:
-		producto = Producto.objects.filter(pk=findID)
-		total = producto.count()
+		prestamo = Prestamo.objects.filter(pk=findID)
+		total = prestamo.count()
 
 	return render(
 		request, 
-		"producto/producto.json",
+		"producto/prestamo.json",
 		{
-			'productos': producto,
+			'prestamos': prestamo,
 			'total':total
 		},
 		content_type= "application/json",
+	)
+
+def ControlProductoCrear(request):
+	response_data = {}
+	if request.method == 'POST':
+		idcliente =int(request.POST["clienteid"])
+		registros = json.loads(request.POST["data"])
+		producto = registros[0]['productoid']
+		entregado = registros[0]['entregado']
+		devuelto = registros[0]['devuelto'] 
+		prest = Prestamo.objects.filter(cliente_id=idcliente, producto_id=producto)
+		if(len(prest) < 1):
+			try:
+				prestamo = Prestamo.objects.create(
+						cliente_id = idcliente,
+						producto_id = producto,
+						entregado = entregado,
+						devuelto = devuelto,
+						creador = request.user,
+					)
+				prestamo.save()
+				response_data = {
+					"success": "Registro agregado correctamente",
+				}
+
+			except Exception:
+				response_data = {"error": "Error al crear el Registro"}
+				raise
+		else:
+			prestamo = Prestamo.objects.get(cliente_id=idcliente, producto_id=producto)
+			prestamo.entregado = entregado + prestamo.entregado
+			prestamo.devuelto = devuelto + prestamo.devuelto
+			try:
+				prestamo.save()
+				response_data = {"success": "Registro actualizado correctamente"}
+			except ValueError:
+				response_data = {"error": sys.exc_info()[0]}
+				raise
+
+	else:
+		response_data = {"error": "Error al crear el Registro"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+def ControlProductoEditar(request):
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idReg = registros[0]["id"]
+		entregado = registros[0]['entregado']
+		devuelto = registros[0]['devuelto'] 
+		registro = Prestamo.objects.get(pk=idReg)
+		registro.entregado = entregado
+		registro.devuelto = devuelto
+		try:
+			registro.save()
+			response_data = {"success": "Registro actualizado correctamente"}
+		except ValueError:
+			response_data = {"error": sys.exc_info()[0]}
+			raise
+	else:
+		response_data = {"success": "Error al actualizar el registro"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+def ControlProductoEliminar(request):
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		for reg in registros:
+			ids = reg["id"]
+			reg = Prestamo.objects.get(pk=ids)
+			reg.delete()
+
+		response_data = {"success": "Los Registros se eliminaron correctamente"}
+	else:
+		response_data = {"error": "Error al eliminar los Registros"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
 	)

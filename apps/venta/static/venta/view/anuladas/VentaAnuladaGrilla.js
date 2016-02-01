@@ -1,9 +1,9 @@
-Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
+Ext.define('GRUPOEJ.venta.view.anuladas.VentaAnuladaGrilla', {
 	extend: 'Ext.grid.Panel',
-	alias: 'widget.ventas-grilla',
-	reference: 'ventagrilla',
+	alias: 'widget.ventasanulada-grilla',
+	reference: 'ventaanuladagrilla',
 	bind: {
-		store: '{store_ventas}',
+		store: '{store_ventasanulada}',
 	},
 	height: 370,
 	columns: [
@@ -19,7 +19,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 		},
 		{
 			text: "Area - Responsable",
-			flex: 1,
+			flex: 2,
 			dataIndex: 'pedido__cliente__area',
 			items:[
 				{
@@ -39,7 +39,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 		},	
 		{
 			text: "Direccion",
-			flex: 1,
+			flex: 2,
 			dataIndex: 'pedido__cliente__direccion',
 			items:[
 				{
@@ -56,7 +56,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 					xtype: 'searchtrigger'
 				}
 			],
-		},		
+		},			
 		{
 			text: "Nro Pedido",
 			width: 100,
@@ -121,37 +121,19 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 		deselect: 'deSeleccionarVenta',
 	},
 	dockedItems:[
-		// {
-		// 	// bind:{
-		// 	// 	store: '{store_pedidos}',
-		// 	// },
-		// 	xtype: 'pagingtoolbar',
-		// 	dock: 'bottom',
-		// 	displayInfo: true,
-		// },
 		{
 			xtype: 'toolbar',
 			dock: 'top',
 			items:[
-				// {
-				// 	xtype: 'button',
-				// 	text: 'Imprimir',
-				// 	iconCls: 'icono-agregar',
-				//     renderTo: Ext.getBody(), 
-				//     url: 'grupoej.venta.ventas.venta/imprimir/',      
-				//     handler: function() {
-				//         alert('You clicked the button!')
-				//     }
-				// },
 				{
 					xtype: 'button',
-					text: 'Anular',
-					iconCls: 'icono-quitar',
+					text: 'Activar',
+					iconCls: 'icono-agregar',
 					bind: {
-						disabled: "{!ventagrilla.selection}",
+						disabled: "{!ventaanuladagrilla.selection}",
 					},
 					listeners:{
-						click: 'AnularVenta',
+						click: 'ActivarVenta',
 					}
 				},
 			],

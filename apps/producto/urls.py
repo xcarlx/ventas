@@ -7,5 +7,10 @@ urlpatterns = [
 	url(r'productos.producto/editar/$', "apps.producto.views.ProductoEditar", name='tipoproducto_editar'),
 	url(r'productos.producto/subirfoto/$', "apps.producto.views.ProductoFotoSubir", name='tipoproducto_editar'),
 	url(r'controles.controlproducto/listar/$', "apps.producto.views.ControlProductoListar", name='controlproducto_listar'),
+	url(r'controles.controlproducto/crear/$', "apps.producto.views.ControlProductoCrear", name='controlproducto_crear'),
+	url(r'controles.controlproducto/editar/$', "apps.producto.views.ControlProductoEditar", name='controlproducto_editar'),
+	url(r'controles.controlproducto/eliminar/$', "apps.producto.views.ControlProductoEliminar", name='controlproducto_eliminar'),
+
+
 ]
 

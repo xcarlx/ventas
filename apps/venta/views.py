@@ -32,10 +32,10 @@ def VentaListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", credito = False).order_by('-id')"
+			filtros = filtros[:-1] + ", credito = False, estado = 'ACTIVO').order_by('-id')"
 			ventas = eval(filtros)
 		else:
-			ventas = Venta.objects.filter(credito = False).order_by('-id')
+			ventas = Venta.objects.filter(credito = False, estado = 'ACTIVO').order_by('-id')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -48,7 +48,7 @@ def VentaListar(request):
 			ventas = Paginator(ventas, limite)
 			ventas = ventas.page(pagina)
 	else:
-		ventas = Venta.objects.filter(pk=findID, credito = False).order_by('-id')
+		ventas = Venta.objects.filter(pk=findID, credito = False, estado = 'ACTIVO').order_by('-id')
 		total = ventas.count()
 	
 	return render(
@@ -77,10 +77,10 @@ def VentaCreditoListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", credito = True).order_by('-id')"
+			filtros = filtros[:-1] + ", credito = True, estado = 'ACTIVO').order_by('-id')"
 			ventas = eval(filtros)
 		else:
-			ventas = Venta.objects.filter(credito = True).order_by('-id')
+			ventas = Venta.objects.filter(credito = True, estado = 'ACTIVO').order_by('-id')
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -93,7 +93,7 @@ def VentaCreditoListar(request):
 			ventas = Paginator(ventas, limite)
 			ventas = ventas.page(pagina)
 	else:
-		ventas = Venta.objects.filter(pk=findID, credito = True).order_by('-id')
+		ventas = Venta.objects.filter(pk=findID, credito = True, estado = 'ACTIVO').order_by('-id')
 		total = ventas.count()
 	
 	return render(
@@ -105,6 +105,51 @@ def VentaCreditoListar(request):
 		},
 		content_type="application/json",
 	)
+
+def VentaAnuladoListar(request):
+
+	findID = request.GET.get("id", 0)
+
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Venta.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ", estado = 'ANULADO').order_by('-id')"
+			ventas = eval(filtros)
+		else:
+			ventas = Venta.objects.filter(estado = 'ANULADO').order_by('-id')
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			ventas = ventas.order_by(tipo_orden+campo_orden)
+		total = ventas.count()
+		# Paginacion
+		if pagina > 0:
+			ventas = Paginator(ventas, limite)
+			ventas = ventas.page(pagina)
+	else:
+		ventas = Venta.objects.filter(pk=findID, estado = 'ANULADO').order_by('-id')
+		total = ventas.count()
+	
+	return render(
+		request,
+		'venta/venta.json',
+		{
+			'ventas': ventas,
+			'total' : total,
+		},
+		content_type="application/json",
+	)	
 
 def DetalleVentaListar(request):
 
@@ -136,6 +181,82 @@ def DetalleVentaCreditoListar(request):
 		content_type="application/json",
 	)
 
+def DetalleVentaAnuladoListar(request):
+	ventaid = request.GET.get("idventa", 0)
+	detalleventas = DetalleVenta.objects.filter(venta_id=ventaid)
+	total = detalleventas.count()
+	return render(
+		request,
+		'venta/detalleventa.json',
+		{
+			'detalleventas': detalleventas,
+			'total' : total,
+		},
+		content_type="application/json",
+	)
+
+def VentaCreditoPagar(request):
+
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idventa = int(registros[0]['id'])
+		for reg in registros:
+			ids = reg["id"]
+			reg = Venta.objects.get(pk=ids)
+			reg.credito = False
+			reg.save()
+
+		response_data = {"success": "EL pago se genero correctamente"}
+	else:
+		response_data = {"error": "Error al generar el Pago"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+def VentaAnular(request):
+
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idventa = int(registros[0]['id'])
+		for reg in registros:
+			ids = reg["id"]
+			reg = Venta.objects.get(pk=ids)
+			reg.estado = "ANULADO"
+			reg.save()
+
+		response_data = {"success": "La Venta se anulo correctamente"}
+	else:
+		response_data = {"error": "Error al Anular la Venta"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
+
+def VentaAnuladaActivar(request):
+
+	response_data = {}
+	if request.method == 'POST':
+		registros = json.loads(request.POST["data"])
+		idventa = int(registros[0]['id'])
+		for reg in registros:
+			ids = reg["id"]
+			reg = Venta.objects.get(pk=ids)
+			reg.estado = "ACTIVO"
+			reg.save()
+
+		response_data = {"success": "La Venta se activo correctamente"}
+	else:
+		response_data = {"error": "Error al Activar la Venta"}
+
+	return HttpResponse(
+		json.dumps(response_data),
+		content_type="application/json"
+	)
 
 
 def ImprimirVenta(request):

@@ -42,7 +42,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 					forceSelection: true,
 					editable: true,
 					fieldLabel: 'Documento',
-					store: [['SIN_COMPOROBANTE', 'SIN COMPOROBANTE'], ['BOLETA', 'BOLETA'],['FACTURA', 'FACTURA']],
+					store: [['SIN_COMPROBANTE', 'SIN COMPROBANTE'], ['BOLETA', 'BOLETA'],['FACTURA', 'FACTURA']],
 					anchor: '100%',
 					msgTarget: 'side',
 				},

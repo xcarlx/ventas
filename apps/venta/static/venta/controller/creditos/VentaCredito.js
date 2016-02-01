@@ -31,5 +31,35 @@ Ext.define('GRUPOEJ.venta.controller.creditos.VentaCredito',	{
 		// 	url: 'grupoej.venta.detalleventas.detalleventa/listar/0'
 		// });
 	},
+	ventaCredito_RegistrosSeleccionados: function() {
+
+		return this.lookupReference('ventacreditogrilla').getSelection();
+	},
+	PagarVenta: function(button, e, options){
+		var me = this,
+			records = me.ventaCredito_RegistrosSeleccionados(),
+			store = me.getStore('store_ventascredito');
+		Ext.Msg.show({
+			title:'Alerta!!',
+			msg: '¿Está seguro de Pagar la Ventas seleccionadas?',
+			buttons: Ext.Msg.YESNO,
+			icon: Ext.Msg.QUESTION,
+			iconCls: button.iconCls,
+			fn: function (buttonId) {
+				if (buttonId == 'yes') {
+					store.remove(records);
+					store.save({
+						success: function(rec, op) {
+							GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
+							store.reload();
+						},
+						failure: function(rec, op) {
+							store.rejectChanges();
+						}
+					});
+				}
+			}
+		});
+	},
 });
 	
