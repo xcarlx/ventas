@@ -13,6 +13,67 @@ Ext.define('GRUPOEJ.venta.view.ventas.Venta', {
 	controller: 'venta',
 	items:[
 		{
+			xtype: 'panel',
+		    bodyPadding: 5,  // Don't want content to crunch against the borders
+		    // marging: 5,
+		    title: 'Filtros por Fechas',
+		    border: true,
+		    layout: {
+				type: 'hbox',
+			},
+
+		    items:[
+		    	{
+		        	xtype: 'datefield',
+		        	fieldLabel: 'Fecha inicio',
+		        	labelwidth: 20,
+		        	labelAlign: 'right',
+		        	format: 'd-m-Y',
+		        	reference: 'vcontadoFechaInicio',
+
+		    	}, 
+		    	{
+		        	xtype: 'datefield',
+		        	fieldLabel: 'Fecha fin',
+		        	labelwidth: 150,
+		        	labelAlign: 'right',
+		        	format: 'd-m-Y',
+		        	reference: 'vcontadoFechaFin',
+		    	},
+
+		    ],
+			dockedItems: [
+				{
+			        xtype: 'toolbar',
+			        dock: 'bottom',
+			        // dock: 'left',
+			        items: [
+			        	{
+			            	xtype: 'button',
+			            	text: "Buscar",
+			            	listeners:{
+								click: 'Flitrar',
+							},
+			        	},
+			        	{
+			            	xtype: 'button',
+			            	text: "Limpiar",
+			            	listeners:{
+								click: 'Limpiar',
+							},
+			        	},
+			        	{
+				    		xtype: 'textfield',
+							fieldLabel: 'Ventas total',
+							labelAlign: 'right',
+							reference: 'vcontadototal',
+				    	}
+
+			        ]
+			    }
+			]
+		},
+		{
 			xtype: 'ventas-grilla',
 		},
 		{

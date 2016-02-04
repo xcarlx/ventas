@@ -3,6 +3,7 @@
 	"success": true,
 	"message": "OK",
 	totalCount: {{total}},
+	"totalv": {{totalventas|unlocalize}},
 	"data":	[{% for venta in  ventas %}
 			{
 				"id": {{ venta.id}},

@@ -62,6 +62,41 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
 			}
 		});
 	},
+	Flitrar: function(){
+		var me = this;
+		store = me.getStore('store_ventas');
+
+		if(me.lookupReference("vcontadoFechaInicio").getValue()!= null && 
+			me.lookupReference("vcontadoFechaFin").getValue()!= null){
+				me.getStore('store_ventas').load({
+				params: {
+					finicio: me.lookupReference("vcontadoFechaInicio").getValue(),
+					ffin: me.lookupReference("vcontadoFechaFin").getValue(),
+				}
+			});
+			// me.lookupReference("vcontadototal").setValue(store.getTotalv());
+			console.log(store);
+
+		}
+
+		else{
+			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
+		}
+		
+	},
+	Limpiar: function(){
+		var me = this;
+		if(me.lookupReference("vcontadoFechaInicio").getValue()!= null && 
+			me.lookupReference("vcontadoFechaFin").getValue()!= null){
+				me.getStore('store_ventas').load();
+				me.lookupReference("vcontadoFechaInicio").setValue(null);
+				me.lookupReference("vcontadoFechaFin").setValue(null);
+		}
+		else{
+			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
+		}
+		
+	}
 
 });
 	

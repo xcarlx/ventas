@@ -3,9 +3,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 from apps.producto.models import Producto
 from django.http import HttpResponse, JsonResponse
-import json, datetime
+import json,datetime
+from datetime import datetime   
 from django.core.paginator import Paginator
 
+from django.db.models import Sum
  #report lab
 from reportlab.pdfgen import canvas
 from apps.cliente.models import *
@@ -17,15 +19,19 @@ from reportlab.platypus import Table
 from io import BytesIO
 
 def VentaListar(request):
-	
+	totalVentas = Venta.objects.filter(credito = False, estado = 'ACTIVO').aggregate(Sum('total'))
 	findID = request.GET.get("id", 0)
-
 	if findID == 0:
 		# Campos
+		fechaI = request.GET.get("finicio", None)
+		fechaF = request.GET.get("ffin", None)
 		orden = request.GET.get("sort", "")
 		filtro = request.GET.get("filter", "")
 		limite = int(request.GET.get("limit", "0"))
 		pagina = int(request.GET.get("page", "0"))
+		if fechaI != None:
+			fecha = datetime.strptime(fechaI,  "%Y-%m-%dT%H:%M:%S")
+
 		# Filtro
 		if len(filtro) > 0:
 			filtros = "Venta.objects.filter("
@@ -36,6 +42,15 @@ def VentaListar(request):
 			ventas = eval(filtros)
 		else:
 			ventas = Venta.objects.filter(credito = False, estado = 'ACTIVO').order_by('-id')
+			totalVentas = Venta.objects.filter(credito = False, estado = 'ACTIVO').aggregate(Sum('total'))
+
+		if fechaI != None and fechaF != None:
+			fechai = datetime.strptime(fechaI,  "%Y-%m-%dT%H:%M:%S")
+			fechaf = datetime.strptime(fechaF,  "%Y-%m-%dT%H:%M:%S")
+			ventas = Venta.objects.filter(credito = False, estado = 'ACTIVO', fecha__gte = fechai, fecha__lte = fechaf).order_by('-id')
+			total = ventas.count()
+			totalVentas = Venta.objects.filter(credito = False, estado = 'ACTIVO', fecha__gte = fechai, fecha__lte = fechaf).aggregate(Sum('total'))
+			
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -43,13 +58,16 @@ def VentaListar(request):
 			campo_orden = orden["property"]
 			ventas = ventas.order_by(tipo_orden+campo_orden)
 		total = ventas.count()
+		
 		# Paginacion
 		if pagina > 0:
 			ventas = Paginator(ventas, limite)
 			ventas = ventas.page(pagina)
+
 	else:
 		ventas = Venta.objects.filter(pk=findID, credito = False, estado = 'ACTIVO').order_by('-id')
 		total = ventas.count()
+		totalVentas = Venta.objects.filter(credito = False, estado = 'ACTIVO').aggregate(Sum('total'))
 	
 	return render(
 		request,
@@ -57,6 +75,7 @@ def VentaListar(request):
 		{
 			'ventas': ventas,
 			'total' : total,
+			'totalventas' : totalVentas['total__sum'],
 		},
 		content_type="application/json",
 	)

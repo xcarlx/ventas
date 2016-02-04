@@ -1,0 +1,195 @@
+.sistema-logo-mini{
+	background: url(images/logo_sede_mini.png)  no-repeat left !important;
+	width: 80px;
+	height: 42px;
+}
+.sistema-titulo{
+	text-align: center;
+	font-weight: bold;
+	font-size: 15px;
+}
+.sistema-cabecera{
+	background: url(images/logo_sar.png) no-repeat left !important;
+	height: 50px;
+	margin-bottom: 15px;
+}
+.sistema-cabecera h1{
+	padding-left: 50px;
+	font-size: 16px;
+	text-align: center;
+}
+
+/*----------- LOGIN ---------*/
+.x-mask.loading-app {
+	background-color: white;
+	opacity: 0;
+	margin: auto;
+}
+.x-mask-msg.loading-app {
+	height: 215px;
+	width: 218px;
+	border-radius: 100px;
+	-webkit-box-shadow: -1px 3px 23px -4px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 3px 23px -4px rgba(0,0,0,0.75);
+	box-shadow: -1px 3px 23px -4px rgba(0,0,0,0.75);
+	text-align: center;
+	background: url(images/logo_sede.png) no-repeat !important;
+}
+.x-mask-msg.loading-app div {
+	border: none;
+	font-size: 16px;
+	font-weight: bold;
+	background: {
+		color: transparent;
+		position: top center;
+	};
+}
+.x-mask-msg.loading-app div div {
+	background-position: 6px center !important;
+	margin-top: 130px;
+}
+.x-splash-icon {
+	background: url(images/logo_sede.png) no-repeat center !important;
+	height: 143px;
+	width: 265px;
+}
+/* ------------------ ICONOS ----------------------*/
+
+.icono-agregar {
+    background-image: url(images/agregar.png) !important;
+}
+.icono-agregar-azul {
+    background-image: url(images/agregar_azul.png) !important;
+}
+.icono-editar {
+    background-image: url(images/editar.png) !important;
+}
+.icono-quitar {
+    background-image: url(images/quitar.png) !important;
+}
+.icono-cancelar {
+    background-image: url(images/cancelar.png) !important;
+}
+.icono-imprimir {
+    background-image: url(images/impresora.png) !important;
+}
+.icono-buscar {
+    background-image: url(images/lupa.png) !important;
+}
+.icono-refrescar {
+	background-image: url(images/refrescar.png) !important;
+}
+.icono-marcar {
+    background-image: url(images/marcar.png) !important;
+}
+.icono-guardar {
+    background-image: url(images/disquette.png) !important;
+}
+.icono-inicio {
+    background-image: url(images/casa.png) !important;
+}
+.icono-llave {
+    background-image: url(images/llave.png) !important;
+}
+.icono-cerrar-sesion {
+	background-image: url(images/cerrar_sesion.png) !important;
+}
+
+.icono-flecha-derecha {
+	background-image: url(images/flecha_derecha.png) !important;
+}
+.icono-flecha-izquierda {
+	background-image: url(images/flecha_izquierda.png) !important;
+}
+.icono-flecha-derecha-todos {
+	background-image: url(images/flecha_derecha_todos.png) !important;
+}
+.icono-flecha-izquierda-todos {
+	background-image: url(images/flecha_izquierda_todos.png) !important;
+}
+
+.icono-menu {
+    background-image: url(images/menu.png) !important;
+}
+.icono-menu-modulos {
+    background-image: url(images/menu_modulos.png) !important;
+}
+.icono-menu-menus {
+    background-image: url(images/menu_arbol.png) !important;
+}
+.icono-menu-usuarios {
+    background-image: url(images/usuario.png) !important;
+}
+.icono-menu-roles {
+	background-image: url(images/roles.png) !important;
+}
+.icono-menu-maestras {
+	background-image: url(images/tuerca.png) !important;
+}
+.icono-menu-accesos {
+	background-image: url(images/accesos.png) !important;
+}
+.icono-menu-catalogo-area {
+	background-image: url(images/organigrama_catalogo.png) !important;
+}
+.icono-menu-area {
+	background-image: url(images/organigrama.png) !important;
+}
+.icono-menu-clase {
+	background-image: url(images/clase.png) !important;
+}
+.icono-menu-nivel {
+	background-image: url(images/nivel.png) !important;
+}
+.icono-menu-nivel-clase {
+	background-image: url(images/nivelesclase.png) !important;
+}
+.icono-menu-estructura {
+	background-image: url(images/estructura.png) !important;
+}
+.icono-menu-version {
+	background-image: url(images/version.png) !important;
+}
+.icono-menu-tipo-area {
+	background-image: url(images/organigrama_tipo.png) !important;
+}
+.icono-deshacer {
+	background-image: url(images/deshacer.png) !important;
+}
+/* -------------- CONCURSO PINTURA -----------------*/
+.icono-menu-ganadores {
+	background-image: url(images/ganadores.png) !important;
+}
+.icono-menu-concurso-pintura {
+	background-image: url(images/pincel.png) !important;
+}
+.icono-menu-categoria-pintura {
+	background-image: url(images/paleta.png) !important;
+}
+.icono-menu-premios {
+	background-image: url(images/copa.png) !important;
+}
+.icono-menu-fotocheck {
+	background-image: url(images/fotocheck.png) !important;
+}
+.icono-menu-personas {
+	background-image: url(images/personas.png) !important;
+}
+.icono-menu-ubicacion {
+	background-image: url(images/ubicacion.png) !important;
+}
+.icono-menu-registros {
+	background-image: url(images/cuadros.png) !important;
+}
+.icono-material {
+	background-image: url(images/bolsa.png) !important;
+}
+.icono-sellar {
+	background-image: url(images/sello.png) !important;
+}
+.icono-recepcionar-cuadro {
+	background-image: url(images/recepcionar_cuadro.png) !important;
+}
+.icono-devolver-cuadro {
+	background-image: url(images/devolver_cuadro.png) !important;
+}
