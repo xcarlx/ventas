@@ -64,8 +64,6 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
 	},
 	Flitrar: function(){
 		var me = this;
-		store = me.getStore('store_ventas');
-
 		if(me.lookupReference("vcontadoFechaInicio").getValue()!= null && 
 			me.lookupReference("vcontadoFechaFin").getValue()!= null){
 				me.getStore('store_ventas').load({
@@ -74,15 +72,23 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
 					ffin: me.lookupReference("vcontadoFechaFin").getValue(),
 				}
 			});
-			// me.lookupReference("vcontadototal").setValue(store.getTotalv());
-			console.log(store);
-
 		}
 
 		else{
 			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
 		}
 		
+	},
+	MostrarTotal: function(){
+		me = this;
+		try {
+		   	var record = me.getStore('store_ventas').first();
+   			me.lookupReference("vcontadototal").setText(" TOTAL DE LAS VENTAS: "+record.get("totalv")+" S/");
+		}
+		catch(err) {
+		    Ext.Msg.alert('Error','No hay ningun registro');
+		    me.lookupReference("vcontadototal").setText(0);
+		}
 	},
 	Limpiar: function(){
 		var me = this;

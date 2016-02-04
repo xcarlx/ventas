@@ -3,7 +3,6 @@
 	"success": true,
 	"message": "OK",
 	totalCount: {{total}},
-	"totalv": {{totalventas|unlocalize}},
 	"data":	[{% for venta in  ventas %}
 			{
 				"id": {{ venta.id}},
@@ -22,6 +21,7 @@
 				"pedido__cliente__direccion": "{{venta.pedido.cliente.direccion}}",
 				"pedido__nro_pedido": '{{venta.pedido.nro_pedido}}',
 				"estado": '{{venta.estado}}',
+				"totalv": {{totalventas|unlocalize}},
 			},{% endfor %}
 		]
 }

@@ -49,7 +49,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 		},
 		{
 			text: "Documento - Venta",
-			width: 170,
+			flex: 1,
 			dataIndex: 'numero_documento',
 			items:[
 				{

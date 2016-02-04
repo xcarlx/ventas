@@ -63,10 +63,19 @@ Ext.define('GRUPOEJ.venta.view.ventas.Venta', {
 							},
 			        	},
 			        	{
-				    		xtype: 'textfield',
-							fieldLabel: 'Ventas total',
-							labelAlign: 'right',
+			            	xtype: 'button',
+			            	text: "Mostrar Total",
+			            	listeners:{
+								click: 'MostrarTotal',
+							},
+			        	},
+			        	{
+			        		name: 'totalv',
+				    		xtype: 'label',
+							// fieldLabel: 'Ventas total',
+							// labelAlign: 'right',
 							reference: 'vcontadototal',
+							style: 'font-weight:bold;',
 				    	}
 
 			        ]

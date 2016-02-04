@@ -279,7 +279,6 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 		me = this;
 		record = "(";
 		i=0;
-		j = 0;
 		arr = [];
 		n=0;
 		cont = 0; 

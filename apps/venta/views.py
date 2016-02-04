@@ -107,6 +107,7 @@ def VentaCreditoListar(request):
 			campo_orden = orden["property"]
 			ventas = ventas.order_by(tipo_orden+campo_orden)
 		total = ventas.count()
+		totalVentas = Venta.objects.filter(credito = True, estado = 'ACTIVO').aggregate(Sum('total'))
 		# Paginacion
 		if pagina > 0:
 			ventas = Paginator(ventas, limite)
@@ -114,6 +115,7 @@ def VentaCreditoListar(request):
 	else:
 		ventas = Venta.objects.filter(pk=findID, credito = True, estado = 'ACTIVO').order_by('-id')
 		total = ventas.count()
+		totalVentas = Venta.objects.filter(credito = True, estado = 'ACTIVO').aggregate(Sum('total'))
 	
 	return render(
 		request,
@@ -121,6 +123,7 @@ def VentaCreditoListar(request):
 		{
 			'ventas': ventas,
 			'total' : total,
+			'totalventas' : totalVentas['total__sum'],
 		},
 		content_type="application/json",
 	)
