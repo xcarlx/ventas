@@ -5,7 +5,10 @@
 	"data":	[{% for prestamo in  prestamos %}
 			{
 				"id": {{prestamo.id}},
-				"cliente__nombres": '{{prestamo.cliente.nombres}}',
+				"cliente__nombres": '{{prestamo.cliente.nombres}} {{prestamo.cliente.apellidos}}',
+				"cliente__telefono": '{{prestamo.cliente.telefono}}',
+				"cliente__nro_documento": '{{prestamo.cliente.nro_documento}}',
+				"cliente__direccion": '{{prestamo.cliente.direccion}}',
 				"producto__descripcion": '{{prestamo.producto.descripcion}}',
 				"productoid": {{prestamo.producto.id}},
 				"entregado": {{prestamo.entregado}},

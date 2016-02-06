@@ -10,6 +10,8 @@ urlpatterns = [
 	url(r'controles.controlproducto/crear/$', "apps.producto.views.ControlProductoCrear", name='controlproducto_crear'),
 	url(r'controles.controlproducto/editar/$', "apps.producto.views.ControlProductoEditar", name='controlproducto_editar'),
 	url(r'controles.controlproducto/eliminar/$', "apps.producto.views.ControlProductoEliminar", name='controlproducto_eliminar'),
+	
+	url(r'.reportes.reporteenvace/listar/$', "apps.producto.views.ReporteEnvaceListar", name='reporteenvace_listar'),
 
 
 ]

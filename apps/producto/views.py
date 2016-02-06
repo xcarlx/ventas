@@ -281,3 +281,50 @@ def ControlProductoEliminar(request):
 		json.dumps(response_data),
 		content_type="application/json"
 	)
+
+
+def ReporteEnvaceListar(request):
+
+
+	findID = request.GET.get("id", 0)
+
+	if findID == 0:
+		# Campos
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Prestamo.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ")"
+			prestamos = eval(filtros)
+		else:
+			prestamos = Prestamo.objects.all()
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			prestamos = prestamos.order_by(tipo_orden+campo_orden)
+		total = prestamos.count()
+		# Paginacion
+		if pagina > 0:
+			prestamos = Paginator(prestamos, limite)
+			prestamos = prestamos.page(pagina)
+	else:
+		prestamos = prestamos.objects.filter(pk=findID)
+		total = prestamos.count()
+
+	return render(
+		request, 
+		"producto/prestamo.json",
+		{
+			'prestamos': prestamos,
+			'total':total
+		},
+		content_type= "application/json",
+	)
