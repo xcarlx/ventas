@@ -9,7 +9,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 	columns: [
 		{
 			text: "Cliente / Razon Social",
-			flex: 1,
+			flex: 3,
 			dataIndex: 'nombres',
 			items:[
 				{
@@ -19,7 +19,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},
 		{
 			text: "DNI/RUC",
-			width: 100,
+			flex: 1,
 			dataIndex: 'nro_documento',
 			items:[
 				{
@@ -28,18 +28,8 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 			],
 		},
 		{
-			text: "E-MAIL",
-			width: 200,
-			dataIndex: 'email',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
 			text: "Telefono",
-			width: 150,
+			flex: 1,
 			dataIndex: 'telefono',
 			items:[
 				{
@@ -49,7 +39,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},	
 		{
 			text: "Direccion",
-			width: 200,
+			flex: 2,
 			dataIndex: 'direccion',
 			items:[
 				{
@@ -59,7 +49,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},
 				{
 			text: "Area",
-			width: 200,
+			flex: 2,
 			dataIndex: 'area',
 			items:[
 				{
@@ -69,7 +59,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},	
 		{
 			text: "Responsable",
-			width: 200,
+			flex: 2,
 			dataIndex: 'responsable',
 			items:[
 				{

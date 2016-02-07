@@ -1,11 +1,11 @@
 from django.conf.urls import url
-
+from apps.inicio.views import *
 urlpatterns = [
-	url(r'^$', "apps.inicio.views.Inicio", name='home'),
-	url(r'login/$', "apps.inicio.views.Login", name='login'),
-	url(r'logout/$', "apps.inicio.views.Logout", name='logout'),
-	url(r'menus/$', "apps.inicio.views.Menus", name='menu'),
-	url(r'pedidosvencidos.pedidovencido/listar/$', "apps.inicio.views.PedidoVencidosListar", name='menu'),
-	url(r'pedidospendientes.pedidopendiente/listar/$', "apps.inicio.views.PedidoPendienteListar", name='menu'),
+	url(r'^$', Inicio),
+	url(r'login/$', Login),
+	url(r'logout/$', Logout),
+	url(r'menus/$', Menus),
+	url(r'pedidosvencidos.pedidovencido/listar/$', PedidoVencidosListar),
+	url(r'pedidospendientes.pedidopendiente/listar/$', PedidoPendienteListar),
 
 ]

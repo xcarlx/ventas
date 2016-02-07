@@ -29,8 +29,6 @@ def VentaListar(request):
 		filtro = request.GET.get("filter", "")
 		limite = int(request.GET.get("limit", "0"))
 		pagina = int(request.GET.get("page", "0"))
-		if fechaI != None:
-			fecha = datetime.strptime(fechaI,  "%Y-%m-%dT%H:%M:%S")
 
 		# Filtro
 		if len(filtro) > 0:
@@ -81,11 +79,13 @@ def VentaListar(request):
 	)
 
 def VentaCreditoListar(request):
-	
+	totalVentas = Venta.objects.filter(credito = True, estado = 'ACTIVO').aggregate(Sum('total'))
 	findID = request.GET.get("id", 0)
 
 	if findID == 0:
 		# Campos
+		fechaI = request.GET.get("finicio", None)
+		fechaF = request.GET.get("ffin", None)
 		orden = request.GET.get("sort", "")
 		filtro = request.GET.get("filter", "")
 		limite = int(request.GET.get("limit", "0"))
@@ -100,6 +100,15 @@ def VentaCreditoListar(request):
 			ventas = eval(filtros)
 		else:
 			ventas = Venta.objects.filter(credito = True, estado = 'ACTIVO').order_by('-id')
+			totalVentas = Venta.objects.filter(credito = True, estado = 'ACTIVO').aggregate(Sum('total'))
+
+		if fechaI != None and fechaF != None:
+			fechai = datetime.strptime(fechaI,  "%Y-%m-%dT%H:%M:%S")
+			fechaf = datetime.strptime(fechaF,  "%Y-%m-%dT%H:%M:%S")
+			ventas = Venta.objects.filter(credito = True, estado = 'ACTIVO', fecha__gte = fechai, fecha__lte = fechaf).order_by('-id')
+			total = ventas.count()
+			totalVentas = Venta.objects.filter(credito = True, estado = 'ACTIVO', fecha__gte = fechai, fecha__lte = fechaf).aggregate(Sum('total'))
+			
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -107,7 +116,6 @@ def VentaCreditoListar(request):
 			campo_orden = orden["property"]
 			ventas = ventas.order_by(tipo_orden+campo_orden)
 		total = ventas.count()
-		totalVentas = Venta.objects.filter(credito = True, estado = 'ACTIVO').aggregate(Sum('total'))
 		# Paginacion
 		if pagina > 0:
 			ventas = Paginator(ventas, limite)
@@ -300,7 +308,11 @@ def ImprimirVenta(request):
     clientes = []
     styles = getSampleStyleSheet()
     header = Paragraph("Listado de Clientes", styles['Heading1'])
+    header2 = Paragraph("Listado de Clientes AAAAAAAAAAA", styles['Heading2'])
+    normal1 = Paragraph("SSSSSSSSSSSSSSSSSS", styles['Normal'])
     clientes.append(header)
+    clientes.append(header2)
+    clientes.append(normal1)
     headings = ('Nombre', 'Apellidos', 'Tipo Documento', 'Numero')
     allclientes = [(p.nombres, p.apellidos, p.tipo_documento, p.nro_documento) for p in Cliente.objects.all()]
 

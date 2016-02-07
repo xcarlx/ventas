@@ -36,22 +36,11 @@ class Cliente(Auditoria):
 		return self.nombres+ ' - '+self.apellidos
 
 class Prestamo(Auditoria):
-	BOLETA = 'BOLETA'
-	FACTURA = 'FACTURA'
-	VALE = 'VALE'
-	GUIA_REMISION = 'GUIA_REMISION'
-	
-	TIPO_DOCUMENTO = (
-		(BOLETA, 'BOLETA'),
-		(FACTURA, 'FACTURA'),
-		(VALE, 'VALE'),
-		(GUIA_REMISION, 'GUIA_REMISION'),
-	)
 	cliente = models.ForeignKey(Cliente)
 	producto = models.ForeignKey(Producto)
 	entregado = models.PositiveSmallIntegerField()
 	devuelto = models.PositiveSmallIntegerField()
 
 	def __str__(self):
-		return self.tipo_documento+ ' ' +self.nro_documento
+		return self.cliente.nombres
 

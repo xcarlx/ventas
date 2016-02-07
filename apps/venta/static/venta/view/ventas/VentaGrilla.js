@@ -118,7 +118,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	],
 	listeners : {
 		select: 'seleccionarVenta',
-		deselect: 'deSeleccionarVenta',
+		deselect: 'deSeleccionarCliente',
 	},
 	dockedItems:[
 		// {
@@ -133,16 +133,16 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 			xtype: 'toolbar',
 			dock: 'top',
 			items:[
-				// {
-				// 	xtype: 'button',
-				// 	text: 'Imprimir',
-				// 	iconCls: 'icono-agregar',
-				//     renderTo: Ext.getBody(), 
-				//     url: 'grupoej.venta.ventas.venta/imprimir/',      
-				//     handler: function() {
-				//         alert('You clicked the button!')
-				//     }
-				// },
+				{
+					xtype: 'button',
+					text: 'Imprimir',
+					iconCls: 'icono-agregar',
+				    renderTo: Ext.getBody(), 
+				    url: 'grupoej.venta.ventas.venta/imprimir/',      
+				    handler: function() {
+				        alert('You clicked the button!')
+				    }
+				},
 				{
 					xtype: 'button',
 					text: 'Anular',

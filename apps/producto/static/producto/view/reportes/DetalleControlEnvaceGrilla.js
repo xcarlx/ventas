@@ -8,32 +8,47 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
 	height: 250,
 	columns: [
 		{
-			text: "Producto",
-			flex: 2,
+			text: "Descripcion",
+			flex: 5,
 			dataIndex: 'producto__descripcion',
-			sortable: false,
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
 		},
 		{
-			text: "Cantidad",
+			xtype: 'numbercolumn',
+			text: "Entregado",
 			width: 100,
-			dataIndex: 'cantidad',
-			sortable: false,
-		},
+			dataIndex: 'entregado',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},		
 		{
-			xtype: 'numbercolumn', 
-			format:'0.00',
-			text: "Precio",
+			xtype: 'numbercolumn',
+			text: "Devuelto",
 			width: 100,
-			dataIndex: 'precio',
-			sortable: false,
-		},	
+			dataIndex: 'devuelto',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},		
 		{
-			xtype: 'numbercolumn', 
-			format:'0.00',
-			text: "Sub total",
+			xtype: 'numbercolumn',
+			text: "Debe",
 			width: 100,
-			dataIndex: 'subtotal',
-			sortable: false,
+			dataIndex: 'resto',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
 		},
 	],
 });

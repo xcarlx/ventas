@@ -8,7 +8,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvace', {
 	viewModel:{
 		type: 'reporteenvace',
 	},
-	// controller: 'producto',
+	controller: 'reportesenvace',
 	items:[
 		{
 			xtype: 'reporteenvace-grilla',

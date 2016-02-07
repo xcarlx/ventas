@@ -9,8 +9,6 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaModelo', {
 		store_ventas:{
 			model: 'GRUPOEJ.venta.model.ventas.Venta',
 			autoLoad: true,
-			pageSize: gridPageSize,
-			remoteSort: true,
 			remoteFilter: true,
 		},
 		store_detalleventas:{

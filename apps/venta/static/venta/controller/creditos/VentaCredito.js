@@ -61,5 +61,46 @@ Ext.define('GRUPOEJ.venta.controller.creditos.VentaCredito',	{
 			}
 		});
 	},
+	Flitrar: function(){
+		var me = this;
+		if(me.lookupReference("vcreditoFechaInicio").getValue()!= null && 
+			me.lookupReference("vcreditoFechaFin").getValue()!= null){
+				me.getStore('store_ventascredito').load({
+				params: {
+					finicio: me.lookupReference("vcreditoFechaInicio").getValue(),
+					ffin: me.lookupReference("vcreditoFechaFin").getValue(),
+				}
+			});
+		}
+
+		else{
+			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
+		}
+		
+	},
+	MostrarTotal: function(){
+		me = this;
+		try {
+		   	var record = me.getStore('store_ventascredito').first();
+   			me.lookupReference("vcreditototal").setText(" TOTAL DE LAS VENTAS: "+record.get("totalv")+" S/");
+		}
+		catch(err) {
+		    Ext.Msg.alert('Error','No hay ningun registro');
+		    me.lookupReference("vcreditototal").setText(0);
+		}
+	},
+	Limpiar: function(){
+		var me = this;
+		if(me.lookupReference("vcreditoFechaInicio").getValue()!= null && 
+			me.lookupReference("vcreditoFechaFin").getValue()!= null){
+				me.getStore('store_ventascredito').load();
+				me.lookupReference("vcreditoFechaInicio").setValue(null);
+				me.lookupReference("vcreditoFechaFin").setValue(null);
+		}
+		else{
+			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
+		}
+		
+	}
 });
 	

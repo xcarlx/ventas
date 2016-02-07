@@ -12,6 +12,7 @@ Ext.define('GRUPOEJ.venta.model.creditos.VentaCredito', {
 		{name: 'pedido__cliente__nombre', type: 'string'},
 		{name: 'pedido__cliente__apellidos', type: 'string'},
 		{name: 'estado', type: 'string'},
+		{name: 'totalv', type: 'number'},
 	],
 	validators:{
 		nro_dias: [

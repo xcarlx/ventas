@@ -8,9 +8,9 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 	height: 370,
 	columns: [
 		{
-			text: "Cliente - Razon Social",
+			text: "Cliente / Razon Social",
 			flex: 2,
-			dataIndex: 'cliente__nombres',
+			dataIndex: 'nombres',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -18,9 +18,9 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 			],
 		},
 		{
-			text: "DNI - RUC",
+			text: "DNI/RUC",
 			flex: 1,
-			dataIndex: 'cliente__telefono',
+			dataIndex: 'nro_documento',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -30,7 +30,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 		{
 			text: "Telefono",
 			flex: 1,
-			dataIndex: 'cliente__nro_documento',
+			dataIndex: 'telefono',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -39,55 +39,38 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 		},	
 		{
 			text: "Direccion",
-			flex: 1,
-			dataIndex: 'cliente__direccion',
+			flex: 2,
+			dataIndex: 'direccion',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
 		},
-	],
-	listeners : {
-		select: 'seleccionarReporteEnvace',
-		deselect: 'deSeleccionarVenta',
-	},
-	dockedItems:[
-		// {
-		// 	// bind:{
-		// 	// 	store: '{store_pedidos}',
-		// 	// },
-		// 	xtype: 'pagingtoolbar',
-		// 	dock: 'bottom',
-		// 	displayInfo: true,
-		// },
-		{
-			xtype: 'toolbar',
-			dock: 'top',
-			items:[
-				// {
-				// 	xtype: 'button',
-				// 	text: 'Imprimir',
-				// 	iconCls: 'icono-agregar',
-				//     renderTo: Ext.getBody(), 
-				//     url: 'grupoej.venta.ventas.venta/imprimir/',      
-				//     handler: function() {
-				//         alert('You clicked the button!')
-				//     }
-				// },
 				{
-					xtype: 'button',
-					text: 'Anular',
-					iconCls: 'icono-quitar',
-					bind: {
-						disabled: "{!ventagrilla.selection}",
-					},
-					listeners:{
-						click: 'AnularVenta',
-					}
-				},
+			text: "Area",
+			flex: 2,
+			dataIndex: 'area',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},	
+		{
+			text: "Responsable",
+			flex: 2,
+			dataIndex: 'responsable',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
 			],
 		}
-	]
+	],
+	listeners : {
+		select: 'seleccionarCliente',
+		deselect: 'deSeleccionarCliente',
+	},
 });
 

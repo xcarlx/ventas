@@ -1,15 +1,15 @@
 from django.conf.urls import url
-
+from apps.vale.views import *
 urlpatterns = [
-	url(r'vales.vale/listar/$', "apps.vale.views.ValeListar", name='vale_listar'),
-	url(r'vales.vale/eliminar/$', "apps.vale.views.ValeEliminar", name='vale_eliminar'),
-	url(r'vales.vale/crear/$', "apps.vale.views.ValeCrear", name='vale_crear'),
-	url(r'vales.vale/editar/$', "apps.vale.views.ValeEditar", name='vale_editar'),
+	url(r'vales.vale/listar/$', ValeListar),
+	url(r'vales.vale/eliminar/$', ValeEliminar),
+	url(r'vales.vale/crear/$',ValeCrear),
+	url(r'vales.vale/editar/$',ValeEditar),
 
-	url(r'vales.producto/listar/(?P<idVa>\d+)$', "apps.vale.views.ProductoListar", name='productos_listar'),
-	url(r'vales.detallevales/listar/(?P<idVa>\d+)$', "apps.vale.views.DetalleValeListar", name='detallevale_listar'),
-	url(r'vales.detallevale/crear/$', "apps.vale.views.DetalleValeCrear", name='detallevale_crear'),
-	url(r'vales.detallevale/eliminar/$', "apps.vale.views.DetalleValeEliminar", name='detallevale_eliminar'),
+	url(r'vales.producto/listar/(?P<idVa>\d+)$', ProductoListar),
+	url(r'vales.detallevales/listar/(?P<idVa>\d+)$', DetalleValeListar),
+	url(r'vales.detallevale/crear/$', DetalleValeCrear),
+	url(r'vales.detallevale/eliminar/$', DetalleValeEliminar),
 
-	url(r'vales.ventavale/crear/$', "apps.vale.views.VentaValeCrear", name='ventavale_crear'),
+	url(r'vales.ventavale/crear/$', VentaValeCrear),
 ]

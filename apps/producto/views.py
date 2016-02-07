@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Producto
-from apps.cliente.models import Prestamo
+from apps.cliente.models import *
 from  django.http import HttpResponse
 import json
 from .forms import ProductoForm,ProductoFotoForm
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
 # Create your views here.
 def ProductoListar(request):
 
@@ -284,7 +285,7 @@ def ControlProductoEliminar(request):
 
 
 def ReporteEnvaceListar(request):
-
+	prestamos = Cliente.objects.filter(id__in = Prestamo.objects.all().values("cliente_id"))
 
 	findID = request.GET.get("id", 0)
 
@@ -296,14 +297,14 @@ def ReporteEnvaceListar(request):
 		pagina = int(request.GET.get("page", "0"))
 		# Filtro
 		if len(filtro) > 0:
-			filtros = "Prestamo.objects.filter("
+			filtros = "Cliente.objects.filter("
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ")"
+			filtros = filtros[:-1] + ",id__in = Prestamo.objects.all().values('cliente_id'))"
 			prestamos = eval(filtros)
 		else:
-			prestamos = Prestamo.objects.all()
+			prestamos = Cliente.objects.all()
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -313,17 +314,67 @@ def ReporteEnvaceListar(request):
 		total = prestamos.count()
 		# Paginacion
 		if pagina > 0:
-			prestamos = Paginator(prestamos, limite)
-			prestamos = prestamos.page(pagina)
+			paginador = Paginator(prestamos, limite)
+			total = prestamos.count
+			try:
+				prestamos = paginador.page(pagina)
+			except PageNotAnInteger:
+				prestamos = paginador.page(1)
+			except EmptyPage:
+				prestamos = paginator.page(paginator.num_pages)
 	else:
-		prestamos = prestamos.objects.filter(pk=findID)
+		prestamos = Cliente.objects.filter(pk=findID)
 		total = prestamos.count()
+
+	return render(
+		request, 
+		"cliente/cliente.json",
+		{
+			'cliente': prestamos,
+			'total':total
+		},
+		content_type= "application/json",
+	)
+def DetalleReporteEnvace(request):
+	findID = request.GET.get("id", 0)
+
+	if findID == 0:
+		# Campos
+		clienteid = int(request.GET.get("idcliente", 0))
+		orden = request.GET.get("sort", "")
+		filtro = request.GET.get("filter", "")
+		limite = int(request.GET.get("limit", "0"))
+		pagina = int(request.GET.get("page", "0"))
+		# Filtro
+		if len(filtro) > 0:
+			filtros = "Prestamo.objects.filter("
+			filtro = json.loads(filtro)
+			for f in filtro:
+				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+			filtros = filtros[:-1] + ", cliente_id = "+clienteid+")"
+			prestamo = eval(filtros)
+		else:
+			prestamo = Prestamo.objects.filter(cliente_id=clienteid)
+		# Orden
+		if len(orden) > 0:
+			orden = json.loads(orden)[0]
+			tipo_orden = "-" if orden["direction"] == "DESC" else ""
+			campo_orden = orden["property"]
+			prestamo = prestamo.order_by(tipo_orden+campo_orden)
+		total = prestamo.count()
+		# Paginacion
+		if pagina > 0:
+			prestamo = Paginator(prestamo, limite)
+			prestamo = prestamo.page(pagina)
+	else:
+		prestamo = Prestamo.objects.filter(pk=findID)
+		total = prestamo.count()
 
 	return render(
 		request, 
 		"producto/prestamo.json",
 		{
-			'prestamos': prestamos,
+			'prestamos': prestamo,
 			'total':total
 		},
 		content_type= "application/json",

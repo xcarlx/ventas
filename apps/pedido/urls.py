@@ -1,19 +1,20 @@
 from django.conf.urls import url
+from apps.pedido.views import *
 
 urlpatterns = [
-	url(r'pedidos.pedido/listar/$', "apps.pedido.views.PedidoListar", name='pedido_listar'),
-	url(r'pedidos.pedido/eliminar/$', "apps.pedido.views.PedidoEliminar", name='pedido_eliminar'),
-	url(r'pedidos.pedido/crear/$', "apps.pedido.views.PedidoCrear", name='pedido_crear'),
-	url(r'pedidos.pedido/editar/$', "apps.pedido.views.PedidoEditar", name='pedido_editar'),
+	url(r'pedidos.pedido/listar/$', PedidoListar),
+	url(r'pedidos.pedido/eliminar/$', PedidoEliminar),
+	url(r'pedidos.pedido/crear/$', PedidoCrear),
+	url(r'pedidos.pedido/editar/$', PedidoEditar),
 
-	url(r'pedidos.producto/listar/(?P<idPe>\d+)$', "apps.pedido.views.ProductoListar", name='productos_listar'),
-	url(r'detallepedidos.detallepedido/listar/(?P<idPe>\d+)$', "apps.pedido.views.DetallePedidoListar", name='detallepedido_listar'),
-	url(r'pedidos.detallepedido/crear/$', "apps.pedido.views.DetallePedidoCrear", name='detallepedido_crear'),
-	url(r'pedidos.detallepedido/eliminar/$', "apps.pedido.views.DetallePedidoEliminar", name='detallepedido_eliminar'),
+	url(r'pedidos.producto/listar/(?P<idPe>\d+)$', ProductoListar),
+	url(r'detallepedidos.detallepedido/listar/(?P<idPe>\d+)$', DetallePedidoListar),
+	url(r'pedidos.detallepedido/crear/$', DetallePedidoCrear),
+	url(r'pedidos.detallepedido/eliminar/$', DetallePedidoEliminar),
 
-	url(r'pedidos.ventapedido/crear/$', "apps.pedido.views.VentaPedidoCrear", name='ventapedido_crear'),
-	url(r'pedidos.ventapedido/listar/$', "apps.pedido.views.VentaPedidoListar", name='ventapedido_crear'),
-	url(r'pedidos.valeguiapedido/crear/$', "apps.pedido.views.ValeGuiaPedidoCrear", name='valeguiapedido_crear'),
+	url(r'pedidos.ventapedido/crear/$', VentaPedidoCrear),
+	url(r'pedidos.ventapedido/listar/$', VentaPedidoListar),
+	url(r'pedidos.valeguiapedido/crear/$',ValeGuiaPedidoCrear),
 	# url(r'pedidos.ventapedido/listar/$', "apps.pedido.views.VentaPedidoListar", name='ventapedido_crear'),
 ]
 
