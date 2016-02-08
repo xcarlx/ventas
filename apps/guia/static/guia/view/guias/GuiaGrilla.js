@@ -6,7 +6,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
-	height: 300,
+	height: 250,
 	columns: [
 		{
 			text: "Cliente / Razon Social",

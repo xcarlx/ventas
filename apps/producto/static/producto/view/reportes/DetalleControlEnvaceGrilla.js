@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
 	bind: {
 		store: '{store_rvdEnvaces}',
 	},
-	height: 250,
+	height: 200,
 	columns: [
 		{
 			text: "Descripcion",

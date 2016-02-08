@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 	bind: {
 		store: '{store_pedidosvencidos}',
 	},
-	height: 600,
+	height: 520,
 	columns: [
 		{
 			text: "Cliente - Nombre",

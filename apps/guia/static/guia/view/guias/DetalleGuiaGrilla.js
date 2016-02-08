@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.guia.view.guias.DetalleGuiaGrilla', {
 	bind: {
 		store: '{store_detalleguia}',
 	},
-	height: 220,
+	height: 200,
 	columns: [
 		{
 			text: "Producto",

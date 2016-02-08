@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.DetalleVentaGrilla', {
 	bind: {
 		store: '{store_detalleventas}',
 	},
-	height: 250,
+	height: 200,
 	columns: [
 		{
 			text: "Producto",

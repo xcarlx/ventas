@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 	bind: {
 		store: '{store_rvCliente}',
 	},
-	height: 370,
+	height: 250,
 	columns: [
 		{
 			text: "Cliente / Razon Social",
