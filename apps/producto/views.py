@@ -304,7 +304,7 @@ def ReporteEnvaceListar(request):
 			filtros = filtros[:-1] + ",id__in = Prestamo.objects.all().values('cliente_id'))"
 			prestamos = eval(filtros)
 		else:
-			prestamos = Cliente.objects.all()
+			prestamos = Cliente.objects.filter(id__in = Prestamo.objects.all().values('cliente_id'))
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -323,7 +323,7 @@ def ReporteEnvaceListar(request):
 			except EmptyPage:
 				prestamos = paginator.page(paginator.num_pages)
 	else:
-		prestamos = Cliente.objects.filter(pk=findID)
+		prestamos = Cliente.objects.filter(pk=findID,id__in = Prestamo.objects.all().values('cliente_id'))
 		total = prestamos.count()
 
 	return render(

@@ -118,7 +118,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	],
 	listeners : {
 		select: 'seleccionarVenta',
-		deselect: 'deSeleccionarCliente',
+		deselect: 'deSeleccionarVenta',
 	},
 	dockedItems:[
 		// {
@@ -137,11 +137,24 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 					xtype: 'button',
 					text: 'Imprimir',
 					iconCls: 'icono-agregar',
+					method: 'POST', 
 				    renderTo: Ext.getBody(), 
-				    url: 'grupoej.venta.ventas.venta/imprimir/',      
-				    handler: function() {
-				        alert('You clicked the button!')
-				    }
+				    // url: 'grupoej.venta.ventas.venta/imprimir/',  
+				    // handler: function () {
+				    // params: { idventa: 0 },
+				    handler: "handlerBtnDownloadHelpGuie",
+				    bind: {
+						disabled: "{!ventagrilla.selection}",
+					},
+				    //     Ext.Ajax.request({
+				    //         // url: 'grupoej.venta.ventas.venta/imprimir/',
+				    //         success: function (){alert('Value has been sent!');},
+				    //         failure: function (){alert('Failure of sending...');},
+				    //         // headers: {
+				    //         //     'my-header': 'foo'
+				    //         // },
+				    //     });
+				    // }
 				},
 				{
 					xtype: 'button',

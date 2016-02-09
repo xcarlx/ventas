@@ -4,7 +4,7 @@ urlpatterns = [
 	url(r'ventas.venta/listar/$', VentaListar),
 	url(r'ventas.venta/eliminar/$', VentaAnular),
 	url(r'ventas.detalleventa/listar/$', DetalleVentaListar),
-	url(r'ventas.venta/imprimir/$', ImprimirVenta),
+	url(r'ventas.venta/imprimir/(?P<idventa>\d+)$', ImprimirVenta),
 
 
 	url(r'creditos.ventacredito/listar/$', VentaCreditoListar),

@@ -102,6 +102,12 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
 			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
 		}
 		
+	},
+	handlerBtnDownloadHelpGuie: function() {
+		me = this;
+    	//TODO: It opens the document in a new tab, but not force the 
+		// console.log(me.lookupReference('ventagrilla').getSelectionModel().getSelection()[0].id);
+    	window.open('grupoej.venta.ventas.venta/imprimir/'+me.lookupReference('ventagrilla').getSelectionModel().getSelection()[0].id,'_blank');
 	}
 
 });

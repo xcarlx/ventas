@@ -40,7 +40,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 				{
 					xtype: 'combobox',
 					editable: false,
-		          	fieldLabel: "Seleccionar el Producto: ",
+		          	fieldLabel: "Seleccionar el Producto",
 					labelWidth: 150,
 					width: 600,
 					name: 'productoid',
