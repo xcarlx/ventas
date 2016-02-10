@@ -11,12 +11,11 @@ from django.db.models import Sum
  #report lab
 from reportlab.pdfgen import canvas
 from apps.cliente.models import *
-from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle, Spacer,Table
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle, StyleSheet1
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.pagesizes import A4,A5, inch, landscape
-from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT, TA_JUSTIFY
 from reportlab.lib.units import inch
 from reportlab.lib import colors
@@ -306,8 +305,8 @@ def ImprimirVenta(request, idventa):
 	
 	doc = SimpleDocTemplate(buff,
 							pagesize=letter,
-							rightMargin=20,
-							leftMargin=20,
+							rightMargin=50,
+							leftMargin=50,
 							topMargin=20,
 							bottomMargin=18,
 							)
@@ -316,7 +315,7 @@ def ImprimirVenta(request, idventa):
 	venta = Venta.objects.get(id = idventa)
 
 	styles = getSampleStyleSheet()
-	header = Paragraph("REPORTE DE VENTA" , getStyleSheet()['Title'])
+	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
 	documento = Paragraph("DOCUMENTO: "+(str(venta.tipo_documento))+" "+(str(venta.numero_correlativo))+"-"+(str(venta.numero_documento)) , getStyleSheet()['TopicItem1'])
 	cliente = Paragraph("CLIENTE / RAZON SOCIAL: "+(str(venta.pedido.cliente.nombres))+" "+(str(venta.pedido.cliente.apellidos))+" - "+(str(venta.pedido.cliente.area)) , getStyleSheet()['TopicItem1'])
 	ventas.append(header)
@@ -335,10 +334,10 @@ def ImprimirVenta(request, idventa):
 	ventas.append(Spacer(1, 0.1 * inch))
 
 	headings = ('DESCRIPCION', 'PRECIO', "CANTIDAD", 'SUBTOTAL')
-	detalleventa = [(dv.producto.descripcion, dv.precio, dv.cantidad, (dv.precio*dv.cantidad)) for dv in DetalleVenta.objects.filter(venta_id=idventa)]
-
-	t = Table([headings] + detalleventa)
-	t.setStyle(TableStyle(
+	detalleventa = [(str(dv.producto.descripcion), str(dv.precio), str(dv.cantidad), str(dv.precio*dv.cantidad)) for dv in DetalleVenta.objects.filter(venta_id=idventa)]
+	data = ([headings] + detalleventa)
+	print(data)
+	style = TableStyle(
 		# [
 		#     ('GRID', (0, 0), (3, -1), 1, colors.dodgerblue),
 		#     ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
@@ -355,21 +354,38 @@ def ImprimirVenta(request, idventa):
 		# 	('TEXTCOLOR',(0,0),(1,-1),colors.red)
 		# ]
 
-			[
-				('BACKGROUND', (0, 0), (-1, 0), colors.gray),
-				('LINEABOVE', (0,0), (-1,0), 2, colors.green),
-				('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
-				('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
-				('ALIGN', (1,1), (-1,-1), 'CENTER')
-			]
-		))
-	t._argW[0]=4.5*inch
-	# t.wrapOn(, 50, 50)
-	# t.drawOn(, 100,600)
+		[
+			('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+			('LINEABOVE', (0,0), (-1,0), 2, colors.green),
+			('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
+			('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
+			('ALIGN', (1,1), (-1,-1), 'CENTER'),
+			('ALIGN', (1,1), (-1,-1), 'CENTER')
+		]
+		# [
+		# 	('ALIGN',(1,1),(-2,-2),'RIGHT'),
+		# 	('TEXTCOLOR',(1,1),(-2,-2),colors.red),
+		# 	('VALIGN',(0,0),(0,-1),'TOP'),
+		# 	('TEXTCOLOR',(0,0),(0,-1),colors.blue),
+		# 	('ALIGN',(0,-1),(-1,-1),'CENTER'),
+		# 	('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+		# 	('TEXTCOLOR',(0,-1),(-1,-1),colors.green),
+		# 	('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+		# 	('BOX', (0,0), (-1,-1), 0.25, colors.black),
+	 #   ]
+	)
+
+	data2 = [[Paragraph(cell, getStyleSheet()['TopicItemq0']) for cell in row] for row in data]
+	t=Table(data2)
+	t.setStyle(style)
+	t._argW[0]=4*inch
+	t._argW[1]=0.8*inch
+	t._argW[2]=0.8*inch
+	t._argW[3]=0.8*inch
 	ventas.append(t)
-	ventas.append(Paragraph("Sub total:__ "+str(venta.sub_total)+" S/", getStyleSheet()['TopicTitle10Right']))
-	ventas.append(Paragraph("IGV:___"+str(venta.igv)+" S/", getStyleSheet()['TopicTitle10Right']))
-	ventas.append(Paragraph("Total:__ "+str(venta.total)+" S/", getStyleSheet()['TopicTitle10Right']))
+	ventas.append(Paragraph("Sub total:__ "+str(venta.sub_total)+" S/", getStyleSheet()['TopicTitle8Right']))
+	ventas.append(Paragraph("IGV:___"+str(venta.igv)+" S/", getStyleSheet()['TopicTitle8Right']))
+	ventas.append(Paragraph("Total:__ "+str(venta.total)+" S/", getStyleSheet()['TopicTitle8Right']))
 	doc.build(ventas)
 	response.write(buff.getvalue())
 	buff.close()
@@ -386,7 +402,8 @@ def getStyleSheet():
 								  fontSize=10,
 								  leading=12,
 								  spaceBefore=4,
-								  spaceAfter=4)
+								  spaceAfter=4,
+								  wordWrap = "CJK")
 				   )
 
 	stylesheet.add(ParagraphStyle(name='DocInfo',
@@ -513,28 +530,41 @@ def getStyleSheet():
 								  spaceAfter=6,
 								  ),
 				   alias='topic-title10')	
-	stylesheet.add(ParagraphStyle(name='TopicTitle10Right',
+	stylesheet.add(ParagraphStyle(name='TopicTitle8Right',
 								  parent=stylesheet['Normal'],
 								  fontName = 'Times-Bold',
-								  fontSize=10,
-								  leading=10,
-								  rightIndent=30,
+								  fontSize=8,
+								  leading=8,
+								  rightIndent=40,
 								  spaceAfter=6,
 								  alignment= TA_RIGHT
 								  ),
-				   alias='topic-title10-right')
+				   alias='topic-title8-right')
 
 	for i in range(0, 15):
 		indent = 18*i
 		stylesheet.add(ParagraphStyle(name='TopicItem%s' % i,
 								  parent=stylesheet['Normal'],
 								  fontName = 'Times-Roman',
-								  fontSize=10,
+								  fontSize=9,
 								  leftIndent=indent,
 								  spaceBefore=0,
 								  spaceAfter=0,
 								  ),
 				   alias='topic-item-%s' % i)
+
+	for i in range(0, 15):
+		indent = 18*i
+		stylesheet.add(ParagraphStyle(name='TopicItemq%s' % i,
+								  parent=stylesheet['Normal'],
+								  fontName = 'Times-Roman',
+								  fontSize=8,
+								  leftIndent=indent,
+								  spaceBefore=0,
+								  spaceAfter=0,
+								  wordWrap = 'CJK',
+								  ),
+				   alias='topic-itemq-%s' % i)
 
 	stylesheet.add(ParagraphStyle(name='UnorderedList',
 								  parent=stylesheet['Normal'],
