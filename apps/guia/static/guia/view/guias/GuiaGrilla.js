@@ -6,7 +6,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
-	height: 250,
+	height: 350,
 	columns: [
 		{
 			text: "Cliente / Razon Social",
@@ -78,15 +78,6 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 		// itemcontextmenu: 'vales_ContextMenu',
 	},
 	dockedItems:[
-		{
-			reference: 'grillaguia-paginador',
-			bind:{
-				store: '{store_guia}',
-			},
-			xtype: 'pagingtoolbar',
-			dock: 'bottom',
-			displayInfo: true,
-		},
 		{
 			xtype: 'toolbar',
 			dock: 'top',

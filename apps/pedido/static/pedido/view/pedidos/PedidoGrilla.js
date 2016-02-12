@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	bind: {
 		store: '{store_pedidos}',
 	},
-	height: 250,
+	height: 350,
 	columns: [
 		{
 			text: "Cliente / Razon Social",
@@ -87,14 +87,6 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 		deselect: 'deSeleccionarPedido',
 	},
 	dockedItems:[
-		{
-			bind:{
-				store: '{store_pedidos}',
-			},
-			xtype: 'pagingtoolbar',
-			dock: 'bottom',
-			displayInfo: true,
-		},
 		{
 			xtype: 'toolbar',
 			dock: 'top',

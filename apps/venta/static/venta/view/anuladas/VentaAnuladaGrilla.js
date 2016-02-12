@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.venta.view.anuladas.VentaAnuladaGrilla', {
 	bind: {
 		store: '{store_ventasanulada}',
 	},
-	height: 250,
+	height: 350,
 	columns: [
 		{
 			text: "Cliente - Razon Social",

@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	bind: {
 		store: '{store_ventas}',
 	},
-	height: 250,
+	height: 350,
 	columns: [
 		{
 			text: "Cliente - Razon Social",
