@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^grupoej.vale.', include("apps.vale.urls")),
     url(r'^grupoej.guia.', include("apps.guia.urls")),
     url(r'^grupoej.venta.', include("apps.venta.urls")),
+    # url(r'^grupoej.inicio.', include("apps.inicio.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

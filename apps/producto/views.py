@@ -335,6 +335,7 @@ def ReporteEnvaceListar(request):
 		},
 		content_type= "application/json",
 	)
+	
 def DetalleReporteEnvace(request):
 	findID = request.GET.get("id", 0)
 

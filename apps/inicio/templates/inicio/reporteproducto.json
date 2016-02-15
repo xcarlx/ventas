@@ -1,0 +1,21 @@
+{% load l10n %}
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{% for detalleventa in  detalleventas %}
+			{
+				"id": {{ detalleventa.id}},
+				"producto__descripcion": "{{ detalleventa.producto.descripcion}}",
+				"productoid": {{ detalleventa.producto.id}},
+				"cliente": "{{ detalleventa.venta.pedido.cliente.nombres }}" + " " + "{{ detalleventa.venta.pedido.cliente.apellidos }}" + " / " + " {{ detalleventa.venta.pedido.cliente.area }}" + " / " + "{{ detalleventa.venta.pedido.cliente.responsable }}",
+				"ventaid": {{ detalleventa.venta.id}},
+				"ventaid": {{ detalleventa.venta.id}},
+				"precio": {{ detalleventa.precio|unlocalize }},
+				"cantidad":{{ detalleventa.cantidad }},
+				"subtotal":{{ detalleventa.cantidad }}*{{ detalleventa.precio|unlocalize }},
+				"totalcantidad":{{ totalcantidad }},
+				"totalprecio":{{ totalprecio|unlocalize }},
+			},{% endfor %}
+		]
+}	
