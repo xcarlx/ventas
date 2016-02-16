@@ -62,6 +62,14 @@ Ext.define('GRUPOEJ.inicio.controller.reportes.ReporteProducto',	{
 			+ me.lookupReference("comboreporteproducto").getValue()+"/"
 			+ new Date(me.lookupReference("vreporteFechaInicio").getValue()).getTime()+"/"
 			+ new Date(me.lookupReference("vreporteFechaFin").getValue()).getTime()+"/",'_blank');
+	},
+	ImprimirAllProducto: function() {
+		me = this;
+    	//TODO: It opens the document in a new tab, but not force the 
+		// console.log(me.lookupReference('ventagrilla').getSelectionModel().getSelection()[0].id);
+    	window.open('grupoej.inicio.reportes.reporteproducto/imprimir/'
+			+ new Date(me.lookupReference("vreporteFechaInicio").getValue()).getTime()+"/"
+			+ new Date(me.lookupReference("vreporteFechaFin").getValue()).getTime()+"/",'_blank');
 	}
 
 });

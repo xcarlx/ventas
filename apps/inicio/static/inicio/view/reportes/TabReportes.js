@@ -17,9 +17,6 @@ Ext.define('GRUPOEJ.inicio.view.reportes.TabReportes', {
 				{
 					xtype: 'panel',
 					bodyPadding: 5,  
-					// Don't want content to crunch against the borders
-					// marging: 5,
-					// title: 'Filtros por Fechas',
 					border: false,
 					items:[
 						 {
@@ -136,6 +133,8 @@ Ext.define('GRUPOEJ.inicio.view.reportes.TabReportes', {
 				},              
 			],
 		}, 
+
+
 		{
 			title: 'Reporte de Clientes',
 			itemId: 'rcliente',

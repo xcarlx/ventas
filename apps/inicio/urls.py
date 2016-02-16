@@ -9,4 +9,5 @@ urlpatterns = [
 	url(r'pedidospendientes.pedidopendiente/listar/$', PedidoPendienteListar),
 	url(r'reportes.reporteproducto/listar/$', ReporteProductoListar),
 	url(r'reportes.reporteproducto/imprimir/(?P<idproducto>[0-9]+)/(?P<fechaI>[0-9]+)/(?P<fechaF>[0-9]+)/$', ImprimirProductoListar),
+	url(r'reportes.reporteproducto/imprimir/(?P<fechaI>[0-9]+)/(?P<fechaF>[0-9]+)/$', ImprimirAllProductoListar),
 ]

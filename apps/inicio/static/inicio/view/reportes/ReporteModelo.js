@@ -9,7 +9,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteModelo', {
 		store_reporteproductogrilla:{
 			model: 'GRUPOEJ.inicio.model.reportes.ReporteProducto',
 			autoLoad: true,
-			// remoteFilter: true,
+			groupField: 'clientes_rsocial',
 		},
 		store_productos:{
 			model:'GRUPOEJ.producto.models.productos.Producto',

@@ -6,12 +6,17 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 	bind: {
 		store: '{store_reporteproductogrilla}',
 	},
+	requires:[
+		'Ext.grid.feature.Grouping',
+	],
+	 
 	height: 400,
 	columns: [
 		{
 			text: "Cliente - Razon Social",
 			flex: 2,
-			dataIndex: 'cliente',
+			dataIndex: 'clientes_rsocial',
+			hidden: true,
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -22,7 +27,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 			xtype: 'numbercolumn', 
 			format:'0',			
 			text: "Cantidad",
-			width: 150,
+			width: 250,
 			dataIndex: 'cantidad',
 			align: "center",
 			items:[
@@ -35,7 +40,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 			xtype: 'numbercolumn', 
 			format:'0.00',
 			text: "Precio",
-			width: 150,
+			width: 250,
 			dataIndex: 'precio',
 			align: "center",
 			items:[
@@ -44,6 +49,13 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 				}
 			],
 		},
+	],
+	features: [
+		{
+			ftype:'grouping',
+			hideGroupedHeader: true,
+        	startCollapsed: true,
+		}
 	],
 	dockedItems:[
 		{
@@ -70,7 +82,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 				    // url: 'grupoej.venta.ventas.venta/imprimir/',  
 				    // handler: function () {
 				    // params: { idventa: 0 },
-				    handler: "handlerBtnDownloadHelpGuie",
+				    handler: "ImprimirAllProducto",
 				    bind: {
 						disabled: "{!comboreporteproducto.selection}",
 					},
