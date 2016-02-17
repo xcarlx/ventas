@@ -16,7 +16,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 			text: "Cliente - Razon Social",
 			flex: 2,
 			dataIndex: 'clientes_rsocial',
-			hidden: true,
+			hidden: false,
 			items:[
 				{
 					xtype: 'searchtrigger'

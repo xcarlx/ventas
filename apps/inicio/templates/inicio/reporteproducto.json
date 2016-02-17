@@ -10,6 +10,7 @@
 				"productoid": {{ detalleventa.producto.id}},
 				"clientes_rsocial": "{{ detalleventa.venta.pedido.cliente.nombres }}" + " " + "{{ detalleventa.venta.pedido.cliente.apellidos }}" + " / " + " {{ detalleventa.venta.pedido.cliente.area }}" + " / " + "{{ detalleventa.venta.pedido.cliente.responsable }}",
 				"ventaid": {{ detalleventa.venta.id}},
+				"venta__fecha": '{{ detalleventa.venta.fecha|date:'m/d/Y' }}',
 				"precio": {{ detalleventa.precio|unlocalize }},
 				"cantidad":{{ detalleventa.cantidad }},
 				"subtotal":{{ detalleventa.cantidad }}*{{ detalleventa.precio|unlocalize }},
