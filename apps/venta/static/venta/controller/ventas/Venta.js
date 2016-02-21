@@ -1,10 +1,11 @@
 Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{	
 	extend:	'Ext.app.ViewController',			
 	alias:	'controller.venta',
-	// requires:[
-	// 	'GRUPOEJ.pedido.view.pedidos.PedidoFormulario', 
-	// 	'GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario',
-	// ],
+	requires:[
+		'GRUPOEJ.venta.view.ventas.ClienteForm',
+		'GRUPOEJ.venta.view.ventas.ClienteContext', 
+	],
+
 	refrescarPedido: function(){
 		st_venta = this.getStore('store_ventas');
 		if (!st_venta.ventaId){
@@ -108,7 +109,73 @@ Ext.define('GRUPOEJ.venta.controller.ventas.Venta',	{
     	//TODO: It opens the document in a new tab, but not force the 
 		// console.log(me.lookupReference('ventagrilla').getSelectionModel().getSelection()[0].id);
     	window.open('grupoej.venta.ventas.venta/imprimir/'+me.lookupReference('ventagrilla').getSelectionModel().getSelection()[0].id,'_blank');
-	}
+	},
+
+	productos_ContextMenu: function(view, record, element, index, evtObj) {
+		me = this;
+		evtObj.stopEvent();
+        me.currentProductoContextMenu = record;
+        currentProductoContextMenu = Ext.widget('ClienteContext', {
+        	viewModel: {
+        		data: {
+        			descripcion: record.get("cliente__nombres"),
+        		},
+        	},
+        	listeners : {
+				'click': me.productos_ContextMenu_Seleccionar
+			}
+        });
+        currentProductoContextMenu.viewTotal = me;
+        currentProductoContextMenu.showAt(evtObj.getXY());
+        return false;
+	},
+
+	productos_ContextMenu_Seleccionar: function(view, record, item, index, eventObj) {
+		me = view.viewTotal;
+		me.uploadfotoproducto_editWindowShow(record.action, me.currentProductoContextMenu);
+	},
+	
+	uploadfotoproducto_editWindowShow: function(accion, registro) {
+		me = this;
+		if (!me.editWindowUploadFotoProducto) {
+			me.editWindowUploadFotoProducto = me.getView().add({
+            	xtype: 'ventacliente-form',
+            	viewModel: {
+	        		data: {
+	        			titulo2: '',
+	        		},
+	        	},
+	        	constrain: true,
+				renderTo: panelCentral.id,
+				constrainTo: panelCentral.id,
+            });
+  			//	me.editWindowPlan.on("show", function(win) {
+			// 	me.lookupReference("formUploadFotoProducto").getForm().findField("tipoplan_id").focus();
+			// });
+		}
+		with (me.editWindowUploadFotoProducto) {
+			action = accion;
+			with (getViewModel()) {
+				setData({
+					titulo2: registro.get("cliente__nombres"),
+					idcliente: registro.get("clienteid"),
+					tipo_documento: registro.get("cliente__tipo_documento"),
+					nro_documento: registro.get("cliente__nro_documento"),
+					email: registro.get("cliente__email"),
+					telefono: registro.get("cliente__telefono"),
+					direccion: registro.get("cliente__direccion"),
+					area: registro.get("cliente__area"),
+					responsable: registro.get("cliente__responsable"),
+					referencia: registro.get("cliente__referencia"),
+				});
+			}
+			show();
+		}
+	},
+	Salir: function(){
+		me = this;
+		me.editWindowUploadFotoProducto.close();
+	}, 
 
 });
 	

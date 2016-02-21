@@ -24,4 +24,9 @@ Ext.define('GRUPOEJ.producto.controller.reportes.ReporteEnvace',	{
 			params:{idcliente: 0}
 		});		
 	},
+	Imprimir: function(){
+		me = this;
+
+		window.open('grupoej.producto.reportes.reporteenvace/imprimir/'+me.lookupReference('reporteenvacegrilla').getSelectionModel().getSelection()[0].id+"/",'_blank');
+	},
 });

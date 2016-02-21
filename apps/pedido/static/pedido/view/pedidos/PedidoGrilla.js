@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	height: 350,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente / Razon Social",
 			flex: 2,
 			dataIndex: 'cliente__nombres',
@@ -85,6 +90,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	listeners : {
 		select: 'seleccionarPedido',
 		deselect: 'deSeleccionarPedido',
+		itemcontextmenu: 'productos_ContextMenu',
 	},
 	dockedItems:[
 		{

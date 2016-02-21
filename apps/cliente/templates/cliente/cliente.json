@@ -16,8 +16,7 @@
 				"direccion": '{{cliente.direccion}}',
 				"area": '{{cliente.area}}',
 				"responsable": '{{cliente.responsable}}',
-				"tipocliente": '{{cliente.tipocliente}}',
-
+				"referencia": '{{cliente.referencia}}',
 			},{% endfor %}
 		]
 }

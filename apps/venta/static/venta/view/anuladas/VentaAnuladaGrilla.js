@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.venta.view.anuladas.VentaAnuladaGrilla', {
 	height: 350,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente - Razon Social",
 			flex: 2,
 			dataIndex: 'pedido__cliente__nombres',

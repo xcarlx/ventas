@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 	height: 350,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente / Razon Social",
 			flex: 2,
 			dataIndex: 'nombres',
@@ -72,5 +77,24 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 		select: 'seleccionarCliente',
 		deselect: 'deSeleccionarCliente',
 	},
+	dockedItems:[
+		{
+			xtype: 'toolbar',
+			dock: 'top',
+			items:[
+				{
+					xtype: 'button',
+					text: 'Imprimir',
+					iconCls: 'icono-print',
+					bind: {
+						disabled: "{!reporteenvacegrilla.selection}",
+					},
+					listeners:{
+						click: 'Imprimir',
+					},
+				},
+			],
+		},
+	],
 });
 

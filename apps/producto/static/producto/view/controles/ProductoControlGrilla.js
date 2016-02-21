@@ -12,6 +12,11 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 	height: 520,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Descripcion",
 			flex: 5,
 			dataIndex: 'producto__descripcion',
@@ -24,6 +29,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 		{
 			xtype: 'numbercolumn',
 			text: "Entregado",
+			format:'0',
 			width: 100,
 			dataIndex: 'entregado',
 			items:[
@@ -35,6 +41,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 		{
 			xtype: 'numbercolumn',
 			text: "Devuelto",
+			format:'0',
 			width: 100,
 			dataIndex: 'devuelto',
 			items:[
@@ -46,6 +53,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 		{
 			xtype: 'numbercolumn',
 			text: "Debe",
+			format:'0',
 			width: 100,
 			dataIndex: 'resto',
 			items:[

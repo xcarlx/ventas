@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 	height: 500,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente / Razon Social",
 			flex: 3,
 			dataIndex: 'nombres',

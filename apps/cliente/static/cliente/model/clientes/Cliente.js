@@ -11,7 +11,7 @@ Ext.define('GRUPOEJ.cliente.model.clientes.Cliente', {
 		{name: 'direccion', type: 'string'},
 		{name: 'area', type: 'string'},
 		{name: 'responsable', type: 'string'},
-		{name: 'tipocliente', type: 'string'},
+		{name: 'referencia', type: 'string'},
 	],
 	validators:{
 		nombres: [
@@ -36,9 +36,6 @@ Ext.define('GRUPOEJ.cliente.model.clientes.Cliente', {
 		direccion: [
 			{type: 'presence', message: 'Este campo es obligatorio'},
 			{type: 'length', min:6, max: 150, message: 'Debe tener entre {0} y {1} caracteres'},
-		],
-		tipocliente: [
-			{type: 'presence', message: 'Este campo es obligatorio'},
 		],
 	},
 });

@@ -13,6 +13,12 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteClienteGrilla', {
 	height: 400,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+         
+		{
 			xtype: 'datecolumn',
 			text: 'Fecha',
 			width: 120,

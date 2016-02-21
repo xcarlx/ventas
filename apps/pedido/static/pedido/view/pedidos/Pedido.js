@@ -19,9 +19,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 		{
 			xtype: 'form',
 			extend: 'Ext.window.Window',
-		    title: 'AGREGAR PRODUCTOS AL DETALLE',
-		    reference: 'frompedidos',
-		    renderTo: Ext.getBody(),
+			title: 'AGREGAR PRODUCTOS AL DETALLE',
+			reference: 'frompedidos',
+			renderTo: Ext.getBody(),
 			bodyPadding: 10,
 			modelValidation: true,
 			bind: {
@@ -40,14 +40,14 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 				{
 					xtype: 'combobox',
 					editable: false,
-		          	fieldLabel: "Seleccionar el Producto",
+					fieldLabel: "Seleccionar el Producto",
 					labelWidth: 150,
 					width: 600,
 					name: 'productoid',
 					reference: 'comboproductospedido',
-		            bind:{
-		            	store: '{store_productos}',
-		            },
+					bind:{
+						store: '{store_productos}',
+					},
 					displayField: 'descripcion',
 					valueField: 'id',
 					queryMode: 'local',
@@ -55,6 +55,15 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 					queryChaching: false,
 					forceSelection:true,
 					editable: true,
+					listConfig: {
+						getInnerTpl: function() {
+							// here you place the images in your combo
+							var tpl = '<div>'+
+									  '{imagen2} &nbsp;&nbsp; &nbsp;&nbsp; '+
+									  '{descripcion}</div>';
+							return tpl;
+						}
+					}
 				},
 				{
 					xtype: 'panel',

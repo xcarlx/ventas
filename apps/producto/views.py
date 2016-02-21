@@ -2,11 +2,32 @@ from django.shortcuts import render, get_object_or_404
 from .models import Producto
 from apps.cliente.models import *
 from  django.http import HttpResponse
-import json
+import json, datetime
+from datetime import datetime   
 from .forms import ProductoForm,ProductoFotoForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
+from apps.cliente.models import Prestamo
+from apps.inicio.stylesheet import getStyleSheet 
+from django.db.models import Sum
+from django.utils import timezone
+
 # Create your views here.
+
+from reportlab.pdfgen import canvas
+from apps.cliente.models import *
+from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle, Spacer,Table
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle, StyleSheet1
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import A4,A5, inch, landscape, portrait 
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT, TA_JUSTIFY
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from io import BytesIO
+
+
+
 def ProductoListar(request):
 
 	findID = request.GET.get("id", 0)
@@ -380,3 +401,64 @@ def DetalleReporteEnvace(request):
 		},
 		content_type= "application/json",
 	)
+
+
+def ImprimirReporteEnvace(request, idcliente):
+	
+	response = HttpResponse(content_type='application/pdf')
+
+	pdf_name = "reporte_producto.pdf" 
+	buff = BytesIO()
+
+	doc = SimpleDocTemplate(buff,
+							pagesize=letter,
+							rightMargin=50,
+							leftMargin=50,
+							topMargin=20,
+							bottomMargin=18,
+							)
+	# doc.pagesize = landscape(A4)
+	doc.pagesize = portrait(A4)
+	productos = []
+	cliente = Cliente.objects.get(id = idcliente)
+	# totales = Prestamo.objects.filter(cliente__id = idcliente).aggregate(Sum('entregado'), Sum('devuelto'))
+	styles = getSampleStyleSheet()
+	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
+	cli = Paragraph(str(cliente.nombres)+" "+str(cliente.apellidos)+" / "+str(cliente.area)+ " / "+ str(cliente.responsable), getStyleSheet()['TopicTitle8'])
+	productos.append(header)
+	productos.append(Spacer(1, 0.2 * inch))	
+	productos.append(Paragraph("REPORTE TOTAL." , getStyleSheet()['TopicTitle14']))
+	productos.append(Spacer(1, 0.05 * inch))
+	productos.append(cli)
+	productos.append(Paragraph("DETALLE", getStyleSheet()['TopicTitle10']))
+	productos.append(Spacer(1, 0.1 * inch))
+
+	headings = ("PRODUCTO","ENTREGADA ", 'DEVUELTA', 'DEBE')
+	detalleventa = [
+			(str(dv.producto.descripcion),str(dv.entregado), str(dv.devuelto), str(dv.entregado - dv.devuelto)) 
+			for dv in Prestamo.objects.filter(cliente__id = idcliente).order_by('producto_id')]
+	data = ([headings] + detalleventa)
+
+	data2 = [[Paragraph(cell, getStyleSheet()['TopicItemq0']) for cell in row] for row in data]
+	t=Table(data2)
+	style = TableStyle(
+		[
+			('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+			('LINEABOVE', (0,0), (-1,0), 2, colors.green),
+			('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
+			('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
+			('ALIGN', (1,1), (-1,-1), 'CENTER'),
+		]
+	)
+
+	t.setStyle(style)
+	t._argW[0]=4.0*inch
+	t._argW[1]=0.9*inch
+	t._argW[2]=0.9*inch
+	t._argW[3]=0.9*inch
+	productos.append(t)
+	# productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales['entregado__sum'])+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales['devuelto__sum']))", getStyleSheet()['TopicTitle8Right']))
+	doc.build(productos)
+	response.write(buff.getvalue())
+	buff.close()
+	return response

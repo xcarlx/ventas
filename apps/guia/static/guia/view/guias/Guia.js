@@ -53,6 +53,15 @@ Ext.define('GRUPOEJ.guia.view.guias.Guia', {
 					queryChaching: false,
 					forceSelection:true,
 					editable: true,
+					listConfig: {
+			        	getInnerTpl: function() {
+				            // here you place the images in your combo
+				            var tpl = '<div>'+
+				                      '{imagen2} &nbsp;&nbsp; &nbsp;&nbsp; '+
+				                      '{descripcion}</div>';
+				            return tpl;
+				        }
+    				}
 				},
 				{
 					xtype: 'panel',

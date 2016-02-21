@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.inicio.view.pedidospendientes.PedidoPendienteGrilla', {
 	height: 520,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente - Nombre",
 			flex: 2,
 			dataIndex: 'cliente__nombres',

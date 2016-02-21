@@ -13,6 +13,11 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
 	height: 400,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente - Razon Social",
 			flex: 2,
 			dataIndex: 'clientes_rsocial',

@@ -9,6 +9,11 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 	height: 350,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente / Razon Social",
 			flex: 2,
 			dataIndex: 'cliente__nombres',

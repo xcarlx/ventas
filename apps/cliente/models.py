@@ -13,13 +13,6 @@ class Cliente(Auditoria):
 		(RUC, 'RUC'),
 	)
 
-	JURIDICA = 'JURIDICA'
-	NATURAL = 'NATURAL'
-	
-	TIPO_PERSONA = (
-		(JURIDICA, 'JURIDICA'),
-		(NATURAL, 'NATURAL'),
-	)
 	nombres = models.CharField(max_length=150)
 	apellidos = models.CharField(max_length=80, blank=True, null=True, default="")
 	tipo_documento = models.CharField(max_length=3, choices=TIPO_DOCUMENTO_IDENTIDAD, default=DNI)
@@ -29,7 +22,7 @@ class Cliente(Auditoria):
 	direccion = models.CharField(max_length=150,blank=True, null=True)
 	area = models.CharField(max_length=200,blank=True, null=True)
 	responsable = models.CharField(max_length=45, blank=True, null=True)
-	tipocliente = models.CharField(max_length=8, choices=TIPO_PERSONA, default=NATURAL)
+	referencia = models.CharField(max_length=200, blank=True, null=True)
 	prestamos = models.ManyToManyField(Producto, through='Prestamo')
 
 	def __str__(self):

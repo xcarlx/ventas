@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.guia.view.guias.DetalleGuiaGrilla', {
 	height: 200,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Producto",
 			flex: 2,
 			dataIndex: 'producto__descripcion',

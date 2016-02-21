@@ -5,6 +5,8 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		'GRUPOEJ.pedido.view.pedidos.PedidoFormulario', 
 		'GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario',
 		'GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario',
+		'GRUPOEJ.pedido.view.pedidos.PedidoContext', 
+		'GRUPOEJ.pedido.view.pedidos.ClienteForm',
 	],
 	init: function(){
 		me = this;
@@ -408,5 +410,72 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 
 		}
 	},	
+
+	productos_ContextMenu: function(view, record, element, index, evtObj) {
+		me = this;
+		evtObj.stopEvent();
+        me.currentProductoContextMenu = record;
+        currentProductoContextMenu = Ext.widget('PedidoContext', {
+        	viewModel: {
+        		data: {
+        			descripcion: record.get("cliente__nombres"),
+        		},
+        	},
+        	listeners : {
+				'click': me.productos_ContextMenu_Seleccionar
+			}
+        });
+        currentProductoContextMenu.viewTotal = me;
+        currentProductoContextMenu.showAt(evtObj.getXY());
+        return false;
+	},
+
+	productos_ContextMenu_Seleccionar: function(view, record, item, index, eventObj) {
+		me = view.viewTotal;
+		me.uploadfotoproducto_editWindowShow(record.action, me.currentProductoContextMenu);
+	},
+	
+	uploadfotoproducto_editWindowShow: function(accion, registro) {
+		me = this;
+		if (!me.editWindowUploadFotoProducto) {
+			me.editWindowUploadFotoProducto = me.getView().add({
+            	xtype: 'pedidocliente-form',
+            	viewModel: {
+	        		data: {
+	        			titulo2: '',
+	        		},
+	        	},
+	        	constrain: true,
+				renderTo: panelCentral.id,
+				constrainTo: panelCentral.id,
+            });
+  			//	me.editWindowPlan.on("show", function(win) {
+			// 	me.lookupReference("formUploadFotoProducto").getForm().findField("tipoplan_id").focus();
+			// });
+		}
+		with (me.editWindowUploadFotoProducto) {
+			action = accion;
+			with (getViewModel()) {
+				setData({
+					titulo2: registro.get("cliente__nombres"),
+					idcliente: registro.get("clienteid"),
+					tipo_documento: registro.get("cliente__tipo_documento"),
+					nro_documento: registro.get("cliente__nro_documento"),
+					email: registro.get("cliente__email"),
+					telefono: registro.get("cliente__telefono"),
+					direccion: registro.get("cliente__direccion"),
+					area: registro.get("cliente__area"),
+					responsable: registro.get("cliente__responsable"),
+					referencia: registro.get("cliente__referencia"),
+				});
+			}
+			show();
+		}
+	},
+	Salir: function(){
+		me = this;
+		me.editWindowUploadFotoProducto.close();
+	}, 
+
 
 });

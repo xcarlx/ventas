@@ -10,9 +10,16 @@
 				"clienteid": {{pedido.cliente.id }},
 				"nro_dias": {{pedido.nro_dias }},
 				"nro_pedido": '{{pedido.nro_pedido}}',
+				"clienteid": '{{pedido.cliente.id}}',
 				"cliente__nombres": '{{pedido.cliente.nombres}} {{pedido.cliente.apellidos}}',
+				"cliente__tipo_documento": '{{pedido.cliente.tipo_documento}}',
+				"cliente__nro_documento": '{{pedido.cliente.nro_documento}}',
+				"cliente__email": '{{pedido.cliente.email}}',
 				"cliente__telefono": '{{pedido.cliente.telefono}}',
+				"cliente__direccion": '{{pedido.cliente.direccion}}',
 				"cliente__area": '{{pedido.cliente.area}}',
+				"cliente__responsable": '{{pedido.cliente.responsable}}',
+				"cliente__referencia": '{{pedido.cliente.referencia}}',
 				"estado": '{{pedido.estado}}',
 			},{% endfor %}
 		]

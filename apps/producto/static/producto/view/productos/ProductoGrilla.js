@@ -11,6 +11,11 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
 	height: 600,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Descripcion",
 			flex: 5,
 			dataIndex: 'descripcion',

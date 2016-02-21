@@ -8,6 +8,11 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	height: 350,
 	columns: [
 		{
+            xtype: 'rownumberer',
+            width: 50,
+            sortable: false
+        },
+		{
 			text: "Cliente - Razon Social",
 			flex: 2,
 			dataIndex: 'pedido__cliente__nombres',
@@ -119,6 +124,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 	listeners : {
 		select: 'seleccionarVenta',
 		deselect: 'deSeleccionarVenta',
+		itemcontextmenu: 'productos_ContextMenu',
 	},
 	dockedItems:[
 		// {
