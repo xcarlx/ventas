@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 	bind: {
 		store: '{store_clientes}',
 	},
-	height: 500,
+	height: 530,
 	columns: [
 		{
             xtype: 'rownumberer',
@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
         },
 		{
 			text: "Cliente / Razon Social",
-			flex: 3,
+			width: 250,
 			dataIndex: 'nombres',
 			items:[
 				{

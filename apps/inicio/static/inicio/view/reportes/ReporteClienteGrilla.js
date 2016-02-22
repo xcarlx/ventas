@@ -32,13 +32,13 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteClienteGrilla', {
 		},
 		{
 			text: "Cliente - Razon Social",
-			flex: 1,
+			width: 250,
 			dataIndex: 'clientes_rsocial',
 			hidden: false,
 		},		
 		{
 			text: "Producto - Descripcion",
-			flex: 1,
+			width: 250,
 			dataIndex: 'producto__descripcion',
 			hidden: false,
 			items:[

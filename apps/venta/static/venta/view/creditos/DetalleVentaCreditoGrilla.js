@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.venta.view.creditos.DetalleVentaCreditoGrilla', {
 	bind: {
 		store: '{store_detalleventascredito}',
 	},
-	height: 200,
+	height: 160,
 	columns: [
 		{
             xtype: 'rownumberer',

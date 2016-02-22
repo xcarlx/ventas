@@ -19,7 +19,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteProductoGrilla', {
         },
 		{
 			text: "Cliente - Razon Social",
-			flex: 2,
+			width: 250,
 			dataIndex: 'clientes_rsocial',
 			hidden: false,
 			items:[

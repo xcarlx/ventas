@@ -16,7 +16,7 @@ Ext.define('GRUPOEJ.venta.view.creditos.VentaCredito', {
 			xtype: 'panel',
 		    bodyPadding: 5,  // Don't want content to crunch against the borders
 		    // marging: 5,
-		    title: 'Filtros por Fechas',
+		    // title: 'Filtros por Fechas',
 		    border: true,
 		    layout: {
 				type: 'hbox',

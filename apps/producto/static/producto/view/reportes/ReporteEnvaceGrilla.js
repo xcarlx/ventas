@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
         },
 		{
 			text: "Cliente / Razon Social",
-			flex: 2,
+			width: 250,
 			dataIndex: 'nombres',
 			items:[
 				{

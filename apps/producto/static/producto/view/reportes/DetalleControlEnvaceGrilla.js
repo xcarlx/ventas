@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
         },
 		{
 			text: "Descripcion",
-			flex: 5,
+			width: 300,
 			dataIndex: 'producto__descripcion',
 			items:[
 				{

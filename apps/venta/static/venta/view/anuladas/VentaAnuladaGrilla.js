@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.venta.view.anuladas.VentaAnuladaGrilla', {
         },
 		{
 			text: "Cliente - Razon Social",
-			flex: 2,
+			width: 250,
 			dataIndex: 'pedido__cliente__nombres',
 			items:[
 				{
@@ -24,7 +24,7 @@ Ext.define('GRUPOEJ.venta.view.anuladas.VentaAnuladaGrilla', {
 		},
 		{
 			text: "Area - Responsable",
-			flex: 2,
+			width: 200,
 			dataIndex: 'pedido__cliente__area',
 			items:[
 				{

@@ -19,10 +19,11 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 		{
 			xtype: 'form',
 			extend: 'Ext.window.Window',
-			title: 'AGREGAR PRODUCTOS AL DETALLE',
+			// title: 'AGREGAR PRODUCTOS AL DETALLE',
 			reference: 'frompedidos',
 			renderTo: Ext.getBody(),
 			bodyPadding: 10,
+			border: true,
 			modelValidation: true,
 			bind: {
 				disabled: "{!pedido-grillapedidos.selection}",

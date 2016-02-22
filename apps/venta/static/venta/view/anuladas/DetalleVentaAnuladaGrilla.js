@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.venta.view.anuladas.DetalleVentaAnuladaGrilla', {
 	bind: {
 		store: '{store_detalleventasanulada}',
 	},
-	height: 200,
+	height: 160,
 	columns: [
 		{
             xtype: 'rownumberer',

@@ -3,7 +3,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 	alias: 'widget.vale-grilla',
 	reference: 'valeGrilla',
 	bind : '{store_vale}',
-	height: 350,
+	height: 320,
 	selModel: {
 		mode: 'MULTI'
 	},
@@ -15,7 +15,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
         },
 		{
 			text: "Cliente / Razon Social",
-			flex: 2,
+			width: 250,
 			dataIndex: 'cliente__nombres',
 			items:[
 				{
@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.vale.view.vales.ValeGrilla', {
 		},
 		{
 			text: "Area - Responsable",
-			flex: 2,
+			width: 200,
 			dataIndex: 'cliente__area',
 			items:[
 				{

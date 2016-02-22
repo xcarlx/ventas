@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.inicio.view.pedidospendientes.PedidoPendienteGrilla', {
         },
 		{
 			text: "Cliente - Nombre",
-			flex: 2,
+			width: 250,
 			dataIndex: 'cliente__nombres',
 			items:[
 				{
@@ -24,7 +24,7 @@ Ext.define('GRUPOEJ.inicio.view.pedidospendientes.PedidoPendienteGrilla', {
 		},
 		{
 			text: "Area - Responsable",
-			flex: 2,
+			width: 200,
 			dataIndex: 'cliente__area',
 			items:[
 				{

@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 	bind: {
 		store: '{store_detallepedidos}',
 	},
-	height: 200,
+	height: 170,
 	columns: [
 		{
             xtype: 'rownumberer',
@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
         },
 		{
 			text: "Producto",
-			flex: 2,
+			width: 300,
 			dataIndex: 'producto__descripcion',
 			sortable: false,
 		},

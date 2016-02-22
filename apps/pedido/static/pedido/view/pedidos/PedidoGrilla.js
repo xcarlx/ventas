@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	bind: {
 		store: '{store_pedidos}',
 	},
-	height: 350,
+	height: 340,
 	columns: [
 		{
             xtype: 'rownumberer',
@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
         },
 		{
 			text: "Cliente / Razon Social",
-			flex: 2,
+			width: 250,
 			dataIndex: 'cliente__nombres',
 			items:[
 				{
@@ -24,7 +24,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 		},
 		{
 			text: "Area Responsable",
-			flex: 2,
+			width: 200,
 			dataIndex: 'cliente__area',
 			items:[
 				{

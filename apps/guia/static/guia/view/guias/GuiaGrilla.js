@@ -6,7 +6,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 	selModel: {
 		mode: 'MULTI'
 	},
-	height: 350,
+	height: 320,
 	columns: [
 		{
             xtype: 'rownumberer',
@@ -15,7 +15,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
         },
 		{
 			text: "Cliente / Razon Social",
-			flex: 2,
+			width: 250,
 			dataIndex: 'cliente__nombres',
 			items:[
 				{
@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.guia.view.guias.GuiaGrilla', {
 		},
 		{
 			text: "Area - Responsable",
-			flex: 2,
+			width: 200,
 			dataIndex: 'cliente__area',
 			items:[
 				{

@@ -17,10 +17,11 @@ Ext.define('GRUPOEJ.guia.view.guias.Guia', {
 		{
 			xtype: 'form',
 			extend: 'Ext.window.Window',
-		    title: 'AGREGAR PRODUCTOS AL DETALLE',
+		    // title: 'AGREGAR PRODUCTOS AL DETALLE',
 		    reference: 'fromguias',
 		    renderTo: Ext.getBody(),
 			bodyPadding: 10,
+			border: true,
 			modelValidation: true,
 			bind: {
 				disabled: "{!guiaGrilla.selection}",
@@ -38,7 +39,7 @@ Ext.define('GRUPOEJ.guia.view.guias.Guia', {
 				{
 					xtype: 'combobox',
 					editable: false,
-		          	fieldLabel: "Seleccionar el Producto: ",
+		          	fieldLabel: "Seleccionar el Producto",
 					labelWidth: 150,
 					width: 600,
 					reference: 'comboproductosguia',

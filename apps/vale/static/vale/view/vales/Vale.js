@@ -17,10 +17,11 @@ Ext.define('GRUPOEJ.vale.view.vales.Vale', {
 		{
 			xtype: 'form',
 			extend: 'Ext.window.Window',
-		    title: 'AGREGAR PRODUCTOS AL DETALLE',
+		    // title: 'AGREGAR PRODUCTOS AL DETALLE',
 		    reference: 'fromvales',
 		    renderTo: Ext.getBody(),
 			bodyPadding: 10,
+			border: true,
 			modelValidation: true,
 			bind: {
 				disabled: "{!valeGrilla.selection}",

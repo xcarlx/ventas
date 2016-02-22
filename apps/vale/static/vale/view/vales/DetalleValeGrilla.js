@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
 	bind: {
 		store: '{store_detallevale}',
 	},
-	height: 200,
+	height: 180,
 	columns: [
 		{
             xtype: 'rownumberer',
@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.vale.view.vales.DetalleValeGrilla', {
         },
 		{
 			text: "Producto",
-			flex: 2,
+			width: 300,
 			dataIndex: 'producto__descripcion',
 			sortable: false,
 		},

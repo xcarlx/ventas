@@ -17,7 +17,7 @@ Ext.define('GRUPOEJ.producto.view.productos.ProductoGrilla', {
         },
 		{
 			text: "Descripcion",
-			flex: 5,
+			width: 300,
 			dataIndex: 'descripcion',
 			items:[
 				{
