@@ -10,7 +10,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.ReporteClienteGrilla', {
 	// 	'Ext.grid.feature.Grouping',
 	// ],
 	 
-	height: 400,
+	height: 360,
 	columns: [
 		{
             xtype: 'rownumberer',

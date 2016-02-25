@@ -290,7 +290,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 						me.venta_ventana_Cancelar();
 						me.getStore('store_pedidos').load();
 						me.getStore('store_detallepedidos').load({
-							url: 'grupoej.pedido.detallepedidos.detallepedido/listar/0'
+							params:{idpedido: 0}
 						});
 					},
 					failure: function(rec, op) {
@@ -372,7 +372,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 						me.valeguia_ventana_Cancelar();
 						me.getStore('store_pedidos').load();
 						me.getStore('store_detallepedidos').load({
-							url: 'grupoej.pedido.detallepedidos.detallepedido/listar/0'
+							params:{idpedido: 0}
 						});
 					},
 					failure: function(rec, op) {

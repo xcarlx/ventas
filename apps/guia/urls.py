@@ -6,8 +6,8 @@ urlpatterns = [
 	url(r'guias.guia/crear/$', GuiaCrear),
 	url(r'guias.guia/editar/$', GuiaEditar),
 
-	url(r'guias.producto/listar/(?P<idGuia>\d+)$', ProductoListar),
-	url(r'guias.detalleguia/listar/(?P<idGuia>\d+)$', DetalleGuiaListar),
+	url(r'guias.producto/listar/$', ProductoListar),
+	url(r'guias.detalleguia/listar/$', DetalleGuiaListar),
 	url(r'guias.detalleguia/crear/$', DetalleGuiaCrear),
 	url(r'guias.detalleguia/eliminar/$', DetalleGuiaEliminar),
 

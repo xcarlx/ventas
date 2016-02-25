@@ -177,10 +177,10 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 	deSeleccionarGuia: function(sm, selectedRecords){
 		
 		this.getStore('store_productos_guia').load({
-			url: '/grupoej.guia.guias.producto/listar/0'
+			params:{idguia: 0}
 		});
 		this.getStore('store_detalleguia').load({
-			url: 'grupoej.guia.guias.detalleguia/listar/0'
+			params:{idguia: 0}
 		});
 		this.lookupReference('comboproductosguia').clearValue();
 		this.lookupReference('cantidadproductosguia').setValue(1);
@@ -192,10 +192,10 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 			st_guia.guiaId = 0;
 		}
 		this.getStore('store_productos_guia').load({
-			url: '/grupoej.guia.guias.producto/listar/' + st_guia.guiaId
+			params:{idguia: st_guia.guiaId} 
 		});
 		this.getStore('store_detalleguia').load({
-			url: 'grupoej.guia.guias.detalleguia/listar/' + st_guia.guiaId
+			params:{idguia: st_guia.guiaId} 
 		});
 		this.lookupReference('cantidadproductosguia').setValue(1);
 	},
@@ -334,7 +334,7 @@ Ext.define('GRUPOEJ.guia.controller.guias.Guia', {
 						me.guiaventa_ventana_Cancelar();
 						me.getStore('store_guia').load();
 						me.getStore('store_detalleguia').load({
-							url: 'grupoej.guia.guias.detalleguia/listar/0'
+							params:{idguia: 0} 
 						});
 					},
 					failure: function(rec, op) {

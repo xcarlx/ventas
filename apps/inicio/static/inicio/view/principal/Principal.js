@@ -26,10 +26,10 @@ Ext.define('GRUPOEJ.inicio.view.principal.Principal', {
 			region: 'center',
 			title: 'inicio',
 		},
-		{
-			xtype: 'appheader',
-			region: 'north'
-		},
+		// {
+		// 	xtype: 'appheader',
+		// 	region: 'north'
+		// },
 		{
 			xtype: 'appfooter',
 			region: 'south'
@@ -38,6 +38,6 @@ Ext.define('GRUPOEJ.inicio.view.principal.Principal', {
 			xtype: 'mainmenu',
 			reference: 'principalContainer',
 			region: 'west',
-		}
+		},
 	]
 });

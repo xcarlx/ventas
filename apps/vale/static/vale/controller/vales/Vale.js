@@ -382,7 +382,7 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 						me.valeventa_ventana_Cancelar();
 						me.getStore('store_vale').load();
 						me.getStore('store_detallevale').load({
-							url: 'grupoej.vale.vales.detallevales/listar/0'
+							params:{idvale: 0}
 						});
 					},
 					failure: function(rec, op) {

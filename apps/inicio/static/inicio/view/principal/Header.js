@@ -28,18 +28,18 @@ Ext.define('GRUPOEJ.inicio.view.principal.Header', {
 		{
 			xtype: 'tbseparator',
 		},
-		{
+		// {
 
 			
-			itemId: 'logout',
-			text: 'Logout',
-			reference: 'logout',
-			iconCls: 'icono-cerrar-sesion',
-			listeners: {
-				click: 'onLogout'
-			},
+		// 	itemId: 'logout',
+		// 	text: 'Logout',
+		// 	reference: 'logout',
+		// 	iconCls: 'icono-cerrar-sesion',
+		// 	listeners: {
+		// 		click: 'onLogout'
+		// 	},
 
-		},
+		// },
 
 	]
 });

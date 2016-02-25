@@ -143,7 +143,8 @@ def GuiaEditar(request):
 		content_type="application/json"
 	)
 
-def ProductoListar(request,idGuia):
+def ProductoListar(request):
+	idGuia = request.GET.get("idguia", 0)
 	idg = GuiaRemision.objects.filter(id=idGuia)
 	iddg =  DetalleGuia.objects.filter(guia_remision_id=idg).values('producto_id')
 	producto = Producto.objects.exclude(id__in=iddg)
@@ -159,8 +160,9 @@ def ProductoListar(request,idGuia):
 		content_type= "application/json",
 	)
 
-def DetalleGuiaListar(request,idGuia):
+def DetalleGuiaListar(request):
 	findID = request.GET.get("id", 0)
+	idGuia = request.GET.get("idguia", 0)
 	idg = GuiaRemision.objects.filter(id=idGuia)
 	if findID == 0:
 		# Campos

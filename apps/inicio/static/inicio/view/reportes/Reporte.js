@@ -5,6 +5,7 @@ Ext.define('GRUPOEJ.inicio.view.reportes.Reporte', {
 		'GRUPOEJ.inicio.view.reportes.ReporteModelo',
 		'GRUPOEJ.inicio.controller.reportes.ReporteProducto',	
 	],
+	height: '100%',
 	viewModel:{
 		type: 'reporteProducto',
 	},
