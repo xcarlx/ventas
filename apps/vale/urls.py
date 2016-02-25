@@ -6,8 +6,8 @@ urlpatterns = [
 	url(r'vales.vale/crear/$',ValeCrear),
 	url(r'vales.vale/editar/$',ValeEditar),
 
-	url(r'vales.producto/listar/(?P<idVa>\d+)$', ProductoListar),
-	url(r'vales.detallevales/listar/(?P<idVa>\d+)$', DetalleValeListar),
+	url(r'vales.producto/listar/$', ProductoListar),
+	url(r'vales.detallevale/listar/$', DetalleValeListar),
 	url(r'vales.detallevale/crear/$', DetalleValeCrear),
 	url(r'vales.detallevale/eliminar/$', DetalleValeEliminar),
 

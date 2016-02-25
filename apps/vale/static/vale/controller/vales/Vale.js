@@ -179,10 +179,10 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 	deSeleccionarVale: function(sm, selectedRecords){
 		
 		this.getStore('store_productos').load({
-			url: '/grupoej.vale.vales.producto/listar/0'
+			params:{idvale: 0}
 		});
 		this.getStore('store_detallevale').load({
-			url: 'grupoej.vale.vales.detallevales/listar/0'
+			params:{idvale: 0}
 		});
 		this.lookupReference('comboproductosvale').clearValue();
 		this.lookupReference('cantidadproductosvale').setValue(1);
@@ -194,10 +194,10 @@ Ext.define('GRUPOEJ.vale.controller.vales.Vale', {
 			st_vale.valeId = 0;
 		}
 		this.getStore('store_productos').load({
-			url: '/grupoej.vale.vales.producto/listar/' + st_vale.valeId
+			params:{idvale: st_vale.valeId}
 		});
 		this.getStore('store_detallevale').load({
-			url: 'grupoej.vale.vales.detallevales/listar/' + st_vale.valeId
+			params:{idvale: st_vale.valeId}
 		});
 		this.lookupReference('cantidadproductosvale').setValue(1);
 	},

@@ -161,10 +161,10 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	},
 	deSeleccionarPedido: function(sm, selectedRecords){
 		this.getStore('store_productos').load({
-			url: '/grupoej.pedido.pedidos.producto/listar/0'
+			params:{idpedido: 0}
 		});
 		this.getStore('store_detallepedidos').load({
-			url: 'grupoej.pedido.detallepedidos.detallepedido/listar/0'
+			params:{idpedido: 0}
 		});
 		this.lookupReference('comboproductospedido').clearValue();
 		this.lookupReference('cantidadproductospedido').setValue(1);
@@ -176,10 +176,10 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 			st_pedido.pedidoId = 0;
 		}
 		this.getStore('store_productos').load({
-			url: 'grupoej.pedido.pedidos.producto/listar/' + st_pedido.pedidoId
+			params:{idpedido: st_pedido.pedidoId}
 		});
 		this.getStore('store_detallepedidos').load({
-			url: 'grupoej.pedido.detallepedidos.detallepedido/listar/' + st_pedido.pedidoId
+			params:{idpedido: st_pedido.pedidoId}
 		});
 		this.lookupReference('cantidadproductospedido').setValue(1);
 	},

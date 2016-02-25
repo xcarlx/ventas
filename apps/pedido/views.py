@@ -157,7 +157,8 @@ def PedidoEditar(request):
 
 
 
-def ProductoListar(request,idPe):
+def ProductoListar(request):
+	idPe = int(request.GET.get("idpedido", 0))
 	idp = Pedido.objects.filter(id=idPe)
 	idpe =  DetallePedido.objects.filter(pedido_id=idp).values('producto_id')
 	producto = Producto.objects.exclude(id__in=idpe)
@@ -173,8 +174,9 @@ def ProductoListar(request,idPe):
 		content_type= "application/json",
 	)
 
-def DetallePedidoListar(request,idPe):
+def DetallePedidoListar(request):
 	findID = request.GET.get("id", 0)
+	idPe = int(request.GET.get("idpedido", 0))
 	idp = Pedido.objects.filter(id=idPe)
 	if findID == 0:
 		# Campos

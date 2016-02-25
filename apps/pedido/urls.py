@@ -7,8 +7,8 @@ urlpatterns = [
 	url(r'pedidos.pedido/crear/$', PedidoCrear),
 	url(r'pedidos.pedido/editar/$', PedidoEditar),
 
-	url(r'pedidos.producto/listar/(?P<idPe>\d+)$', ProductoListar),
-	url(r'detallepedidos.detallepedido/listar/(?P<idPe>\d+)$', DetallePedidoListar),
+	url(r'pedidos.producto/listar/$', ProductoListar),
+	url(r'pedidos.detallepedido/listar/$', DetallePedidoListar),
 	url(r'pedidos.detallepedido/crear/$', DetallePedidoCrear),
 	url(r'pedidos.detallepedido/eliminar/$', DetallePedidoEliminar),
 

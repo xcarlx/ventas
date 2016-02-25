@@ -148,7 +148,8 @@ def ValeEditar(request):
 
 
 
-def ProductoListar(request,idVa):
+def ProductoListar(request):
+	idVa = int(request.GET.get("idvale", 0))
 	idv = Vale.objects.filter(id=idVa)
 	iddv =  DetalleVale.objects.filter(vale_id=idv).values('producto_id')
 	producto = Producto.objects.exclude(id__in=iddv)
@@ -164,7 +165,8 @@ def ProductoListar(request,idVa):
 		content_type= "application/json",
 	)
 
-def DetalleValeListar(request,idVa):
+def DetalleValeListar(request):
+	idVa = int(request.GET.get("idvale", 0))
 	findID = request.GET.get("id", 0)
 	idv = Vale.objects.filter(id=idVa)
 	if findID == 0:
