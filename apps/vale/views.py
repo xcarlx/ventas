@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from .models import Vale, DetalleVale
@@ -41,7 +42,7 @@ def ValeListar(request):
 		total = vales.count()
 		# Paginacion
 		if pagina > 0:
-			vales = Paginator(vales, limite)
+			vales = Paginator(vales, 999999)
 			vales = vales.page(pagina)
 	else:
 		vales = Vale.objects.filter(pk=findID).order_by('-id')
@@ -194,7 +195,7 @@ def DetalleValeListar(request):
 		total = detallevales.count()
 		# Paginacion
 		if pagina > 0:
-			detallevales = Paginator(detallevales, limite)
+			detallevales = Paginator(detallevales, 999999)
 			detallevales = detallevales.page(pagina)
 	else:
 		detallevales = DetalleVale.objects.filter(pk=findID)

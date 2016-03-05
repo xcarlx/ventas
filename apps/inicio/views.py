@@ -113,7 +113,7 @@ def PedidoVencidosListar(request):
 		total = pedidos.count()
 		# Paginacion
 		if pagina > 0:
-			pedidos = Paginator(pedidos, limite)
+			pedidos = Paginator(pedidos, 999999)
 			pedidos = pedidos.page(pagina)
 	else:
 		pedidos = Pedido.objects.filter(fecha_entrega__lt = timezone.now(), estado=False)
@@ -158,7 +158,7 @@ def PedidoPendienteListar(request):
 		total = pedidos.count()
 		# Paginacion
 		if pagina > 0:
-			pedidos = Paginator(pedidos, limite)
+			pedidos = Paginator(pedidos, 999999)
 			pedidos = pedidos.page(pagina)
 	else:
 		pedidos = Pedido.objects.filter(fecha_entrega__gte = timezone.now(), estado=False)

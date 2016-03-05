@@ -42,7 +42,7 @@ def PedidoListar(request):
 		total = pedidos.count()
 		# Paginacion
 		if pagina > 0:
-			pedidos = Paginator(pedidos, limite)
+			pedidos = Paginator(pedidos, 999999)
 			pedidos = pedidos.page(pagina)
 	else:
 		pedidos = Pedido.objects.filter(pk=findID).order_by('-id')
@@ -203,7 +203,7 @@ def DetallePedidoListar(request):
 		total = detallepedidos.count()
 
 		if pagina > 0:
-			detallepedidos = Paginator(detallepedidos, limite)
+			detallepedidos = Paginator(detallepedidos, 999999)
 			detallepedidos = detallepedidos.page(pagina)
 	else:
 		detallepedidos = DetallePedido.objects.filter(pk=findID)

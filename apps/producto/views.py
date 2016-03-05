@@ -57,7 +57,7 @@ def ProductoListar(request):
 		total = producto.count()
 		# Paginacion
 		if pagina > 0:
-			producto = Paginator(producto, limite)
+			producto = Paginator(producto, 999999)
 			producto = producto.page(pagina)
 	else:
 		producto = Producto.objects.filter(pk=findID)
@@ -201,7 +201,7 @@ def ControlProductoListar(request):
 		total = prestamo.count()
 		# Paginacion
 		if pagina > 0:
-			prestamo = Paginator(prestamo, limite)
+			prestamo = Paginator(prestamo, 999999)
 			prestamo = prestamo.page(pagina)
 	else:
 		prestamo = Prestamo.objects.filter(pk=findID)
@@ -335,7 +335,7 @@ def ReporteEnvaceListar(request):
 		total = prestamos.count()
 		# Paginacion
 		if pagina > 0:
-			paginador = Paginator(prestamos, limite)
+			paginador = Paginator(prestamos, 999999)
 			total = prestamos.count
 			try:
 				prestamos = paginador.page(pagina)
@@ -386,7 +386,7 @@ def DetalleReporteEnvace(request):
 		total = prestamo.count()
 		# Paginacion
 		if pagina > 0:
-			prestamo = Paginator(prestamo, limite)
+			prestamo = Paginator(prestamo, 999999)
 			prestamo = prestamo.page(pagina)
 	else:
 		prestamo = Prestamo.objects.filter(pk=findID)

@@ -75,21 +75,6 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 	],
 	dockedItems:[
 		{
-			reference: 'grillaclientes-paginador',
-			bind:{
-				store: '{store_clientes}',
-			},
-			xtype: 'pagingtoolbar',
-			dock: 'bottom',
-			displayInfo: true,
-			displayRefresh: false,
-			listeners:{
-				beforerender: function(){
-					this.down('#refresh').hide();
-				}
-			},
-		},
-		{
 			xtype: 'toolbar',
 			dock: 'top',
 			items:[

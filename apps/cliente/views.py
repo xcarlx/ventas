@@ -26,7 +26,7 @@ def ClienteListar(request):
 											)
 			total = cliente.count()
 	else:
-		limite = int(request.GET.get("limit","10"))
+		limite = int(request.GET.get("limit","99999"))
 		pagina = int(request.GET.get("page","1"))
 		orden = request.GET.get("sort","")
 		filtros = request.GET.get("filter","")
@@ -46,7 +46,7 @@ def ClienteListar(request):
 			signo = "-" if orden["direction"] == "DESC" else ""
 			orden = signo+orden["property"]
 			cliente = cliente.order_by(orden)
-		cliente = Paginator(cliente, limite) 
+		cliente = Paginator(cliente, 99999) 
 		cliente = cliente.page(pagina)
 
 	return render(

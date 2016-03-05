@@ -42,7 +42,7 @@ def GuiaListar(request):
 		total = guias.count()
 		# Paginacion
 		if pagina > 0:
-			guias = Paginator(guias, limite)
+			guias = Paginator(guias, 99999)
 			guias = guias.page(pagina)
 	else:
 		guias = GuiaRemision.objects.filter(pk=findID).order_by('-pk')
@@ -189,7 +189,7 @@ def DetalleGuiaListar(request):
 		total = detalleguias.count()
 		# Paginacion
 		if pagina > 0:
-			detalleguias = Paginator(detalleguias, limite)
+			detalleguias = Paginator(detalleguias, 999999)
 			detalleguias = detalleguias.page(pagina)
 	else:
 		detalleguias = DetalleGuia.objects.filter(pk=findID)
