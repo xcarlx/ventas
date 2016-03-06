@@ -43,6 +43,16 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			],
 		},
 		{
+			text: "Direccion",
+			width: 200,
+			dataIndex: 'cliente__direccion',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
+		{
 			text: "Nro Pedido",
 			width: 100,
 			dataIndex: 'nro_pedido',
