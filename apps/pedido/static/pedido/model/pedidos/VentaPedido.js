@@ -8,6 +8,7 @@ Ext.define('GRUPOEJ.pedido.model.pedidos.VentaPedido', {
 		{name: 'reprogramar', type: 'boolean'},
 		{name: 'credito', type: 'boolean'},
 		{name: 'nro_dias', type: 'int'},
+		{name: 'cliente__frecuencia', type: 'int'},
 
 	],
 	validators:{

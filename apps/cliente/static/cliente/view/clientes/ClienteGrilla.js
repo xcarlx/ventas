@@ -72,6 +72,16 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 				}
 			],
 		},		
+		{
+			text: "Frecuencia",
+			flex: 2,
+			dataIndex: 'frecuencia',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},		
 	],
 	dockedItems:[
 		{

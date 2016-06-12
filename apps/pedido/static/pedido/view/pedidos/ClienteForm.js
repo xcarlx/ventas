@@ -137,6 +137,17 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ClienteForm', {
 						value: '{referencia}'
 					}
 				},
+				{
+					xtype: 'textfield',
+					name: 'frecuencia',
+					fieldLabel: 'Frecuencia',
+					anchor: '100%',
+					msgTarget: 'side',
+					readOnly:true,
+					bind:{
+						value: '{frecuencia}'
+					}
+				},
 			],
 			dockedItems:[
 				{

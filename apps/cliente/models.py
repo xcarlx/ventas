@@ -24,12 +24,13 @@ class Cliente(Auditoria):
 	responsable = models.CharField(max_length=45, blank=True, null=True)
 	referencia = models.CharField(max_length=200, blank=True, null=True)
 	prestamos = models.ManyToManyField(Producto, through='Prestamo')
+	frecuencia = models.IntegerField(blank=True, null=True, default=0)
 
 	def __str__(self):
 		return self.nombres+ ' - '+self.apellidos
 
 class Prestamo(Auditoria):
-	cliente = models.ForeignKey(Cliente)
+	cliente = models.ForeignKey(Cliente,  related_name='+')
 	producto = models.ForeignKey(Producto)
 	entregado = models.PositiveSmallIntegerField()
 	devuelto = models.PositiveSmallIntegerField()

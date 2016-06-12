@@ -20,6 +20,7 @@
 				"cliente__area": '{{pedido.cliente.area}}',
 				"cliente__responsable": '{{pedido.cliente.responsable}}',
 				"cliente__referencia": '{{pedido.cliente.referencia}}',
+				"cliente__frecuencia": '{{pedido.cliente.frecuencia}}',
 				"estado": '{{pedido.estado}}',
 			},{% endfor %}
 		]

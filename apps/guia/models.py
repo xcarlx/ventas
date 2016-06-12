@@ -22,7 +22,7 @@ class DetalleGuia(Auditoria):
 	guia_remision = models.ForeignKey(GuiaRemision)
 	producto = models.ForeignKey(Producto)
 	cantidad = models.PositiveSmallIntegerField()
-	precio = models.DecimalField(max_digits=10, decimal_places=2)
+	precios = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
 	def __str__(self):
 		return self.guia_remision.cliente.nombres+" "+self.producto.descripcion

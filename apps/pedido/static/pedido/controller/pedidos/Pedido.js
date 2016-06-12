@@ -20,6 +20,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 			});
 			me.editPedidoWindow.on("show", function(win) {
 				me.lookupReference("pedidoFormulario").getForm().findField("clienteid").focus();
+
 			});
 		}; 
 
@@ -59,7 +60,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 			action = !record ? "add" : "edit";
 			with (getViewModel()) {
 				setData({
-					titulo: record ? 'Editando Pedido Nro' + record.get('nro_pedido') : 'Agregando Pedido'
+					titulo: record ? 'Editando Pedido Nro' + record.get('nro_pedido'): 'Agregando Pedido'
 				});
 				setLinks({
 					currentPedido: record || {
@@ -242,7 +243,8 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 			action = !record ? "add" : "edit";
 			with (getViewModel()) {
 				setData({
-					titulo: 'Agregando Venta del Pedido'
+					titulo: 'Agregando Venta del Pedido',
+					
 				});
 				setLinks({
 					currentVentaPedido: record || {
@@ -263,6 +265,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				me.lookupReference("ventaFormulariopedido").getForm().findField("reprogramar").setValue(false);
 				me.lookupReference("ventaFormulariopedido").getForm().findField("nro_dias").setValue(0);
 				me.lookupReference("ventaFormulariopedido").getForm().findField("credito").setValue(false);
+				me.lookupReference("ventaFormulariopedido").getForm().findField("cliente__frecuencia").setValue(me.pedido_RegistrosSeleccionados()[0].get("cliente__frecuencia"));
 			});
 		me.ventapedido_AbrirVentanaEditar(null, button);
 	},
@@ -467,6 +470,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 					area: registro.get("cliente__area"),
 					responsable: registro.get("cliente__responsable"),
 					referencia: registro.get("cliente__referencia"),
+					frecuencia: registro.get("cliente__frecuencia"),
 				});
 			}
 			show();

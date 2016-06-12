@@ -17,6 +17,7 @@
 				"area": '{{cliente.area}}',
 				"responsable": '{{cliente.responsable}}',
 				"referencia": '{{cliente.referencia}}',
+				"frecuencia": '{{cliente.frecuencia}}',
 			},{% endfor %}
 		]
 }

@@ -141,6 +141,16 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 						value: '{recordCliente.referencia}'
 					}
 				},
+				{
+					xtype: 'textfield',
+					name: 'frecuencia',
+					fieldLabel: 'Frecuencia',
+					anchor: '100%',
+					msgTarget: 'side',
+					bind:{
+						value: '{recordCliente.frecuencia}'
+					}
+				},
 			],
 			dockedItems:[
 				{

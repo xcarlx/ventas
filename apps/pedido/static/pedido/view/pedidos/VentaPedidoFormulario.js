@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 				anchor: '100%',
 				xtype: 'textfield',
 				msgTarget: 'side',
-				labelWidth: 85,
+				labelWidth: 90,
 				labelAlign: 'right',
 			},
 			items: [
@@ -52,7 +52,6 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 					margin: 2,
 					border: false,
 					width: '100%',
-					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
 					layout:{
 						type: 'hbox',
 					},
@@ -60,7 +59,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 						{
 							xtype: 'numberfield',
 							name: 'numero_correlativo',
-							labelWidth: 80,
+							labelWidth: 85,
 							labelAlign: 'right',
 							width: '40%',
 							fieldLabel: 'Correlativo',
@@ -82,31 +81,40 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 					],
 				},
 				{
-					xtype: 'checkboxfield',
-					name: 'credito',
-					labelWidth: 85,
-					labelAlign: 'right',
-					width: '40%',
-					fieldLabel: 'Credito',
-				},
-				{
 					xtype: 'panel',
-					bodyPadding: 5,
-					margin: 5,
-					border: true,
+					border: false,
 					width: '100%',
-					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
 					layout:{
 						type: 'vbox',
 					},
 					items:[
 						{
 							xtype: 'checkboxfield',
+							name: 'credito',
+							labelWidth: 90,
+							labelAlign: 'right',
+							width: '40%',
+							fieldLabel: 'Credito',
+						},
+					],
+				},
+				{
+					xtype: 'panel',
+					bodyPadding: 2,
+					margin: 2,
+					border: false,
+					width: '100%',
+					layout:{
+						type: 'hbox',
+					},
+					items:[
+						{
+							xtype: 'checkboxfield',
 							name: 'reprogramar',
-							labelWidth: 75,
+							labelWidth: 85,
 							labelAlign: 'right',
 							reference: 'reprogramarpedidoventa',
-							width: '40%',
+							width: '30%',
 							fieldLabel: 'Reprogramar',
 						},
 						{
@@ -119,10 +127,36 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							allowNegative: false,
 							allowBlank: true,
 							minValue : 0,
+							width: '65%',
 							bind:{
 								disabled: "{!reprogramarpedidoventa.checked}",
 							}
 						},
+					
+					],
+				},
+				{
+					xtype: 'panel',
+					bodyPadding: 2,
+					margin: 2,
+					border: false,
+					width: '100%',
+					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
+					layout:{
+						type: 'vbox',
+					},
+					items:[
+						
+						{
+							xtype: 'textfield',
+							labelWidth: 85,
+							labelAlign: 'right',
+							name: 'cliente__frecuencia',
+							fieldLabel: 'Frecuencia',
+							width: '80%',
+							readOnly: true,	
+						},
+
 					],
 				},
 			],
