@@ -148,6 +148,17 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ClienteForm', {
 						value: '{frecuencia}'
 					}
 				},
+				{
+					xtype: 'textfield',
+					name: 'zona_sector',
+					fieldLabel: 'Zona Sector',
+					anchor: '100%',
+					msgTarget: 'side',
+					readOnly:true,
+					bind:{
+						value: '{zona_sector}'
+					}
+				},
 			],
 			dockedItems:[
 				{

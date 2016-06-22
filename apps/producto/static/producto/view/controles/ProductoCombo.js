@@ -1,15 +1,16 @@
-Ext.define('GRUPOEJ.producto.view.controles.ClienteCombo', {
+Ext.define('GRUPOEJ.producto.view.controles.ProductoCombo', {
 	extend: 'Ext.form.ComboBox',
-	alias: 'widget.cliente-combo',
-	fieldLabel: "Cliente",
+	alias: 'widget.producto-combo',
+	fieldLabel: "Producto",
 	labelWidth: 100,
 	width: 450,
-	reference: 'clientecombo',
-	bind:{
-	 	store: '{store_clientes}'
-	 },
-	displayField: 'cliente',
+	reference: 'comboproductosprestamo',
+	displayField: 'descripcion',
 	valueField: 'id',
+	allowBlank: false,
+	bind:{
+		store: '{store_comboproductoprestamo}',
+	},
 	queryMode: 'local',
 	listConfig:{
 		maxHeight: 200,
@@ -31,8 +32,9 @@ Ext.define('GRUPOEJ.producto.view.controles.ClienteCombo', {
             delete qe.combo.lastQuery;
         }
     },
-	// listeners:{
-	// 	select: 'ClienteSelect'
-	// },
+	listeners:{
+		select: 'ClienteSelect'
+	},
+
 
 });

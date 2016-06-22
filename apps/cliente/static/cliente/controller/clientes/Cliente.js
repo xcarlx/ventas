@@ -91,6 +91,22 @@ Ext.define('GRUPOEJ.cliente.controller.clientes.Cliente',	{
 			show();
 		}
 	},
+	ClienteDuplicar: function(){
+		me = this;
+		with (me.formCliente){
+			action = 'Duplicar';
+			with(getViewModel()){
+				setData({
+					titulo: "Duplicar Cliente"
+				});
+				setLinks({
+					recordCliente: me.ClienteSeleccionados()[0]
+					
+				});
+			}
+			show();
+		}
+	},
 	ClienteCancelar: function(){
 		me.formCliente.close();
 	},
@@ -104,7 +120,7 @@ Ext.define('GRUPOEJ.cliente.controller.clientes.Cliente',	{
 						form.getFieldValues()
 					);
 				}
-				else{
+				else if(me.formCliente.action == "edit"){
 					idRec = form.findField("id").getValue();
 					registro = getById(idRec);
 					newdata = form.getFieldValues();
@@ -115,13 +131,58 @@ Ext.define('GRUPOEJ.cliente.controller.clientes.Cliente',	{
 							registro.set(campo, eval("newdata."+campo));
 						}
 					}
+				}else if(me.formCliente.action == "Duplicar"){
+					nombre = form.findField("nombres").getValue();
+					apellidos = form.findField("apellidos").getValue();
+					tipo_documento = form.findField("tipo_documento").getValue();
+					nro_documento = form.findField("nro_documento").getValue();
+					email = form.findField("email").getValue();
+					telefono = form.findField("telefono").getValue();
+					direccion = form.findField("direccion").getValue();
+					area = form.findField("area").getValue();
+					responsable = form.findField("responsable").getValue();
+					referencia = form.findField("referencia").getValue();
+					frecuencia = form.findField("frecuencia").getValue();
+					zona_sector = form.findField("zona_sector").getValue();
+				
+					me.getStore("store_clientes").load(
+						{
+							url:'grupoej.cliente.clientes.cliente/duplicar',
+							actionMethods: {
+					       		read: 'POST'
+					    	},
+							params:
+								{
+									nombres: nombre,
+									apellidos: apellidos,
+									tipo_documento: tipo_documento,
+									nro_documento: nro_documento,
+									email: email,
+									telefono: telefono,
+									direccion: direccion,
+									area: area,
+									responsable: responsable,
+									referencia: referencia,
+									frecuencia: frecuencia,
+									zona_sector: zona_sector,
+								}
+						});
+					this.ClienteCancelar();
+					this.getStore("store_clientes").load({
+						callback: function(options, success, response, records) {
+							if (success) {
+								Ext.Msg.alert('Cliente', 'Agregado Correctamente');
+								me.ClienteRefrescar();
+							}
+						}
+					});
+
 				}
 				save({
 					success: function(rec, op){
 						GRUPOEJ.utiles.Utiles.showMsgCRUD(rec);
 						me.getStore("store_clientes").reload();
 						me.ClienteCancelar();
-
 					},
 					failure: function(rec, op){
 						me.getStore("store_clientes").rejectChanges();

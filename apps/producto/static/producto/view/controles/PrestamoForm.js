@@ -38,38 +38,24 @@ Ext.define('GRUPOEJ.producto.view.controles.PrestamoForm', {
 					bind:'{currentPrestamo.id}',
 				},
 				{
-					xtype: 'combobox',
-					fieldLabel: "Producto",
-					reference: 'comboproductosprestamo',
-					displayField: 'descripcion',
-					valueField: 'id',
+					xtype: 'datefield',
+					fieldLabel: 'Fecha',
+					// width: 230,
+					// labelWidth: 95,
+					msgTarget: 'side',
 					allowBlank: false,
-					bind:{
-						store: '{store_comboproductoprestamo}',
-						value: '{currentPrestamo.productoid}',
-					},
-					name: 'productoid',
-					queryMode: 'local',
-					listConfig:{
-						maxHeight: 200,
-					},
-					queryDelay: 5,
-					queryChaching: false,
-					forceSelection:true,
-					hideTrigger: true,
-					editable: true,
-					triggerAction: 'all',
-					// typeAheadDelay: 100,
-					// minChars: 3,
-					lastQuery: '',
-					typeAhead: true,
-					listeners: {
-				        // delete the previous query in the beforequery event or set
-				        // combo.lastQuery = null (this will reload the store the next time it expands)
-				        beforequery: function(qe){
-				            delete qe.combo.lastQuery;
-				        }
-				    },
+					labelAlign: 'right',
+					name: 'fecha',
+					bind : '{currentPrestamo.fecha}',
+				},	
+				{
+					xtype: 'textfield',
+					name: 'nro_documento',
+					fieldLabel: 'Nro Documento',
+					anchor: '100%',
+					msgTarget: 'side',
+					bind: '{currentPrestamo.nro_documento}'
+
 				},
 				{
 					xtype: 'numberfield',

@@ -3,12 +3,12 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencido', {
 	requires:[
 		'GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', 
 		'GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoModelo',
-	// 	'GRUPOEJ.producto.controller.productos.Producto',
+		'GRUPOEJ.inicio.controller.reportes.ReporteProducto',	
 	],
 	viewModel:{
 		type: 'pedidovencidomodel',
 	},
-	// controller: 'producto',
+	controller: 'reporteproducto',
 	items:[
 		{
 			xtype: 'pedidovencido-grilla',

@@ -70,8 +70,8 @@ def Logout(request):
 	return _result
 
 def Menus(request):
-	menus = Menu.objects.all()
-	modulos = Modulo.objects.filter(id__in=menus.values_list("modulo_id"))
+	menus = Menu.objects.all().order_by('orden')
+	modulos = Modulo.objects.filter(id__in=menus.values_list("modulo_id")).order_by('orden')
 
 	return render(
 		request,
@@ -145,10 +145,10 @@ def PedidoPendienteListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", fecha_entrega__gte = timezone.now(), estado=False)"
+			filtros = filtros[:-1] + ", fecha_entrega = timezone.now(), estado=False)"
 			pedidos = eval(filtros)
 		else:
-			pedidos = Pedido.objects.filter(fecha_entrega__gte= timezone.now(), estado=False)
+			pedidos = Pedido.objects.filter(fecha_entrega= timezone.now(), estado=False)
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -161,7 +161,7 @@ def PedidoPendienteListar(request):
 			pedidos = Paginator(pedidos, 999999)
 			pedidos = pedidos.page(pagina)
 	else:
-		pedidos = Pedido.objects.filter(fecha_entrega__gte = timezone.now(), estado=False)
+		pedidos = Pedido.objects.filter(fecha_entrega = timezone.now(), estado=False)
 		total = pedidos.count()
 	
 	return render(

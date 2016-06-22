@@ -14,7 +14,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 		{
 			xtype: 'form',
 			reference: 'valeguiaFormulariopedido',
-			bodyPadding: 5,
+			bodyPadding: '10 15 5 5',
 			modelValidation: true,
 			layout: {
 				type: 'vbox',
@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 				anchor: '100%',
 				xtype: 'textfield',
 				msgTarget: 'side',
-				labelWidth: 110,
+				labelWidth: 100,
 				labelAlign: 'right',
 			},
 
@@ -54,18 +54,18 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 				},
 
 				{
-					fieldLabel: 'Punto de Partida',
+					fieldLabel: 'Punto Partida',
 					name: 'punto_partida',
 					allowBlank: false,
 				},			
 				{
-					fieldLabel: 'Punto de Llegada',
+					fieldLabel: 'Punto Llegada',
 					name: 'punto_llegada',
 					allowBlank: false,
 				},
 				{
 					xtype: 'panel',
-					bodyPadding: 0,
+					bodyPadding: '0 0 5 5',
 					margin: 0,
 					border: false,
 					width: '100%',
@@ -76,9 +76,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 					items:[
 						{
 							xtype: 'datefield',
-							fieldLabel: 'Fecha Emision',
-							width: 235,
-							labelWidth: 110,
+							fieldLabel: 'Fecha Emis',
+							width: 230,
+							labelWidth: 95,
 							msgTarget: 'side',
 							allowBlank: false,
 							labelAlign: 'right',
@@ -87,9 +87,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 						},	
 						{
 							xtype: 'datefield',
-							fieldLabel: 'Fecha Translado',
-							width: 235,
-							labelWidth: 110,
+							fieldLabel: 'Fecha Trans',
+							width: 230,
+							labelWidth: 100,
 							allowBlank: false,
 							labelAlign: 'right',
 							name: 'fecha_translado',
@@ -100,8 +100,8 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 
 				{
 					xtype: 'panel',
-					bodyPadding: 5,
-					margin: 5,
+					bodyPadding: '5 5 5 5',
+					margin: 0,
 					border: false,
 					width: '100%',
 					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
@@ -112,18 +112,18 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 						{
 							xtype: 'checkboxfield',
 							name: 'reprogramar',
-							labelWidth: 100,
+							labelWidth: 95,
 							labelAlign: 'right',
 							reference: 'reprogramarpedidovaleguia',
-							width: '35%',
+							width: '50%',
 							fieldLabel: 'Reprogramar',
 						},
 						{
 							xtype: 'numberfield',
 							name: 'nro_dias',
-							labelWidth: 75,
+							labelWidth: 80,
 							labelAlign: 'right',
-							// width: '40%',
+							width: '50%',
 							fieldLabel: ' Nro de Dias',
 							allowNegative: false,
 							allowBlank: true,
@@ -132,6 +132,30 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario', {
 								disabled: "{!reprogramarpedidovaleguia.checked}",
 							}
 						},
+					],
+				},
+				{
+					xtype: 'panel',
+					bodyPadding: '5 5 5 5',
+					margin: 0,
+					border: false,
+					width: '100%',
+					afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
+					layout:{
+						type: 'vbox',
+					},
+					items:[
+						
+						{
+							xtype: 'textfield',
+							labelWidth: 95,
+							labelAlign: 'right',
+							name: 'cliente__frecuencia',
+							fieldLabel: 'Frecuencia',
+							width: '50%',
+							readOnly: true,	
+						},
+
 					],
 				},
 			],

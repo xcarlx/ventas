@@ -4,7 +4,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 	reference: 'referenceprestamogrilla',
 	bind: {
 		store: '{store_controlarproducto}',
-		disabled: '{!clientecombo.selection}'
+		disabled: '{!comboproductosprestamo.selection}'
 	},
 	selModel: {
 		mode: 'MULTI'
@@ -27,6 +27,28 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 			],
 		},
 		{
+			xtype: 'datecolumn',
+			text: 'Fecha',
+			width: 100,
+			dataIndex: 'fecha',
+			format:'d/m/Y',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
+		{
+			text: "Nro Documento",
+			width: 120,
+			dataIndex: 'nro_documento',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
+		{
 			xtype: 'numbercolumn',
 			text: "Entregado",
 			format:'0',
@@ -37,7 +59,7 @@ Ext.define('GRUPOEJ.producto.view.controles.ProductoControlGrilla', {
 					xtype: 'searchtrigger'
 				}
 			],
-		},		
+		},
 		{
 			xtype: 'numbercolumn',
 			text: "Devuelto",

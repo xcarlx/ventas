@@ -3,12 +3,12 @@ Ext.define('GRUPOEJ.inicio.view.pedidospendientes.PedidoPendiente', {
 	requires:[
 		'GRUPOEJ.inicio.view.pedidospendientes.PedidoPendienteGrilla', 
 		'GRUPOEJ.inicio.view.pedidospendientes.PedidoPendienteModelo',
-	// 	'GRUPOEJ.producto.controller.productos.Producto',
+		'GRUPOEJ.inicio.controller.reportes.ReporteProducto',	
 	],
 	viewModel:{
 		type: 'pedidopendientemodel',
 	},
-	// controller: 'producto',
+	controller: 'reporteproducto',
 	items:[
 		{
 			xtype: 'pedidopendiente-grilla',

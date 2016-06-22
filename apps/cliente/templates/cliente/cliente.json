@@ -18,6 +18,7 @@
 				"responsable": '{{cliente.responsable}}',
 				"referencia": '{{cliente.referencia}}',
 				"frecuencia": '{{cliente.frecuencia}}',
+				"zona_sector": '{{cliente.zona_sector}}',
 			},{% endfor %}
 		]
 }

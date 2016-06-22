@@ -61,7 +61,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario', {
 							name: 'numero_correlativo',
 							labelWidth: 85,
 							labelAlign: 'right',
-							width: '40%',
+							width: '42%',
 							fieldLabel: 'Correlativo',
 							allowNegative: false,
 							allowBlank: false,

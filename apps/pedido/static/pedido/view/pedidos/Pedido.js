@@ -41,9 +41,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 				{
 					xtype: 'combobox',
 					editable: false,
-					fieldLabel: "Seleccionar el Producto",
-					labelWidth: 150,
-					width: 600,
+					fieldLabel: "Producto",
+					labelWidth: 70,
+					width: 380,
 					name: 'productoid',
 					reference: 'comboproductospedido',
 					bind:{
@@ -76,7 +76,8 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 					},
 					items:[
 						{
-							labelWidth: 150,
+							labelWidth: 70,
+							width: 180,
 							name: 'cantidad',
 							reference: 'cantidadproductospedido',
 							xtype: 'numberfield',
@@ -90,10 +91,11 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 						},
 						{
 							// id: "precio_producto",
-							labelWidth: 96,
+							labelWidth: 50,
+							width: 180,
 							xtype: 'numberfield',
 							name: 'precio',
-							margin: 2,
+							margin: '0 0 0 20',
 							fieldLabel: 'Precio ',
 							anchor: '100%',
 							maxValue: 1000,

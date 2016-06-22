@@ -10,7 +10,7 @@
 				"productoid": {{ detalleguia.producto.id}},
 				"guia_remisionid": {{ detalleguia.guia_remision.id}},
 				"cantidad":{{ detalleguia.cantidad }},
-				"precio":{{ detalleguia.precio|unlocalize }},
+				"precio": {{ detalleguia.precio |unlocalize }},
 				"subtotal": {{ detalleguia.cantidad }} * {{ detalleguia.precio|unlocalize }},
 			},{% endfor %}
 		]

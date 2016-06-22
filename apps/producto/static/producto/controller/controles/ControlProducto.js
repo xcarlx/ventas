@@ -21,6 +21,7 @@ Ext.define('GRUPOEJ.producto.controller.controles.ControlProducto',	{
 		me.getStore("store_controlarproducto").on("beforeload", function(pstore){
 			pstore.getProxy().setExtraParams({
 				clienteid: me.lookupReference("clientecombo").getValue(),
+				productoid: me.lookupReference("comboproductosprestamo").getValue(),
 			});
 		});
 	},

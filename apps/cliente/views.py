@@ -137,3 +137,49 @@ def ClienteEditar(request):
 		json.dumps(respuesta),
 		content_type="application/json"
 		)
+
+def ClienteDuplicar(request):
+	respuesta = {}
+
+	nombres = str(request.GET.get("nombres",""))
+	apellidos = str(request.GET.get("apellidos",""))
+	tipo_documento = str(request.GET.get("tipo_documento",""))
+	nro_documento = str(request.GET.get("nro_documento",""))
+	email = str(request.GET.get("email",""))
+	telefono = str(request.GET.get("telefono",""))
+	direccion = str(request.GET.get("direccion",""))
+	area = str(request.GET.get("area",""))
+	responsable = str(request.GET.get("responsable",""))
+	referencia = str(request.GET.get("referencia",""))
+	frecuencia = str(request.GET.get("frecuencia",""))
+	zona_sector = str(request.GET.get("zona_sector",""))
+	try:
+		cliente = Cliente.objects.create(
+					nombres = nombres,
+					apellidos = apellidos,
+					tipo_documento = tipo_documento,
+					nro_documento = nro_documento,
+					email = email,
+					telefono = telefono,
+					direccion = direccion,
+					area = area,
+					responsable = responsable,
+					referencia = referencia,
+					frecuencia = frecuencia,
+					zona_sector = zona_sector,
+					creador = request.user,
+				)
+		cliente.save()
+		respuesta = {
+				"success": "El Cliente se creo correctamenta", 
+				"id": cliente.id
+			}
+		
+	except Exception:
+			respuesta = {"success": "Error al Agregar al Cliente"}
+			raise
+
+	return HttpResponse(
+		json.dumps(respuesta),
+		content_type="application/json"
+	)

@@ -3,7 +3,7 @@ from .models import Producto
 from apps.cliente.models import *
 from  django.http import HttpResponse
 import json, datetime
-from datetime import datetime   
+from datetime import date, time, timedelta 
 from .forms import ProductoForm,ProductoFotoForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
@@ -11,6 +11,7 @@ from apps.cliente.models import Prestamo
 from apps.inicio.stylesheet import getStyleSheet 
 from django.db.models import Sum
 from django.utils import timezone
+
 
 # Create your views here.
 
@@ -178,6 +179,7 @@ def ControlProductoListar(request):
 	if findID == 0:
 		# Campos
 		clienteid = int(request.GET.get("clienteid", 0))
+		productoid = int(request.GET.get("productoid", 0))
 		orden = request.GET.get("sort", "")
 		filtro = request.GET.get("filter", "")
 		limite = int(request.GET.get("limit", "0"))
@@ -188,10 +190,10 @@ def ControlProductoListar(request):
 			filtro = json.loads(filtro)
 			for f in filtro:
 				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", cliente_id = "+clienteid+")"
+			filtros = filtros[:-1] + ", cliente_id = "+clienteid+", producto_id ="+ productoid+")"
 			prestamo = eval(filtros)
 		else:
-			prestamo = Prestamo.objects.filter(cliente_id=clienteid)
+			prestamo = Prestamo.objects.filter(cliente_id=clienteid, producto_id = productoid)
 		# Orden
 		if len(orden) > 0:
 			orden = json.loads(orden)[0]
@@ -221,38 +223,42 @@ def ControlProductoCrear(request):
 	response_data = {}
 	if request.method == 'POST':
 		idcliente =int(request.POST["clienteid"])
+		producto =int(request.POST["productoid"])
 		registros = json.loads(request.POST["data"])
-		producto = registros[0]['productoid']
+		fecha = datetime.datetime.fromtimestamp(int(registros[0]['fecha'])).date()
+		nro_documento = registros[0]['nro_documento']
 		entregado = registros[0]['entregado']
 		devuelto = registros[0]['devuelto'] 
 		prest = Prestamo.objects.filter(cliente_id=idcliente, producto_id=producto)
-		if(len(prest) < 1):
-			try:
-				prestamo = Prestamo.objects.create(
-						cliente_id = idcliente,
-						producto_id = producto,
-						entregado = entregado,
-						devuelto = devuelto,
-						creador = request.user,
-					)
-				prestamo.save()
-				response_data = {
-					"success": "Registro agregado correctamente",
-				}
+		# if(len(prest) < 1):
+		try:
+			prestamo = Prestamo.objects.create(
+					cliente_id = idcliente,
+					producto_id = producto,
+					fecha = fecha,
+					nro_documento = nro_documento,
+					entregado = entregado,
+					devuelto = devuelto,
+					creador = request.user,
+				)
+			prestamo.save()
+			response_data = {
+				"success": "Registro agregado correctamente",
+			}
 
-			except Exception:
-				response_data = {"error": "Error al crear el Registro"}
-				raise
-		else:
-			prestamo = Prestamo.objects.get(cliente_id=idcliente, producto_id=producto)
-			prestamo.entregado = entregado + prestamo.entregado
-			prestamo.devuelto = devuelto + prestamo.devuelto
-			try:
-				prestamo.save()
-				response_data = {"success": "Registro actualizado correctamente"}
-			except ValueError:
-				response_data = {"error": sys.exc_info()[0]}
-				raise
+		except Exception:
+			response_data = {"error": "Error al crear el Registro"}
+			raise
+		# else:
+		# 	prestamo = Prestamo.objects.get(cliente_id=idcliente, producto_id=producto)
+		# 	prestamo.entregado = entregado + prestamo.entregado
+		# 	prestamo.devuelto = devuelto + prestamo.devuelto
+			# try:
+			# 	prestamo.save()
+			# 	response_data = {"success": "Registro actualizado correctamente"}
+			# except ValueError:
+			# 	response_data = {"error": sys.exc_info()[0]}
+			# 	raise
 
 	else:
 		response_data = {"error": "Error al crear el Registro"}
@@ -269,7 +275,11 @@ def ControlProductoEditar(request):
 		idReg = registros[0]["id"]
 		entregado = registros[0]['entregado']
 		devuelto = registros[0]['devuelto'] 
+		fecha = datetime.datetime.fromtimestamp(int(registros[0]['fecha'])).date()
+		nro_documento = registros[0]['nro_documento']
 		registro = Prestamo.objects.get(pk=idReg)
+		registro.fecha = fecha
+		registro.nro_documento = nro_documento
 		registro.entregado = entregado
 		registro.devuelto = devuelto
 		try:
@@ -433,9 +443,9 @@ def ImprimirReporteEnvace(request, idcliente):
 	productos.append(Paragraph("DETALLE", getStyleSheet()['TopicTitle10']))
 	productos.append(Spacer(1, 0.1 * inch))
 
-	headings = ("PRODUCTO","ENTREGADA ", 'DEVUELTA', 'DEBE')
+	headings = ("PRODUCTO","FECHA","NRO DOCUMENTO","ENTREGADA ", 'DEVUELTA', 'DEBE')
 	detalleventa = [
-			(str(dv.producto.descripcion),str(dv.entregado), str(dv.devuelto), str(dv.entregado - dv.devuelto)) 
+			(str(dv.producto.descripcion),str(dv.fecha),str(dv.nro_documento) ,str(dv.entregado), str(dv.devuelto), str(dv.entregado - dv.devuelto)) 
 			for dv in Prestamo.objects.filter(cliente__id = idcliente).order_by('producto_id')]
 	data = ([headings] + detalleventa)
 
@@ -452,10 +462,12 @@ def ImprimirReporteEnvace(request, idcliente):
 	)
 
 	t.setStyle(style)
-	t._argW[0]=4.0*inch
-	t._argW[1]=0.9*inch
-	t._argW[2]=0.9*inch
+	t._argW[0]=2.5*inch
+	t._argW[1]=1.0*inch
+	t._argW[2]=1.2*inch
 	t._argW[3]=0.9*inch
+	t._argW[4]=0.8*inch
+	t._argW[5]=0.6*inch
 	productos.append(t)
 	# productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales['entregado__sum'])+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales['devuelto__sum']))", getStyleSheet()['TopicTitle8Right']))
 	doc.build(productos)
