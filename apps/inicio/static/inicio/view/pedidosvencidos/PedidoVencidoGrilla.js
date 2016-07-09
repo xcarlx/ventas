@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 		{
 			text: "Area - Responsable",
 			width: 200,
-			dataIndex: 'cliente__area',
+			dataIndex: 'cliente__responsable',
 			items:[
 				{
 					xtype: 'searchtrigger'

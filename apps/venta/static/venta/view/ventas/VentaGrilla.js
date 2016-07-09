@@ -72,30 +72,30 @@ Ext.define('GRUPOEJ.venta.view.ventas.VentaGrilla', {
 				}
 			],
 		},
-		{
-			xtype: 'numbercolumn', 
-			format:'0.00',			
-			text: "Sub Total",
-			width: 100,
-			dataIndex: 'sub_total',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
-			xtype: 'numbercolumn', 
-			format:'0.00',
-			text: "IGV",
-			width: 75,
-			dataIndex: 'igv',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
+		// {
+		// 	xtype: 'numbercolumn', 
+		// 	format:'0.00',			
+		// 	text: "Sub Total",
+		// 	width: 100,
+		// 	dataIndex: 'sub_total',
+		// 	items:[
+		// 		{
+		// 			xtype: 'searchtrigger'
+		// 		}
+		// 	],
+		// },
+		// {
+		// 	xtype: 'numbercolumn', 
+		// 	format:'0.00',
+		// 	text: "IGV",
+		// 	width: 75,
+		// 	dataIndex: 'igv',
+		// 	items:[
+		// 		{
+		// 			xtype: 'searchtrigger'
+		// 		}
+		// 	],
+		// },
 		{
 			xtype: 'numbercolumn', 
 			format:'0.00',

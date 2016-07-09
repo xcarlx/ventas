@@ -35,7 +35,7 @@ Ext.define('GRUPOEJ.venta.view.ventas.DetalleVentaGrilla', {
 		{
 			xtype: 'numbercolumn', 
 			format:'0.00',
-			text: "Sub total",
+			text: "Total",
 			width: 100,
 			dataIndex: 'subtotal',
 			sortable: false,

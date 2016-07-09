@@ -23,7 +23,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			],
 		},
 		{
-			text: "Responsable - Area ",
+			text: "Area - Responsable",
 			width: 180,
 			dataIndex: 'cliente__responsable',
 			items:[
@@ -52,16 +52,16 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 				}
 			],
 		},
-		// {
-		// 	text: "Nro Pedido",
-		// 	width: 100,
-		// 	dataIndex: 'nro_pedido',
-		// 	items:[
-		// 		{
-		// 			xtype: 'searchtrigger'
-		// 		}
-		// 	],
-		// },
+		{
+			text: "Nro Pedido",
+			width: 100,
+			dataIndex: 'nro_pedido',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
 		{
 			xtype: 'datecolumn',
 			text: 'Fech Entrega',

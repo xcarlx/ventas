@@ -35,7 +35,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 		{
 			xtype: 'numbercolumn', 
 			format:'0.00',
-			text: "Sub total",
+			text: "Total",
 			width: 100,
 			dataIndex: 'subtotal',
 			sortable: false,

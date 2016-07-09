@@ -431,7 +431,7 @@ def ImprimirReporteEnvace(request, idcliente):
 	doc.pagesize = portrait(A4)
 	productos = []
 	cliente = Cliente.objects.get(id = idcliente)
-	# totales = Prestamo.objects.filter(cliente__id = idcliente).aggregate(Sum('entregado'), Sum('devuelto'))
+	totales = Prestamo.objects.filter(cliente__id = idcliente).extra(select = {'total_entregado': 'SUM(entregado)','total_devuelto': 'SUM(devuelto)'})
 	styles = getSampleStyleSheet()
 	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
 	cli = Paragraph(str(cliente.nombres)+" "+str(cliente.apellidos)+" / "+str(cliente.area)+ " / "+ str(cliente.responsable), getStyleSheet()['TopicTitle8'])
@@ -467,9 +467,17 @@ def ImprimirReporteEnvace(request, idcliente):
 	t._argW[2]=1.2*inch
 	t._argW[3]=0.9*inch
 	t._argW[4]=0.8*inch
-	t._argW[5]=0.6*inch
+	t._argW[5]=0.7*inch
 	productos.append(t)
-	# productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales['entregado__sum'])+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales['devuelto__sum']))", getStyleSheet()['TopicTitle8Right']))
+	productos.append(
+		Paragraph("Total Entregado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+str(totales[0].total_entregado)
+			+" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+"Total Devuelto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+str(totales[0].total_devuelto)
+			+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+"TOTAL DEBE: "
+			+str(totales[0].total_entregado - totales[0].total_devuelto ), getStyleSheet()['TopicTitle8Right']))
 	doc.build(productos)
 	response.write(buff.getvalue())
 	buff.close()
