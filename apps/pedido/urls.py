@@ -16,5 +16,7 @@ urlpatterns = [
 	url(r'pedidos.ventapedido/listar/$', VentaPedidoListar),
 	url(r'pedidos.valeguiapedido/crear/$',ValeGuiaPedidoCrear),
 	# url(r'pedidos.ventapedido/listar/$', "apps.pedido.views.VentaPedidoListar", name='ventapedido_crear'),
+
+	url(r'pedidos.clientedeudor/listar/$', ClienteDeudorListar),
 ]
 

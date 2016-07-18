@@ -14,42 +14,42 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
         },
 		{
 			text: "Descripcion",
-			width: 300,
-			dataIndex: 'producto__descripcion',
+			width: 400,
+			dataIndex: 'descripcion',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
 		},
-		{
-			xtype: 'datecolumn',
-			text: 'Fecha',
-			width: 100,
-			dataIndex: 'fecha',
-			format:'d/m/Y',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
-			text: "Nro Documento",
-			width: 120,
-			dataIndex: 'nro_documento',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
+		// {
+		// 	xtype: 'datecolumn',
+		// 	text: 'precio',
+		// 	width: 100,
+		// 	dataIndex: 'fecha',
+		// 	format:'d/m/Y',
+		// 	items:[
+		// 		{
+		// 			xtype: 'searchtrigger'
+		// 		}
+		// 	],
+		// },
+		// {
+		// 	text: "Nro Documento",
+		// 	width: 120,
+		// 	dataIndex: 'nro_documento',
+		// 	items:[
+		// 		{
+		// 			xtype: 'searchtrigger'
+		// 		}
+		// 	],
+		// },
 		{
 			xtype: 'numbercolumn',
 			text: "Entregado",
 			width: 100,
 			format:'0',
-			dataIndex: 'entregado',
+			dataIndex: 'total_entregado',
 			align: "center",
 			items:[
 				{
@@ -62,7 +62,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
 			text: "Devuelto",
 			width: 100,
 			format:'0',
-			dataIndex: 'devuelto',
+			dataIndex: 'total_devuelto',
 			align: "center",
 			items:[
 				{
@@ -75,7 +75,7 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
 			text: "Debe",
 			width: 100,
 			format:'0',
-			dataIndex: 'resto',
+			dataIndex: 'total_debe',
 			align: "center",
 			items:[
 				{
@@ -83,5 +83,6 @@ Ext.define('GRUPOEJ.producto.view.reportes.DetalleControlEnvaceGrilla', {
 				}
 			],
 		},
+
 	],
 });

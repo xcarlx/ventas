@@ -1,6 +1,6 @@
-Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{	
-	extend:	'Ext.app.ViewController',			
-	alias:	'controller.pedido',
+Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',  {   
+	extend: 'Ext.app.ViewController',           
+	alias:  'controller.pedido',
 	requires:[
 		'GRUPOEJ.pedido.view.pedidos.PedidoFormulario', 
 		'GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario',
@@ -15,7 +15,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				xtype: 'pedido-formulario',
 				constrain: true,
 				renderTo: panelCentral.id,
-				constrainTo: panelCentral.id,		
+				constrainTo: panelCentral.id,       
 				viewModel: { data: { titulo: "", }, },
 			});
 			me.editPedidoWindow.on("show", function(win) {
@@ -29,7 +29,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				xtype: 'ventapedido-formulario',
 				constrain: true,
 				renderTo: panelCentral.id,
-				constrainTo: panelCentral.id,		
+				constrainTo: panelCentral.id,       
 				viewModel: { data: { titulo: "", }, },
 			});
 		}; 
@@ -38,7 +38,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				xtype: 'valeguia-formulario',
 				constrain: true,
 				renderTo: panelCentral.id,
-				constrainTo: panelCentral.id,		
+				constrainTo: panelCentral.id,       
 				viewModel: { data: { titulo: "", }, },
 			});
 		}; 
@@ -159,6 +159,11 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		this.lookupReference("idpedidoreference").setValue(record.get("id"));
 		me.lookupReference('ventapedidoid').setValue(record.get("id"));
 		me.lookupReference('valeguiapedidoid').setValue(record.get("id"));
+
+		me.getStore('store_ClienteDeudor').load(
+			{
+			params:{clienteid: st_pedido.pedidoId}
+		});
 	},
 	deSeleccionarPedido: function(sm, selectedRecords){
 		this.getStore('store_productos').load({
@@ -263,17 +268,40 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	ventapedido_Agregar: function(button, e, options){
 		me = this;
 
-		
-		me.editVentaPedidoWindow.on("show", function(win) {
-				me.lookupReference("ventaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
-				me.lookupReference("ventaFormulariopedido").getForm().findField("numero_correlativo").setValue(0);
-				me.lookupReference("ventaFormulariopedido").getForm().findField("numero_documento").setValue(0);
-				me.lookupReference("ventaFormulariopedido").getForm().findField("reprogramar").setValue(false);
-				me.lookupReference("ventaFormulariopedido").getForm().findField("nro_dias").setValue(0);
-				me.lookupReference("ventaFormulariopedido").getForm().findField("credito").setValue(false);
-				me.lookupReference("ventaFormulariopedido").getForm().findField("cliente__frecuencia").setValue(me.pedido_RegistrosSeleccionados()[0].get("cliente__frecuencia"));
+		var record = me.getStore('store_ClienteDeudor').first();
+		if(record.get('totaldeuda') != "None"){
+			// Ext.Msg.alert('Alerta',"EL Cliente Debe un monto de "+record.get('totaldeuda')+" S/");        
+			Ext.Msg.confirm("Debe", "El cliente debe "+record.get('totaldeuda')+" S/"+" desea continuar?", function(btnText){
+		        if(btnText === "no"){
+		        }
+		        else if(btnText === "yes"){
+		        	me.editVentaPedidoWindow.on("show", function(win) {
+						me.lookupReference("ventaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("numero_correlativo").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("numero_documento").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("reprogramar").setValue(false);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("nro_dias").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("credito").setValue(false);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("cliente__frecuencia").setValue(me.pedido_RegistrosSeleccionados()[0].get("cliente__frecuencia"));
+					});
+					me.ventapedido_AbrirVentanaEditar(null, button);
+		           
+		        }
+		    }, this);
+
+		}
+		else{
+			me.editVentaPedidoWindow.on("show", function(win) {
+						me.lookupReference("ventaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("numero_correlativo").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("numero_documento").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("reprogramar").setValue(false);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("nro_dias").setValue(0);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("credito").setValue(false);
+						me.lookupReference("ventaFormulariopedido").getForm().findField("cliente__frecuencia").setValue(me.pedido_RegistrosSeleccionados()[0].get("cliente__frecuencia"));
 			});
-		me.ventapedido_AbrirVentanaEditar(null, button);
+			me.ventapedido_AbrirVentanaEditar(null, button);
+		}
 	},
 
 	venta_ventana_Cancelar: function(button, e, options){
@@ -422,7 +450,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 			me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setVisible(false);
 
 		}
-	},	
+	},  
 
 
 	// From Cliente
@@ -430,20 +458,20 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 	productos_ContextMenu: function(view, record, element, index, evtObj) {
 		me = this;
 		evtObj.stopEvent();
-        me.currentProductoContextMenu = record;
-        currentProductoContextMenu = Ext.widget('PedidoContext', {
-        	viewModel: {
-        		data: {
-        			descripcion: record.get("cliente__nombres"),
-        		},
-        	},
-        	listeners : {
+		me.currentProductoContextMenu = record;
+		currentProductoContextMenu = Ext.widget('PedidoContext', {
+			viewModel: {
+				data: {
+					descripcion: record.get("cliente__nombres"),
+				},
+			},
+			listeners : {
 				'click': me.productos_ContextMenu_Seleccionar
 			}
-        });
-        currentProductoContextMenu.viewTotal = me;
-        currentProductoContextMenu.showAt(evtObj.getXY());
-        return false;
+		});
+		currentProductoContextMenu.viewTotal = me;
+		currentProductoContextMenu.showAt(evtObj.getXY());
+		return false;
 	},
 
 	productos_ContextMenu_Seleccionar: function(view, record, item, index, eventObj) {
@@ -455,18 +483,18 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		me = this;
 		if (!me.editWindowUploadFotoProducto) {
 			me.editWindowUploadFotoProducto = me.getView().add({
-            	xtype: 'pedidocliente-form',
-            	viewModel: {
-	        		data: {
-	        			titulo2: '',
-	        		},
-	        	},
-	        	constrain: true,
+				xtype: 'pedidocliente-form',
+				viewModel: {
+					data: {
+						titulo2: '',
+					},
+				},
+				constrain: true,
 				renderTo: panelCentral.id,
 				constrainTo: panelCentral.id,
-            });
-  			//	me.editWindowPlan.on("show", function(win) {
-			// 	me.lookupReference("formUploadFotoProducto").getForm().findField("tipoplan_id").focus();
+			});
+			//  me.editWindowPlan.on("show", function(win) {
+			//  me.lookupReference("formUploadFotoProducto").getForm().findField("tipoplan_id").focus();
 			// });
 		}
 		with (me.editWindowUploadFotoProducto) {

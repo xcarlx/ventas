@@ -141,6 +141,17 @@ Ext.define('GRUPOEJ.venta.view.creditos.VentaCreditoGrilla', {
 						click: 'PagarVenta',
 					}
 				},
+				{
+					xtype: 'button',
+					text: 'Imprimir',
+					iconCls: 'icono-agregar',
+					method: 'POST', 
+				    renderTo: Ext.getBody(), 
+				    handler: "handlerBtnDownloadHelpGuie",
+				    bind: {
+						disabled: "{!ventagrilla.selection}",
+					},
+				},
 			],
 		}
 	]

@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from apps.cliente.models import Prestamo
 from apps.inicio.stylesheet import getStyleSheet 
-from django.db.models import Sum
+from django.db.models import F, FloatField, Sum,Count
 from django.utils import timezone
 
 
@@ -377,36 +377,51 @@ def DetalleReporteEnvace(request):
 		filtro = request.GET.get("filter", "")
 		limite = int(request.GET.get("limit", "0"))
 		pagina = int(request.GET.get("page", "0"))
-		# Filtro
-		if len(filtro) > 0:
-			filtros = "Prestamo.objects.filter("
-			filtro = json.loads(filtro)
-			for f in filtro:
-				filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
-			filtros = filtros[:-1] + ", cliente_id = "+clienteid+")"
-			prestamo = eval(filtros)
-		else:
-			prestamo = Prestamo.objects.filter(cliente_id=clienteid)
-		# Orden
-		if len(orden) > 0:
-			orden = json.loads(orden)[0]
-			tipo_orden = "-" if orden["direction"] == "DESC" else ""
-			campo_orden = orden["property"]
-			prestamo = prestamo.order_by(tipo_orden+campo_orden)
+
+		prestamo = Producto.objects.filter(prestamo__cliente_id = clienteid).annotate(Sum('prestamo__entregado'),Sum('prestamo__devuelto'))
+
+		# prestamo = Producto.objects.filter(id__in=Prestamo.objects.filter(cliente_id=clienteid).values('producto_id'))
+
+
+		# prestamo = Prestamo.objects.values(
+		# 	'id','cliente__nombres','cliente__apellidos','cliente__telefono','cliente__nro_documento','cliente__direccion',
+		# 	'producto__descripcion','producto__id'
+		# 	).annotate(Count("producto__id"), Sum('entregado'), Sum('devuelto')).filter(cliente_id=clienteid)
+
+		# prestamo = Prestamo.objects.all().filter(cliente_id=clienteid).annotate(Count("producto__id"))
+
+		
 		total = prestamo.count()
-		# Paginacion
-		if pagina > 0:
-			prestamo = Paginator(prestamo, 999999)
-			prestamo = prestamo.page(pagina)
+		# Filtro
+		# if len(filtro) > 0:
+		# 	filtros = "Prestamo.objects.filter("
+		# 	filtro = json.loads(filtro)
+		# 	for f in filtro:
+		# 		filtros = filtros + f["property"] + "__icontains='" + f["value"] + "',"
+		# 	filtros = filtros[:-1] + ", cliente_id = "+clienteid+")"
+		# 	prestamo = eval(filtros)
+		# else:
+		# 	prestamo = Prestamo.objects.filter(cliente_id=clienteid)
+		# # Orden
+		# if len(orden) > 0:
+		# 	orden = json.loads(orden)[0]
+		# 	tipo_orden = "-" if orden["direction"] == "DESC" else ""
+		# 	campo_orden = orden["property"]
+		# 	prestamo = prestamo.order_by(tipo_orden+campo_orden)
+		# total = prestamo.count()
+		# # Paginacion
+		# if pagina > 0:
+		# 	prestamo = Paginator(prestamo, 999999)
+			# prestamo = prestamo.page(pagina)
 	else:
-		prestamo = Prestamo.objects.filter(pk=findID)
+		prestamo = Producto.objects.filter(pk=findID,prestamo__cliente_id = clienteid).annotate(Sum('prestamo__entregado'),Sum('prestamo__devuelto'))
 		total = prestamo.count()
 
 	return render(
 		request, 
 		"producto/prestamo.json",
 		{
-			'prestamos': prestamo,
+			'prestamo': prestamo,
 			'total':total
 		},
 		content_type= "application/json",
@@ -431,7 +446,12 @@ def ImprimirReporteEnvace(request, idcliente):
 	doc.pagesize = portrait(A4)
 	productos = []
 	cliente = Cliente.objects.get(id = idcliente)
-	totales = Prestamo.objects.filter(cliente__id = idcliente).extra(select = {'total_entregado': 'SUM(entregado)','total_devuelto': 'SUM(devuelto)'})
+	totales = Prestamo.objects.filter(cliente__id = idcliente).aggregate(
+			total_entregado=Sum(F('entregado'),output_field=FloatField()), 
+			total_devuelto=Sum(F('devuelto'),output_field=FloatField())
+		)
+	# aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField())
+	# extra(select = {'total_entregado': 'SUM(entregado)','total_devuelto': 'SUM(devuelto)'})
 	styles = getSampleStyleSheet()
 	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
 	cli = Paragraph(str(cliente.nombres)+" "+str(cliente.apellidos)+" / "+str(cliente.area)+ " / "+ str(cliente.responsable), getStyleSheet()['TopicTitle8'])
@@ -471,13 +491,91 @@ def ImprimirReporteEnvace(request, idcliente):
 	productos.append(t)
 	productos.append(
 		Paragraph("Total Entregado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			+str(totales[0].total_entregado)
+			+str(int(totales['total_entregado']))
 			+" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 			+"Total Devuelto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			+str(totales[0].total_devuelto)
+			+str(int(totales['total_devuelto']))
 			+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 			+"TOTAL DEBE: "
-			+str(totales[0].total_entregado - totales[0].total_devuelto ), getStyleSheet()['TopicTitle8Right']))
+			+str(int(totales['total_entregado']) - int(totales['total_devuelto'])), getStyleSheet()['TopicTitle8Right']))
+	doc.build(productos)
+	response.write(buff.getvalue())
+	buff.close()
+	return response
+
+
+def ImprimirReporteEnvacePorProducto(request, idcliente,idproducto):
+	
+	response = HttpResponse(content_type='application/pdf')
+
+	pdf_name = "reporte_producto.pdf" 
+	buff = BytesIO()
+
+	doc = SimpleDocTemplate(buff,
+							pagesize=letter,
+							rightMargin=50,
+							leftMargin=50,
+							topMargin=20,
+							bottomMargin=18,
+							)
+	# doc.pagesize = landscape(A4)
+	doc.pagesize = portrait(A4)
+	productos = []
+	cliente = Cliente.objects.get(id = idcliente)
+	# prod = Prestamo.objects.filter(id = idproducto)
+	# produc = Producto.objects.filter(id = prod[0].producto.id)
+	totales = Prestamo.objects.filter(cliente__id = idcliente, producto__id= idproducto).aggregate(
+			total_entregado=Sum(F('entregado'),output_field=FloatField()), 
+			total_devuelto=Sum(F('devuelto'),output_field=FloatField())
+		)
+	# aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField())
+	# extra(select = {'total_entregado': 'SUM(entregado)','total_devuelto': 'SUM(devuelto)'})
+	styles = getSampleStyleSheet()
+	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
+	cli = Paragraph(str(cliente.nombres)+" "+str(cliente.apellidos)+" / "+str(cliente.area)+ " / "+ str(cliente.responsable), getStyleSheet()['TopicTitle8'])
+	productos.append(header)
+	productos.append(Spacer(1, 0.2 * inch))	
+	productos.append(Paragraph("REPORTE TOTAL." , getStyleSheet()['TopicTitle14']))
+	productos.append(Spacer(1, 0.05 * inch))
+	productos.append(cli)
+	productos.append(Paragraph("DETALLE", getStyleSheet()['TopicTitle10']))
+	productos.append(Spacer(1, 0.1 * inch))
+
+	headings = ("PRODUCTO","FECHA","NRO DOCUMENTO","ENTREGADA ", 'DEVUELTA', 'DEBE')
+	detalleventa = [
+			(str(dv.producto.descripcion),str(dv.fecha),str(dv.nro_documento) ,str(dv.entregado), str(dv.devuelto), str(dv.entregado - dv.devuelto)) 
+			for dv in Prestamo.objects.filter(cliente__id = idcliente, producto__id= idproducto)]
+	data = ([headings] + detalleventa)
+
+	data2 = [[Paragraph(cell, getStyleSheet()['TopicItemq0']) for cell in row] for row in data]
+	t=Table(data2)
+	style = TableStyle(
+		[
+			('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+			('LINEABOVE', (0,0), (-1,0), 2, colors.green),
+			('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
+			('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
+			('ALIGN', (1,1), (-1,-1), 'CENTER'),
+		]
+	)
+
+	t.setStyle(style)
+	t._argW[0]=2.5*inch
+	t._argW[1]=1.0*inch
+	t._argW[2]=1.2*inch
+	t._argW[3]=0.9*inch
+	t._argW[4]=0.8*inch
+	t._argW[5]=0.7*inch
+	productos.append(t)
+	productos.append(
+		Paragraph("Total Entregado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+str(int(totales['total_entregado']))
+			+" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+"Total Devuelto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+str(int(totales['total_devuelto']))
+			+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+"TOTAL DEBE: "
+			+str(int(totales['total_entregado']) - int(totales['total_devuelto'])), getStyleSheet()['TopicTitle8Right']))
 	doc.build(productos)
 	response.write(buff.getvalue())
 	buff.close()

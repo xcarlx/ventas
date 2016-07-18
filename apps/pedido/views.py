@@ -12,6 +12,7 @@ from django.db.models import Sum
 from datetime import date, time, timedelta
 from django.utils import timezone
 from decimal import Decimal
+from django.db.models import F, FloatField, Sum,Count
 
 def PedidoListar(request):
 	
@@ -541,4 +542,22 @@ def NroCorrelativo(numero):
 def VentaPedidoListar(request):
 	return HttpResponse("",
 		content_type="application/json"
+	)
+
+def ClienteDeudorListar(request):
+	findID = request.GET.get("id", 0)
+	clienteid = request.GET.get("clienteid", 0)
+	idcliente = Pedido.objects.filter(id=clienteid).values('cliente_id')
+	if findID == 0:
+		cliente = Venta.objects.filter(pedido__cliente_id = idcliente, credito=True).aggregate(Sum('total'))
+	
+	print(idcliente)
+	return render(
+		request,
+		'pedido/clientedeuda.json',
+		{
+			'cliente': cliente['total__sum'],
+			'total' : 1,
+		},
+		content_type="application/json",
 	)

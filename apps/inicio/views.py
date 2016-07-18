@@ -9,8 +9,7 @@ from apps.venta.models import *
 from django.core.paginator import Paginator
 from django.utils import timezone
 from apps.inicio.stylesheet import getStyleSheet 
-from django.db.models import Sum
-
+from django.db.models import F, FloatField, Sum
 # Create your views here.
 
 from reportlab.pdfgen import canvas
@@ -175,16 +174,17 @@ def PedidoPendienteListar(request):
 	)
 
 def ReporteProductoListar(request):
-	idp = request.GET.get("idproducto", None)
+	idp = int(request.GET.get("idproducto", 0))
 	fechaI = request.GET.get("finicio", None)
 	fechaF = request.GET.get("ffin", None)
-	detalleventa = DetalleVenta.objects.all().order_by('-id')
-	totales = DetalleVenta.objects.all().extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+	detalleventa = DetalleVenta.objects.all()[:20]
+	totales = DetalleVenta.objects.all().aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField())) 
 	if fechaI != None and fechaF != None and idp != None:
 		fechai = datetime.strptime(fechaI,  "%Y-%m-%dT%H:%M:%S")
 		fechaf = datetime.strptime(fechaF,  "%Y-%m-%dT%H:%M:%S")
 		detalleventa = DetalleVenta.objects.filter(producto_id = int(idp), venta__fecha__gte = fechai,  venta__fecha__lte = fechaf, venta__credito = False, venta__estado = 'ACTIVO').order_by('-id')
-		totales = DetalleVenta.objects.filter(producto_id = idp, venta__fecha__gte = fechai,  venta__fecha__lte = fechaf, venta__credito = False, venta__estado = 'ACTIVO').extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+		totales = DetalleVenta.objects.filter(producto_id = idp, venta__fecha__gte = fechai,  venta__fecha__lte = fechaf, venta__credito = False, venta__estado = 'ACTIVO').aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField())) 
+		# .extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
 
 	total = detalleventa.count()
 	return render(
@@ -192,23 +192,24 @@ def ReporteProductoListar(request):
 		{
 			'detalleventas': detalleventa,
 			'total' : total,
-			'totalcantidad' : totales[0].cantidad,
-			'totalprecio' : totales[0].total,
+			'totalcantidad' : totales['cantidad'],
+			'totalprecio' : totales['total'],
 		},
 		content_type="application/json",
 	)
 
 def ReporteClienteListar(request):
-	idc = request.GET.get("idcliente", None)
+
+	idc = int(request.GET.get("idcliente", 0))
 	fechaI = request.GET.get("finicio", None)
 	fechaF = request.GET.get("ffin", None)
-	detalleventa = DetalleVenta.objects.all().order_by('-id')
-	totales = DetalleVenta.objects.all().extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+	detalleventa = DetalleVenta.objects.all()[:20]
+	totales = DetalleVenta.objects.all().aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField())) 
 	if fechaI != None and fechaF != None and idc != None:
 		fechai = datetime.strptime(fechaI,  "%Y-%m-%dT%H:%M:%S")
 		fechaf = datetime.strptime(fechaF,  "%Y-%m-%dT%H:%M:%S")
 		detalleventa = DetalleVenta.objects.filter(venta__pedido__cliente__id = int(idc), venta__fecha__gte = fechai,  venta__fecha__lte = fechaf, venta__credito = False, venta__estado = 'ACTIVO').order_by('-id')
-		totales = DetalleVenta.objects.filter(venta__pedido__cliente__id = idc, venta__fecha__gte = fechai,  venta__fecha__lte = fechaf, venta__credito = False, venta__estado = 'ACTIVO').extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+		totales = DetalleVenta.objects.filter(venta__pedido__cliente__id = int(idc), venta__fecha__gte = fechai,  venta__fecha__lte = fechaf, venta__credito = False, venta__estado = 'ACTIVO').aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField())) 
 
 	total = detalleventa.count()
 	return render(
@@ -216,8 +217,8 @@ def ReporteClienteListar(request):
 		{
 			'detalleventas': detalleventa,
 			'total' : total,
-			'totalcantidad' : totales[0].cantidad,
-			'totalprecio' : totales[0].total,
+			'totalcantidad' : totales['cantidad'],
+			'totalprecio' : totales['total'],
 		},
 		content_type="application/json",
 	)
@@ -242,7 +243,7 @@ def ImprimirProductoListar(request, idproducto, fechaI, fechaF):
 	doc.pagesize = portrait(A4)
 	productos = []
 	producto = Producto.objects.get(id = int(idproducto))
-	totales = DetalleVenta.objects.filter(producto_id = idproducto, venta__fecha__gte = finicio,  venta__fecha__lte = ffin, venta__credito = False , venta__estado = 'ACTIVO').extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+	totales = DetalleVenta.objects.filter(producto_id = idproducto, venta__fecha__gte = finicio,  venta__fecha__lte = ffin, venta__credito = False , venta__estado = 'ACTIVO').aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField())) 
 	styles = getSampleStyleSheet()
 	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
 	pro = Paragraph(producto.descripcion, getStyleSheet()['TopicTitle8'])
@@ -280,7 +281,7 @@ def ImprimirProductoListar(request, idproducto, fechaI, fechaF):
 	t._argW[1]=0.75*inch
 	t._argW[2]=0.8*inch
 	productos.append(t)
-	productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales[0].cantidad)+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales[0].total)+" S/)", getStyleSheet()['TopicTitle8Right']))
+	productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales['cantidad'])+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales['total'])+" S/)", getStyleSheet()['TopicTitle8Right']))
 	doc.build(productos)
 	response.write(buff.getvalue())
 	buff.close()
@@ -306,7 +307,7 @@ def ImprimirClienteListar(request, idcliente, fechaI, fechaF):
 	doc.pagesize = portrait(A4)
 	productos = []
 	cliente = Cliente.objects.get(id = int(idcliente))
-	totales = DetalleVenta.objects.filter(venta__pedido__cliente__id = idcliente, venta__fecha__gte = finicio,  venta__fecha__lte = ffin, venta__credito = False , venta__estado = 'ACTIVO').extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+	totales = DetalleVenta.objects.filter(venta__pedido__cliente__id = idcliente, venta__fecha__gte = finicio,  venta__fecha__lte = ffin, venta__credito = False , venta__estado = 'ACTIVO').aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField()))
 	styles = getSampleStyleSheet()
 	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
 	pro = Paragraph(str(cliente.nombres)+" "+str(cliente.apellidos)+" / "+str(cliente.area)+" / "+str(cliente.responsable), getStyleSheet()['TopicTitle8'])
@@ -353,7 +354,7 @@ def ImprimirClienteListar(request, idcliente, fechaI, fechaF):
 	t._argW[3]=0.75*inch
 	t._argW[4]=0.8*inch
 	productos.append(t)
-	productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales[0].cantidad)+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales[0].total)+" S/)", getStyleSheet()['TopicTitle8Right']))
+	productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales['cantidad'])+" ) &nbsp;&nbsp;&nbsp;"+"PRECIO - TOTAL: ( "+str(totales['total'])+" S/)", getStyleSheet()['TopicTitle8Right']))
 	doc.build(productos)
 	response.write(buff.getvalue())
 	buff.close()
@@ -379,7 +380,7 @@ def ImprimirAllProductoListar(request, fechaI, fechaF):
 	# doc.pagesize = portrait(A4)
 	productos = []
 	# producto = Producto.objects.get(id = int(idproducto))
-	totales = DetalleVenta.objects.filter(venta__fecha__gte = finicio,  venta__fecha__lte = ffin, venta__estado = 'ACTIVO', venta__credito = False).extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+	totales = DetalleVenta.objects.filter(venta__fecha__gte = finicio,  venta__fecha__lte = ffin, venta__estado = 'ACTIVO', venta__credito = False).aggregate(total = Sum(F('cantidad')*F('precio'), output_field=FloatField()), cantidad= Sum('cantidad', output_field=FloatField()))
 	styles = getSampleStyleSheet()
 	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
 	# pro = Paragraph(producto.descripcion, getStyleSheet()['TopicTitle8'])
@@ -418,7 +419,7 @@ def ImprimirAllProductoListar(request, fechaI, fechaF):
 	t._argW[2]=0.75*inch
 	t._argW[3]=0.8*inch
 	productos.append(t)
-	productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales[0].cantidad)+" ) &nbsp;&nbsp;&nbsp;"+"&nbsp;&nbsp;&nbsp;"+"PRECIO TOTAL: ( "+str(totales[0].total)+" S/)", getStyleSheet()['TopicTitle8Right']))
+	productos.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales['cantidad'])+" ) &nbsp;&nbsp;&nbsp;"+"&nbsp;&nbsp;&nbsp;"+"PRECIO TOTAL: ( "+str(totales['total'])+" S/)", getStyleSheet()['TopicTitle8Right']))
 	doc.build(productos)
 	response.write(buff.getvalue())
 	buff.close()

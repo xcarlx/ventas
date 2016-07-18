@@ -44,7 +44,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 		},
 		{
 			text: "Direccion",
-			width: 150,
+			width: 250,
 			dataIndex: 'cliente__direccion',
 			items:[
 				{
@@ -52,16 +52,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 				}
 			],
 		},
-		{
-			text: "Nro Pedido",
-			width: 100,
-			dataIndex: 'nro_pedido',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
+
 		{
 			xtype: 'datecolumn',
 			text: 'Fech Entrega',
@@ -70,8 +61,8 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			format:'d/m/Y',
 		},
 		{
-			text: "Nro de Dias",
-			width: 100,
+			text: "Dias",
+			width: 60,
 			dataIndex: 'nro_dias',
 			items:[
 				{
@@ -86,7 +77,16 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			dataIndex: 'fecha_pedido',
 			format:'d/m/Y',
 		},
-
+		{
+			text: "Nro Pedido",
+			width: 100,
+			dataIndex: 'nro_pedido',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
 		// {
 		// 	xtype: 'booleancolumn',
 		// 	align: 'center',

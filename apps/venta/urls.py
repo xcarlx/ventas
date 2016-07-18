@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'creditos.ventacredito/listar/$', VentaCreditoListar),
 	url(r'creditos.detalleventacredito/listar/$', DetalleVentaCreditoListar),
 	url(r'creditos.ventacredito/eliminar/$', VentaCreditoPagar),
+	url(r'creditos.reporteventacredito/imprimir/(?P<fechaI>[0-9]+)/(?P<fechaF>[0-9]+)/$', ImprimirVentasCreditos),
 
 	url(r'anuladas.ventaanulada/listar/$', VentaAnuladoListar),
 	url(r'anuladas.detalleventaanulada/listar/$', DetalleVentaAnuladoListar),
