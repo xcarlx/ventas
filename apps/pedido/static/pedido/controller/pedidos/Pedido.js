@@ -5,6 +5,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',  {
 		'GRUPOEJ.pedido.view.pedidos.PedidoFormulario', 
 		'GRUPOEJ.pedido.view.pedidos.VentaPedidoFormulario',
 		'GRUPOEJ.pedido.view.pedidos.ValeGuiaFormulario',
+		'GRUPOEJ.pedido.view.pedidos.EditarProductoDPFormulario',
 		'GRUPOEJ.pedido.view.pedidos.PedidoContext', 
 		'GRUPOEJ.pedido.view.pedidos.ClienteForm',
 	],
@@ -36,6 +37,15 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',  {
 		if (!me.editValeGuiaPedidoWindow) {
 			me.editValeGuiaPedidoWindow = me.getView().add({
 				xtype: 'valeguia-formulario',
+				constrain: true,
+				renderTo: panelCentral.id,
+				constrainTo: panelCentral.id,       
+				viewModel: { data: { titulo: "", }, },
+			});
+		};
+		if (!me.EditarProductoDetalleWindows) {
+			me.EditarProductoDetalleWindows = me.getView().add({
+				xtype: 'editarproducto-formulario',
 				constrain: true,
 				renderTo: panelCentral.id,
 				constrainTo: panelCentral.id,       
