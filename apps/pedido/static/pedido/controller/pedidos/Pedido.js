@@ -238,26 +238,32 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 
 	ventapedido_AbrirVentanaEditar: function(record, button) {
 		var me = this;
-		with (me.editVentaPedidoWindow) {
-			setIconCls(button.iconCls);
-			action = !record ? "add" : "edit";
-			with (getViewModel()) {
-				setData({
-					titulo: 'Agregando Venta del Pedido',
-					
-				});
-				setLinks({
-					currentVentaPedido: record || {
-						type: 'GRUPOEJ.pedido.model.pedidos.VentaPedido',
-						create: true
-					}
-				});
+		if(me.getStore("store_detallepedidos").getData().getCount()>0){
+			with (me.editVentaPedidoWindow) {
+				setIconCls(button.iconCls);
+				action = !record ? "add" : "edit";
+				with (getViewModel()) {
+					setData({
+						titulo: 'Agregando Venta del Pedido',
+						
+					});
+					setLinks({
+						currentVentaPedido: record || {
+							type: 'GRUPOEJ.pedido.model.pedidos.VentaPedido',
+							create: true
+						}
+					});
+				}
+				show();
 			}
-			show();
+		}else{
+			Ext.Msg.alert('Alerta','"No tiene ningun producto registrado"');
 		}
 	},
 	ventapedido_Agregar: function(button, e, options){
 		me = this;
+
+		
 		me.editVentaPedidoWindow.on("show", function(win) {
 				me.lookupReference("ventaFormulariopedido").getForm().findField("tipo_documento").setValue(0);
 				me.lookupReference("ventaFormulariopedido").getForm().findField("numero_correlativo").setValue(0);
@@ -309,21 +315,25 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 
 	valeguia_AbrirVentanaEditar: function(record, button) {
 		var me = this;
-		with (me.editValeGuiaPedidoWindow) {
-			setIconCls(button.iconCls);
-			action = !record ? "add" : "edit";
-			with (getViewModel()) {
-				setData({
-					titulo: 'Cambiar a Vale o Guia'
-				});
-				setLinks({
-					currentValeGuia: record || {
-						type: 'GRUPOEJ.pedido.model.pedidos.ValeGuiaPedido',
-						create: true
-					}
-				});
+		if(me.getStore("store_detallepedidos").getData().getCount()>0){
+			with (me.editValeGuiaPedidoWindow) {
+				setIconCls(button.iconCls);
+				action = !record ? "add" : "edit";
+				with (getViewModel()) {
+					setData({
+						titulo: 'Cambiar a Vale o Guia'
+					});
+					setLinks({
+						currentValeGuia: record || {
+							type: 'GRUPOEJ.pedido.model.pedidos.ValeGuiaPedido',
+							create: true
+						}
+					});
+				}
+				show();
 			}
-			show();
+		}else{
+			Ext.Msg.alert('Alerta','"No tiene ningun producto registrado"');
 		}
 	},
 
@@ -348,7 +358,7 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("punto_llegada").setVisible(false);
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_emision").setVisible(false);
 				me.lookupReference("valeguiaFormulariopedido").getForm().findField("fecha_translado").setVisible(false);
-
+				me.lookupReference("valeguiaFormulariopedido").getForm().findField("cliente__frecuencia").setValue(me.pedido_RegistrosSeleccionados()[0].get("cliente__frecuencia"));
 			});
 		me.valeguia_AbrirVentanaEditar(null, button);
 	},
@@ -414,6 +424,9 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 		}
 	},	
 
+
+	// From Cliente
+
 	productos_ContextMenu: function(view, record, element, index, evtObj) {
 		me = this;
 		evtObj.stopEvent();
@@ -471,15 +484,15 @@ Ext.define('GRUPOEJ.pedido.controller.pedidos.Pedido',	{
 					responsable: registro.get("cliente__responsable"),
 					referencia: registro.get("cliente__referencia"),
 					frecuencia: registro.get("cliente__frecuencia"),
+					zona_sector: registro.get("cliente__zona_sector"),
 				});
 			}
 			show();
 		}
 	},
+
 	Salir: function(){
 		me = this;
 		me.editWindowUploadFotoProducto.close();
 	}, 
-
-
 });

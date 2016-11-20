@@ -89,6 +89,23 @@ Ext.define('GRUPOEJ.venta.controller.creditos.VentaCredito',	{
 		    me.lookupReference("vcreditototal").setText(0);
 		}
 	},
+	ImprimirCredito: function(){
+		me = this;
+    	
+
+		if(me.lookupReference("vcreditoFechaInicio").getValue()!= null && 
+			me.lookupReference("vcreditoFechaFin").getValue()!= null){
+				window.open('grupoej.venta.creditos.ventacredito/imprimir/'
+			+ me.ventaCredito_RegistrosSeleccionados()[0].id+"/"
+			+ new Date(me.lookupReference("vcreditoFechaInicio").getValue()).getTime()+"/"
+			+ new Date(me.lookupReference("vcreditoFechaFin").getValue()).getTime()+"/",'_blank');
+		}
+
+		else{
+			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
+		}
+
+	},
 	Limpiar: function(){
 		var me = this;
 		if(me.lookupReference("vcreditoFechaInicio").getValue()!= null && 
