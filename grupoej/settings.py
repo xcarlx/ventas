@@ -91,11 +91,10 @@ WSGI_APPLICATION = 'grupoej.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'grupoej',
-		'USER': 'root',
-		'PASSWORD': '123456',
-		'HOST': '127.0.0.1',
-		'PORT': '3306',
+		'NAME': 'grupoej$grupoej',
+		'USER': 'grupoej',
+		'PASSWORD': '123grupoej123',
+		'HOST': 'grupoej.mysql.pythonanywhere-services.com',
 	}
 }
 
@@ -117,6 +116,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+STATIC_ROOT ='/home/grupoej/grupoej/static/'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
