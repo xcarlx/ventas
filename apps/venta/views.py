@@ -434,3 +434,75 @@ def ImprimirVentasCreditos(request, fechaI, fechaF):
 
 
 
+def ImprimirCredito(request, idventa, fechaI, fechaF):
+
+	response = HttpResponse(content_type='application/pdf')
+	pdf_name = "ventas.pdf" 
+	buff = BytesIO()
+	finicio = datetime.fromtimestamp(int(fechaI) / 1e3)
+	ffin = datetime.fromtimestamp(int(fechaF) / 1e3)
+
+	doc = SimpleDocTemplate(buff,
+							pagesize=letter,
+							rightMargin=50,
+							leftMargin=50,
+							topMargin=20,
+							bottomMargin=18,
+							)
+	doc.pagesize = landscape(A4)
+	ventas = []
+	venta = Venta.objects.get(id = idventa)
+	totales = DetalleVenta.objects.filter(venta__pedido__cliente_id=venta.pedido.cliente.id, venta__fecha__gte = finicio,  venta__fecha__lte = ffin).extra(select = {'total': 'SUM(cantidad * precio)','cantidad': 'SUM(cantidad)'})
+	styles = getSampleStyleSheet()
+	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
+	documento = Paragraph("DOCUMENTO: "+(str(venta.tipo_documento))+" "+(str(venta.numero_correlativo))+"-"+(str(venta.numero_documento)) , getStyleSheet()['TopicItem1'])
+	cliente = Paragraph("CLIENTE / RAZON SOCIAL: "+(str(venta.pedido.cliente.nombres))+" "+(str(venta.pedido.cliente.apellidos))+" - "+(str(venta.pedido.cliente.area)) , getStyleSheet()['TopicItem1'])
+	ventas.append(header)
+	ventas.append(Spacer(1, 0.2 * inch))
+	ventas.append(documento)
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(cliente)
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(Paragraph(venta.pedido.cliente.tipo_documento+": "+venta.pedido.cliente.nro_documento+" ",getStyleSheet()['TopicItem1']))
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(Paragraph("DIRECCION: "+venta.pedido.cliente.direccion+" ",getStyleSheet()['TopicItem1']))
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(Paragraph("FECHA INICIO: "+datetime.strftime(finicio, "%d-%m-%Y")+" ",getStyleSheet()['TopicItem1']))
+	ventas.append(Spacer(1, 0.1 * inch))
+	ventas.append(Paragraph("FECHA FIN: "+datetime.strftime(ffin, "%d-%m-%Y")+" ",getStyleSheet()['TopicItem1']))
+	ventas.append(Spacer(1, 0.1 * inch))
+	ventas.append(Paragraph("DETALLE DE LA COMPRA", getStyleSheet()['TopicTitle10']))
+	ventas.append(Spacer(1, 0.1 * inch))
+
+	headings = ('FECHA', 'CLIENTE','DESCRIPCION', 'NRO DOCUMENTO','PRECIO', "CANTIDAD", 'TOTAL')
+	detalleventa = [(str(dv.venta.fecha),str(dv.venta.pedido.cliente), str(dv.producto.descripcion),str(dv.venta.numero_correlativo)+'-'+str(dv.venta.numero_documento),str(dv.precio), str(dv.cantidad), str(dv.precio*dv.cantidad)) for dv in DetalleVenta.objects.filter(venta__pedido__cliente_id=venta.pedido.cliente.id, venta__fecha__gte = finicio,  venta__fecha__lte = ffin)]
+	data = ([headings] + detalleventa)
+
+	data2 = [[Paragraph(cell, getStyleSheet()['TopicItemq0']) for cell in row] for row in data]
+	t=Table(data2)
+	style = TableStyle(
+		[
+			('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+			('LINEABOVE', (0,0), (-1,0), 2, colors.green),
+			('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
+			('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
+			('ALIGN', (1,1), (-1,-1), 'CENTER'),
+		]
+	)
+
+	t.setStyle(style)
+	t._argW[0]=0.8*inch
+	t._argW[1]=2.5*inch
+	t._argW[2]=2.5*inch
+	t._argW[3]=1.5*inch
+	t._argW[4]=0.8*inch
+	t._argW[5]=0.8*inch
+	ventas.append(t)
+	ventas.append(Paragraph("CANTIDAD - TOTAL:( "+str(totales[0].cantidad)+" ) &nbsp;&nbsp;&nbsp;"+"&nbsp;&nbsp;&nbsp;"+"PRECIO TOTAL: ( "+str(totales[0].total)+" S/)", getStyleSheet()['TopicTitle8Right']))
+	# ventas.append(Paragraph("Sub total:__ "+str(venta.sub_total)+" S/", getStyleSheet()['TopicTitle8Right']))
+	# ventas.append(Paragraph("IGV:___"+str(venta.igv)+" S/", getStyleSheet()['TopicTitle8Right']))
+	# ventas.append(Paragraph("Total:__ "+str(venta.total)+" S/", getStyleSheet()['TopicTitle8Right']))
+	doc.build(ventas)
+	response.write(buff.getvalue())
+	buff.close()
+	return response

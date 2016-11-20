@@ -70,6 +70,16 @@ Ext.define('GRUPOEJ.venta.view.creditos.VentaCredito', {
 							},
 			        	},
 			        	{
+			            	xtype: 'button',
+			            	text: "Imprimir",
+			            	listeners:{
+								click: 'ImprimirCredito',
+							},
+							bind: {
+								disabled: "{!ventacreditogrilla.selection}",
+							},
+			        	},
+			        	{
 			        		name: 'totalv',
 				    		xtype: 'label',
 							// fieldLabel: 'Ventas total',
