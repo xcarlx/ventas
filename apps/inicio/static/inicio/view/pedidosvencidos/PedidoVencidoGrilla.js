@@ -6,7 +6,7 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 		store: '{store_pedidosvencidos}',
 	},
 	height: 520,
-	columns: [
+		columns: [
 		{
             xtype: 'rownumberer',
             width: 50,
@@ -25,7 +25,7 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 		{
 			text: "Area - Responsable",
 			width: 200,
-			dataIndex: 'cliente__area',
+			dataIndex: 'cliente__responsable',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -43,9 +43,9 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 			],
 		},
 		{
-			text: "Nro Pedido",
-			width: 100,
-			dataIndex: 'nro_pedido',
+			text: "Direccion",
+			flex : 1,
+			dataIndex: 'cliente__direccion',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -53,8 +53,15 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 			],
 		},
 		{
-			text: "Nro de Dias",
-			width: 100,
+			xtype: 'datecolumn',
+			text: 'Fecha Entrega',
+			width: 120,
+			dataIndex: 'fecha_entrega',
+			format:'d/m/Y',
+		},
+		{
+			text: "Nro Dias",
+			width: 75,
 			dataIndex: 'nro_dias',
 			items:[
 				{
@@ -64,27 +71,23 @@ Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PedidoVencidoGrilla', {
 		},
 		{
 			xtype: 'datecolumn',
-			text: 'Fecha del Pedido',
-			width: 150,
+			text: 'Fecha Pedido',
+			width: 120,
 			dataIndex: 'fecha_pedido',
 			format:'d/m/Y',
 		},
-		{
-			xtype: 'datecolumn',
-			text: 'Fecha de Entrega',
-			width: 150,
-			dataIndex: 'fecha_entrega',
-			format:'d/m/Y',
-		},
-			{
-			xtype: 'booleancolumn',
-			align: 'center',
-			width: 120,
-			dataIndex: 'estado',
-			text: 'Estado',
-			resizable: false,
-			trueText: "Finalizado",
-			falseText: "Pendiete",
-		},
+		// 	{
+		// 	xtype: 'booleancolumn',
+		// 	align: 'center',
+		// 	width: 120,
+		// 	dataIndex: 'estado',
+		// 	text: 'Estado',
+		// 	resizable: false,
+		// 	trueText: "Finalizado",
+		// 	falseText: "Pendiete",
+		// },
 	],
+	listeners : {
+		itemcontextmenu: 'productos_ContextMenu',
+	},
 });

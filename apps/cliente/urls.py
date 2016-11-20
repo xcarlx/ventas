@@ -6,6 +6,7 @@ urlpatterns = [
 	url(r'clientes.cliente/eliminar/$', ClienteEliminar),
 	url(r'clientes.cliente/crear/$', ClienteCrear),
 	url(r'clientes.cliente/editar/$', ClienteEditar),
+	url(r'clientes.cliente/duplicar/$', ClienteDuplicar),
 	# url(r'clientes.cliente/editar/$', "apps.cliente.views.ClienteEditar", name='cliente_editar'),
 ]
 

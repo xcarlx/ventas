@@ -1,6 +1,7 @@
 from django.db import models
 from apps.inicio.models import *
 from apps.producto.models import Producto
+from django.utils import timezone
 
 # Create your models here.
 
@@ -23,15 +24,18 @@ class Cliente(Auditoria):
 	area = models.CharField(max_length=200,blank=True, null=True)
 	responsable = models.CharField(max_length=45, blank=True, null=True)
 	referencia = models.CharField(max_length=200, blank=True, null=True)
-	prestamos = models.ManyToManyField(Producto, through='Prestamo')
 	frecuencia = models.IntegerField(blank=True, null=True, default=0)
-
+	zona_sector = models.CharField(max_length=200, blank=True, null=True, default="")
+	prestamos = models.ManyToManyField(Producto, through='Prestamo')
+	
 	def __str__(self):
 		return self.nombres+ ' - '+self.apellidos
 
 class Prestamo(Auditoria):
 	cliente = models.ForeignKey(Cliente,  related_name='+')
 	producto = models.ForeignKey(Producto)
+	fecha = models.DateField(blank=True, null=True, default=timezone.now)
+	nro_documento = models.CharField(max_length=45, blank=True, null=True, default="0000")
 	entregado = models.PositiveSmallIntegerField()
 	devuelto = models.PositiveSmallIntegerField()
 

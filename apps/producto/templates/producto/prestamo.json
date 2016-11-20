@@ -1,19 +1,15 @@
+{% load l10n %}
 {
 	"success": true,
 	"message": "OK",
 	totalCount: {{total}},
-	"data":	[{% for prestamo in  prestamos %}
+	"data":	[{% for producto in  prestamo %}
 			{
-				"id": {{prestamo.id}},
-				"cliente__nombres": '{{prestamo.cliente.nombres}} {{prestamo.cliente.apellidos}}',
-				"cliente__telefono": '{{prestamo.cliente.telefono}}',
-				"cliente__nro_documento": '{{prestamo.cliente.nro_documento}}',
-				"cliente__direccion": '{{prestamo.cliente.direccion}}',
-				"producto__descripcion": '{{prestamo.producto.descripcion}}',
-				"productoid": {{prestamo.producto.id}},
-				"entregado": {{prestamo.entregado}},
-				"devuelto": {{prestamo.devuelto}},
-				"resto": {{prestamo.entregado}} - {{prestamo.devuelto}},
+				"id": {{producto.id}},
+				"descripcion": '{{producto.descripcion}}',
+				"total_entregado": {{ producto.prestamo__entregado__sum }},
+				"total_devuelto": {{ producto.prestamo__devuelto__sum  }},
+				"total_debe": {{ producto.prestamo__entregado__sum }}-{{ producto.prestamo__devuelto__sum }},
 			},{% endfor %}
 		]
 }

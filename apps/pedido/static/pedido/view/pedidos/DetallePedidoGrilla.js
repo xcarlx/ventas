@@ -35,7 +35,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 		{
 			xtype: 'numbercolumn', 
 			format:'0.00',
-			text: "Sub total",
+			text: "Total",
 			width: 100,
 			dataIndex: 'subtotal',
 			sortable: false,
@@ -59,6 +59,17 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 				},
 				{
 					xtype: 'button',
+					text: 'Editar',
+					iconCls: 'icono-editar',
+					bind: {
+						disabled: "{!detallepedido-grilladetallepedido.selection}",
+					},
+					// listeners:{
+					// 	click: 'detallepedido_Eliminar',
+					// }
+				},
+				{
+					xtype: 'button',
 					text: 'Eliminar',
 					iconCls: 'icono-quitar',
 					bind: {
@@ -68,6 +79,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla', {
 						click: 'detallepedido_Eliminar',
 					}
 				},
+				
 			],
 		}
 	]

@@ -18,9 +18,10 @@
 				"cliente__telefono": '{{pedido.cliente.telefono}}',
 				"cliente__direccion": '{{pedido.cliente.direccion}}',
 				"cliente__area": '{{pedido.cliente.area}}',
-				"cliente__responsable": '{{pedido.cliente.responsable}}',
+				"cliente__responsable":'{{pedido.cliente.area}}' +' - '+'{{pedido.cliente.responsable}}',
 				"cliente__referencia": '{{pedido.cliente.referencia}}',
 				"cliente__frecuencia": '{{pedido.cliente.frecuencia}}',
+				"cliente__zona_sector": '{{pedido.cliente.zona_sector}}',
 				"estado": '{{pedido.estado}}',
 			},{% endfor %}
 		]

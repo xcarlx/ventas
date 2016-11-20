@@ -13,6 +13,7 @@ Ext.define('GRUPOEJ.cliente.model.clientes.Cliente', {
 		{name: 'responsable', type: 'string'},
 		{name: 'referencia', type: 'string'},
 		{name: 'frecuencia', type: 'int'},
+		{name: 'zona_sector', type: 'string'},
 
 	],
 	validators:{

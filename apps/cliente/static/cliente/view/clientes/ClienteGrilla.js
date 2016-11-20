@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},
 		{
 			text: "Telefono",
-			flex: 1,
+			width: 250,
 			dataIndex: 'telefono',
 			items:[
 				{
@@ -54,7 +54,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},
 				{
 			text: "Area",
-			flex: 2,
+			flex: 1,
 			dataIndex: 'area',
 			items:[
 				{
@@ -64,7 +64,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},	
 		{
 			text: "Responsable",
-			flex: 2,
+			flex: 1,
 			dataIndex: 'responsable',
 			items:[
 				{
@@ -74,8 +74,18 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 		},		
 		{
 			text: "Frecuencia",
-			flex: 2,
+			flex: 1,
 			dataIndex: 'frecuencia',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},	
+		{
+			text: "Zona Sector",
+			flex: 1,
+			dataIndex: 'zona_sector',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -117,6 +127,37 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteGrilla', {
 					listeners:{
 						click: 'ClientesEliminar',
 					}
+				},
+				{
+					xtype: 'tbfill',
+
+				},
+				{
+					xtype: 'button',
+					text: 'Duplicar',
+					iconCls: 'icono-editar',
+					bind: {
+						disabled: "{!cliente-grillaclientes.selection}",
+					},
+					listeners:{
+						click: 'ClienteDuplicar',
+					},
+				},
+				{
+					xtype: 'tbfill',
+
+				},
+				{
+					xtype: 'tbfill',
+
+				},
+				{
+					xtype: 'tbfill',
+
+				},
+				{
+					xtype: 'tbfill',
+
 				},
 				{
 					xtype: 'tbfill',

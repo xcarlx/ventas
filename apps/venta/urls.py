@@ -12,7 +12,6 @@ urlpatterns = [
 	url(r'creditos.ventacredito/eliminar/$', VentaCreditoPagar),
 	url(r'creditos.ventacredito/imprimir/(?P<idventa>[0-9]+)/(?P<fechaI>[0-9]+)/(?P<fechaF>[0-9]+)/$', ImprimirCredito),
 
-
 	url(r'anuladas.ventaanulada/listar/$', VentaAnuladoListar),
 	url(r'anuladas.detalleventaanulada/listar/$', DetalleVentaAnuladoListar),
 	url(r'anuladas.ventaanulada/eliminar/$', VentaAnuladaActivar),

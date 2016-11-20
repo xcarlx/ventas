@@ -7,8 +7,10 @@ import json,datetime
 from datetime import datetime   
 from django.core.paginator import Paginator
 
-from django.db.models import Sum
+from django.db.models import F, FloatField, Sum
+
 from apps.inicio.stylesheet import getStyleSheet 
+
  #report lab
 from reportlab.pdfgen import canvas
 from apps.cliente.models import *
@@ -360,6 +362,75 @@ def ImprimirVenta(request, idventa):
 	response.write(buff.getvalue())
 	buff.close()
 	return response
+
+def ImprimirVentasCreditos(request, fechaI, fechaF):
+	
+	response = HttpResponse(content_type='application/pdf')
+	finicio = datetime.fromtimestamp(int(fechaI) / 1e3)
+	ffin = datetime.fromtimestamp(int(fechaF) / 1e3)
+
+	pdf_name = "ventasacredito.pdf" 
+	buff = BytesIO()
+	
+	doc = SimpleDocTemplate(buff,
+							pagesize=letter,
+							rightMargin=50,
+							leftMargin=50,
+							topMargin=20,
+							bottomMargin=18,
+							)
+	doc.pagesize = landscape(A4)
+	ventas = []
+
+	totales = Venta.objects.filter(fecha__gte = finicio,  fecha__lte = ffin, credito = True , estado = 'ACTIVO').aggregate(precio_total=Sum(F('total')))
+	
+	ventas.append(Spacer(1, 0.05 * inch))
+
+	header = Paragraph("GRUPOEJ - SRL." , getStyleSheet()['Title'])
+	subtitel = Paragraph("Ventas al credito." , getStyleSheet()['Subtitle'])
+	ventas.append(header)
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(subtitel)
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(Paragraph("<para>Fecha Inicio: "+finicio.strftime('%d/%m/%Y')+" &nbsp;&nbsp;&nbsp;"+" Fecha Fin:"+ffin.strftime('%d/%m/%Y')+"</para>", getStyleSheet()['TopicTitle8']))
+	ventas.append(Spacer(1, 0.05 * inch))
+	ventas.append(Paragraph("DETALLE", getStyleSheet()['TopicTitle10']))
+	ventas.append(Spacer(1, 0.1 * inch))
+	styles = getSampleStyleSheet()
+
+	headings = ('DNI/RUC', 'CLIENTE', "RESPONSABLE", 'NRO_VENTA','FECHA' ,'TOTAL')
+	venta = [(str(v.pedido.cliente.nro_documento), str(v.pedido.cliente.nombres)+"/"+str(v.pedido.cliente.apellidos), str(v.pedido.cliente.responsable), str(v.numero_correlativo)+"-"+str(v.numero_documento), str(v.fecha), str(v.total)) for v in Venta.objects.filter(fecha__gte = finicio,  fecha__lte = ffin, credito = True , estado = 'ACTIVO')]
+	data = ([headings] + venta)
+
+	data2 = [[Paragraph(cell, getStyleSheet()['TopicItemq0']) for cell in row] for row in data]
+	t=Table(data2)
+	style = TableStyle(
+		[
+			('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+			('LINEABOVE', (0,0), (-1,0), 2, colors.green),
+			('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
+			('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
+			('ALIGN', (1,1), (-1,-1), 'CENTER'),
+		]
+	)
+
+	t.setStyle(style)
+	t._argW[0]=0.8*inch
+	t._argW[1]=2.8*inch
+	t._argW[2]=2.8*inch
+	t._argW[3]=0.9*inch
+	t._argW[4]=0.9*inch
+	t._argW[5]=0.9*inch
+	ventas.append(t)
+	ventas.append(Paragraph("Total: S/  "+str(totales['precio_total']), getStyleSheet()['TopicTitle8Right']))
+	# ventas.append(Paragraph("IGV:___"+str(venta.igv)+" S/", getStyleSheet()['TopicTitle8Right']))
+	# ventas.append(Paragraph("Total:__ "+str(venta.total)+" S/", getStyleSheet()['TopicTitle8Right']))
+	doc.build(ventas)
+	response.write(buff.getvalue())
+	buff.close()
+	return response
+
+
 
 
 

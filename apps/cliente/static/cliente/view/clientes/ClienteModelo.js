@@ -10,7 +10,12 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteModelo', {
 			autoLoad: true,
 			remoteSort: true,
 			remoteFilter: true,
+		},
+		store_clientes2:{
+			model: 'GRUPOEJ.cliente.model.clientes.Cliente',
+			autoLoad: true,
+			remoteSort: true,
+			remoteFilter: true,
 		}
-
 	},
 });

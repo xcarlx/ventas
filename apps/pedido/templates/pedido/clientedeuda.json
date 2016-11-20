@@ -1,0 +1,7 @@
+{% load l10n %}
+{
+	"success": true,
+	"message": "OK",
+	totalCount: {{total}},
+	"data":	[{"totaldeuda": '{{cliente|unlocalize}}',},]
+}

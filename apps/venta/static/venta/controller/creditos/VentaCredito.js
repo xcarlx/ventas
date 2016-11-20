@@ -118,6 +118,21 @@ Ext.define('GRUPOEJ.venta.controller.creditos.VentaCredito',	{
 			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
 		}
 		
+	},
+
+	handlerBtnDownloadHelpGuie: function() {
+		me = this;
+    	//TODO: It opens the document in a new tab, but not force the 
+		// console.log(me.lookupReference('ventagrilla').getSelectionModel().getSelection()[0].id);
+		if(me.lookupReference("vcreditoFechaInicio").getValue()!= null && 
+			me.lookupReference("vcreditoFechaFin").getValue()!= null){
+			window.open('grupoej.venta.creditos.reporteventacredito/imprimir/'
+				+ new Date(me.lookupReference("vcreditoFechaInicio").getValue()).getTime()+"/"
+				+ new Date(me.lookupReference("vcreditoFechaFin").getValue()).getTime()+"/",'_blank');
+		}else{
+			Ext.Msg.alert('Error','No ha seleccionado las Fechas');
+		}
 	}
+
 });
 	

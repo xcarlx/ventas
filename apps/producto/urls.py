@@ -14,7 +14,7 @@ urlpatterns = [
 	url(r'reportes.reporteenvace/listar/$', ReporteEnvaceListar),
 	url(r'reportes.detallereporteenvace/listar/$', DetalleReporteEnvace),
 	url(r'reportes.reporteenvace/imprimir/(?P<idcliente>[0-9]+)/$', ImprimirReporteEnvace),
-
+	url(r'reportes.reporteporenvace/imprimir/(?P<idcliente>[0-9]+)/(?P<idproducto>[0-9]+)/$', ImprimirReporteEnvacePorProducto),
 
 ]
 

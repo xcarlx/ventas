@@ -84,13 +84,24 @@ Ext.define('GRUPOEJ.producto.view.reportes.ReporteEnvaceGrilla', {
 			items:[
 				{
 					xtype: 'button',
-					text: 'Imprimir',
+					text: 'Imprimir Total',
 					iconCls: 'icono-print',
 					bind: {
 						disabled: "{!reporteenvacegrilla.selection}",
 					},
 					listeners:{
 						click: 'Imprimir',
+					},
+				},
+				{
+					xtype: 'button',
+					text: 'Imprimir por Producto',
+					iconCls: 'icono-print',
+					bind: {
+						disabled: "{!detallecontrolenvacegrilla.selection}",
+					},
+					listeners:{
+						click: 'ImprimirPorProducto',
 					},
 				},
 			],

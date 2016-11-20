@@ -1,19 +1,19 @@
-Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
+Ext.define('GRUPOEJ.inicio.view.pedidosvencidos.PVClienteForm', {
 	extend: 'Ext.window.Window',
-	alias: 'widget.cliente-form',
-	width: 450,
+	alias: 'widget.pedidoVencidoCliente-form',
+	width: 500,
 	closeAction: 'hide',
 	modal: true,
 	resizable: false,
 	action: "",
 	height: 'auto',
 	bind: {
-		title: '{titulo}'
+		title: '{titulo2}'
 	},
 	items:[
 		{
 			xtype: 'form',
-			reference: 'formCliente',
+			reference: 'formPedidoVencidoCliente',
 			bodyPadding: 10,
 			modelValidation: true,
 			layout:{
@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					hidden: true,
 					name: 'id',
 					bind:{
-						value: '{recordCliente.id}'
+						value: '{idcliente}'
 					},
 				},
 				{
@@ -43,43 +43,20 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Nombres',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.nombre}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
+						value: '{titulo2}'
 					}
 				},
 				{
 					xtype: 'textfield',
-					name: 'apellidos',
-					fieldLabel: 'Nomb Comercial',
-					anchor: '100%',
-					msgTarget: 'side',
-					bind:{
-						value: '{recordCliente.apellidos}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
-					}
-				},
-				{
-					xtype: 'combobox',
 					name: 'tipo_documento',
-					forceSelection: true,
-					editable: true,
 					fieldLabel: 'Tipo de Documento',
-					store: [['DNI', 'DNI'], ['RUC', 'RUC']],
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.tipo_documento}'
+						value: '{tipo_documento}'
 					}
 				},
 				{
@@ -88,8 +65,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Nro del Documento',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.nro_documento}'
+						value: '{nro_documento}'
 					}
 				},
 				{
@@ -99,14 +77,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Correo - email',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.email}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
+						value: '{email}'
 					}
 				},
 				{
@@ -115,8 +88,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Telefono',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.telefono}'
+						value: '{telefono}'
 					}
 				},
 				{
@@ -125,14 +99,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Direccion',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.direccion}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
+						value: '{direccion}'
 					}
 				},
 				{
@@ -141,14 +110,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Area',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.area}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
+						value: '{area}'
 					}
 				},
 				{
@@ -157,14 +121,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Responsable',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.responsable}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
+						value: '{responsable}'
 					}
 				},
 				{
@@ -173,24 +132,20 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Referencias',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.referencia}'
-					},
-					style : {textTransform: "uppercase"},
-					listeners:{
-						change: function(field, newValue, oldValue){
-							field.setValue(newValue.toUpperCase());
-						}
+						value: '{referencia}'
 					}
 				},
 				{
-					xtype: 'numberfield',
+					xtype: 'textfield',
 					name: 'frecuencia',
 					fieldLabel: 'Frecuencia',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.frecuencia}'
+						value: '{frecuencia}'
 					}
 				},
 				{
@@ -199,8 +154,9 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					fieldLabel: 'Zona Sector',
 					anchor: '100%',
 					msgTarget: 'side',
+					readOnly:true,
 					bind:{
-						value: '{recordCliente.zona_sector}'
+						value: '{zona_sector}'
 					}
 				},
 			],
@@ -216,19 +172,10 @@ Ext.define('GRUPOEJ.cliente.view.clientes.ClienteForm', {
 					items:[
 						{
 							xtype: 'button',
-							iconCls: 'icono-guardar',
-							text: 'Guardar',
-							formBind: true,
-							listeners:{
-								click: 'ClienteGuardar',
-							},
-						},
-						{
-							xtype: 'button',
 							iconCls: 'icono-cancelar',
-							text: 'Cancelar',
+							text: 'Salir',
 							listeners:{
-								click: 'ClienteCancelar',
+								click: 'Salir',
 							},
 						},
 

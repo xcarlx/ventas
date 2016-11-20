@@ -5,7 +5,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 	bind: {
 		store: '{store_pedidos}',
 	},
-	height: 340,
+	height: 290,
 	columns: [
 		{
             xtype: 'rownumberer',
@@ -23,9 +23,9 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 			],
 		},
 		{
-			text: "Area Responsable",
-			width: 200,
-			dataIndex: 'cliente__area',
+			text: "Area - Responsable",
+			width: 180,
+			dataIndex: 'cliente__responsable',
 			items:[
 				{
 					xtype: 'searchtrigger'
@@ -34,7 +34,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 		},
 		{
 			text: "Telefono",
-			width: 150,
+			width: 80,
 			dataIndex: 'cliente__telefono',
 			items:[
 				{
@@ -44,13 +44,38 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 		},
 		{
 			text: "Direccion",
-			width: 200,
+			width: 250,
 			dataIndex: 'cliente__direccion',
 			items:[
 				{
 					xtype: 'searchtrigger'
 				}
 			],
+		},
+
+		{
+			xtype: 'datecolumn',
+			text: 'Fech Entrega',
+			width: 100,
+			dataIndex: 'fecha_entrega',
+			format:'d/m/Y',
+		},
+		{
+			text: "Dias",
+			width: 60,
+			dataIndex: 'nro_dias',
+			items:[
+				{
+					xtype: 'searchtrigger'
+				}
+			],
+		},
+		{
+			xtype: 'datecolumn',
+			text: 'Fech Pedido',
+			width: 100,
+			dataIndex: 'fecha_pedido',
+			format:'d/m/Y',
 		},
 		{
 			text: "Nro Pedido",
@@ -62,40 +87,16 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.PedidoGrilla', {
 				}
 			],
 		},
-		{
-			text: "Nro de Dias",
-			width: 100,
-			dataIndex: 'nro_dias',
-			items:[
-				{
-					xtype: 'searchtrigger'
-				}
-			],
-		},
-		{
-			xtype: 'datecolumn',
-			text: 'Fecha del Pedido',
-			width: 150,
-			dataIndex: 'fecha_pedido',
-			format:'d/m/Y',
-		},
-		{
-			xtype: 'datecolumn',
-			text: 'Fecha de Entrega',
-			width: 150,
-			dataIndex: 'fecha_entrega',
-			format:'d/m/Y',
-		},
-			{
-			xtype: 'booleancolumn',
-			align: 'center',
-			width: 120,
-			dataIndex: 'estado',
-			text: 'Estado',
-			resizable: false,
-			trueText: "Finalizado",
-			falseText: "Pendiete",
-		},
+		// {
+		// 	xtype: 'booleancolumn',
+		// 	align: 'center',
+		// 	width: 120,
+		// 	dataIndex: 'estado',
+		// 	text: 'Estado',
+		// 	resizable: false,
+		// 	trueText: "Finalizado",
+		// 	falseText: "Pendiete",
+		// },
 	],
 	listeners : {
 		select: 'seleccionarPedido',

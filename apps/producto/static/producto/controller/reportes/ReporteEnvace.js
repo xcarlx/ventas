@@ -26,7 +26,13 @@ Ext.define('GRUPOEJ.producto.controller.reportes.ReporteEnvace',	{
 	},
 	Imprimir: function(){
 		me = this;
-
 		window.open('grupoej.producto.reportes.reporteenvace/imprimir/'+me.lookupReference('reporteenvacegrilla').getSelectionModel().getSelection()[0].id+"/",'_blank');
+	},	
+	
+	ImprimirPorProducto: function(){
+		me = this;
+		window.open('grupoej.producto.reportes.reporteporenvace/imprimir/'
+			+me.lookupReference('reporteenvacegrilla').getSelectionModel().getSelection()[0].id+"/"
+			+me.lookupReference('detallecontrolenvacegrilla').getSelectionModel().getSelection()[0].id+"/",'_blank');
 	},
 });

@@ -1,42 +1,40 @@
-Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
-	extend: 'GRUPOEJ.inicio.view.PlantillaContenido',
-	requires:[
-		'GRUPOEJ.pedido.view.pedidos.PedidoModelo',
-		'GRUPOEJ.pedido.model.pedidos.VentaPedido',
-		'GRUPOEJ.pedido.view.pedidos.PedidoGrilla',
-		'GRUPOEJ.pedido.view.pedidos.DetallePedidoGrilla',
-		'GRUPOEJ.pedido.controller.pedidos.Pedido',
-
-	],
-	viewModel:{
-		type: 'pedido',
-	},
-	controller: 'pedido',
-	items:[
-		{
-			xtype: 'pedidos-grilla-pedidos',
-		},
+Ext.define('GRUPOEJ.pedido.view.pedidos.EditarProductoDPFormulario', {
+	extend: 'Ext.window.Window',
+	alias: 'widget.editarproducto-formulario',
+	width: 490,
+	action: '',
+	closeAction: 'hide',
+	closable: true,
+	modal: true,
+	resizable: false,
+	bind: {
+		title: '{titulo}'
+	},	
+	items: [
 		{
 			xtype: 'form',
-			extend: 'Ext.window.Window',
-			// title: 'AGREGAR PRODUCTOS AL DETALLE',
-			reference: 'frompedidos',
-			renderTo: Ext.getBody(),
-			bodyPadding: 10,
-			border: true,
+			reference: 'editarprodcutoFormulariodp',
+			bodyPadding: '10 15 5 5',
 			modelValidation: true,
-			bind: {
-				disabled: "{!pedido-grillapedidos.selection}",
-			},
-			layout:{
+			layout: {
 				type: 'vbox',
+				align: 'stretch'
 			},
-			items:[
+			defaults: {
+				afterLabelTextTpl: GRUPOEJ.utiles.Utiles.required,
+				anchor: '100%',
+				xtype: 'textfield',
+				msgTarget: 'side',
+				labelWidth: 100,
+				labelAlign: 'right',
+			},
+
+			items: [
 				{
 					xtype: 'numberfield',
 					name: 'pedidoid',
 					hidden: true,
-					reference: 'idpedidoreference',
+					reference: 'iddetallepedidoreference',
 				},
 				{
 					xtype: 'combobox',
@@ -45,7 +43,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 					labelWidth: 70,
 					width: 380,
 					name: 'productoid',
-					reference: 'comboproductospedido',
+					reference: 'comboproductoseditarpedido',
 					bind:{
 						store: '{store_productos}',
 					},
@@ -79,7 +77,7 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 							labelWidth: 70,
 							width: 180,
 							name: 'cantidad',
-							reference: 'cantidadproductospedido',
+							reference: 'cantidadproductosdetallepedido',
 							xtype: 'numberfield',
 							fieldLabel: 'Cantidad',
 							allowNegative: false,
@@ -103,20 +101,45 @@ Ext.define('GRUPOEJ.pedido.view.pedidos.Pedido', {
 							forcePrecision: true,
 							decimalSeparator : ".",
 							decimalPrecision : 2,
-							bind:{
-								disabled: "{!comboproductospedido.selection}",
-								value:"{comboproductospedido.selection.precio}",
-							},
+							// bind:{
+							// 	disabled: "{!comboproductospedido.selection}",
+							// 	value:"{comboproductospedido.selection.precio}",
+							// },
 						},
 					],
 				}
 			],
-		},
-		{
-			xtype: 'detallepedido-grilla-detallepedido',
-			bind: {
-				disabled: "{!pedido-grillapedidos.selection}",
-			},
-		},
+			dockedItems: [
+				{
+					xtype: 'toolbar',
+					dock: 'bottom',
+					layout: {
+						pack: 'end',
+						type: 'hbox'
+					},
+
+					items:[
+						{
+							xtype: 'button',
+							iconCls: 'icono-guardar',
+							text: 'Guardar',
+							formBind: true,
+							// listeners:{
+							// 	click: 'valeguia_ventana_Guardar',
+							// },
+						},
+						{
+							xtype: 'button',
+							iconCls: 'icono-cancelar',
+							text: 'Cancelar',
+							// listeners:{
+							// 	click: 'valeguia_ventana_Cancelar',
+							// },
+						},
+
+					],
+				}
+			]
+		}
 	],
 });
