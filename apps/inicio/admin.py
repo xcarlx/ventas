@@ -11,5 +11,5 @@ from .models import Modulo, Menu
 # 	list_display_links = ['id','nombre','iconoclase','modulo','menupadre','orden','control']
 # 	list_editable = ['id','nombre','iconoclase','modulo','menupadre','orden','control']
 
-admin.site.register(Modulo, AdminModulo)
-admin.site.register(Menu, AdminMenu)
+admin.site.register(Modulo)
+admin.site.register(Menu)
