@@ -3,12 +3,12 @@ from .models import Modulo, Menu
 # Register your models here.
 
 class AdminModulo(admin.ModelAdmin):
-	list_display = ['id','nombre','orden']
+	list_display_links = ['id','nombre','orden']
 	list_editable = ['id','nombre', 'orden']
 
 class AdminMenu(admin.ModelAdmin):
 
-	list_display = ['id','nombre','iconoclase','modulo','menupadre','orden','control']
+	list_display_links = ['id','nombre','iconoclase','modulo','menupadre','orden','control']
 	list_editable = ['id','nombre','iconoclase','modulo','menupadre','orden','control']
 
 admin.site.register(Modulo, AdminModulo)
